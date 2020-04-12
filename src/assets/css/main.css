@@ -1,4 +1,12 @@
-/* Example css file */
+.Red {
+  background: red;
+}
+
+.Brown {
+  background: brown;
+}
+
+
 body {
   margin: 0;
   padding: 0;

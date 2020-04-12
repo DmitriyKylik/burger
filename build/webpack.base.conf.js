@@ -80,7 +80,7 @@ module.exports = {
         test: /\.scss$/,
         use: [
           "style-loader",
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: { sourceMap: true }
@@ -103,10 +103,17 @@ module.exports = {
         test: /\.css$/,
         use: [
           "style-loader",
-          MiniCssExtractPlugin.loader,
+          // MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
-            options: { sourceMap: true }
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
+              // modules: true,
+              modules: {
+                localIdentName: '[local]--[hash:base64:5]',
+              },
+            }
           },
           {
             loader: "postcss-loader",
@@ -121,14 +128,13 @@ module.exports = {
   },
   resolve: {
     alias: {
-      "~": PATHS.src,
-      vue$: "vue/dist/vue.js"
+      "~": PATHS.src
     }
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: `${PATHS.assets}css/[name].[contenthash].css`
-    }),
+    // new MiniCssExtractPlugin({
+    //   filename: `${PATHS.assets}css/[name].[contenthash].css`
+    // }),
     new CopyWebpackPlugin([
       { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
       { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
