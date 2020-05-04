@@ -14,6 +14,13 @@ const INGREDIENT_PRICES = {
   bacon: 0.5
 };
 
+const INGREDIENT_LIMITS = {
+  salad: 10,
+  meat: 8,
+  cheese: 15,
+  bacon: 40
+};
+
 class BurgerBuilder extends Component {
 
   state = {
@@ -23,7 +30,8 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0,
     },
-    totalPrice: 40
+    basePrice: 40,
+    totalPrice: null
   };
 
   addIngredientHandler = (type, input) => {
@@ -52,14 +60,26 @@ class BurgerBuilder extends Component {
   };
 
   changeIngredientHandler = (event, type) => {
-
     let inputValue = event.target.value;
-    //  1.check for not number value and negative value
-    inputValue = parseInt(inputValue.replace(/[^\d]/g, ''), 10);
+
+    if(inputValue === '') {
+      inputValue = 0;
+    } else {
+      inputValue = parseInt(inputValue.replace(/[^\d]/g, ''), 10);
+    }
+
+    if(inputValue > INGREDIENT_LIMITS[type]) {
+      inputValue = INGREDIENT_LIMITS[type];
+    }
+
     const updatedIngredients = {...this.state.ingredients};
     // add total price for each ingredient
-    const updatedPrice = this.state.totalPrice + (INGREDIENT_PRICES[type] * inputValue);
+    // console.log(INGREDIENT_PRICES[type] * inputValue);
+    // debugger;
+    // console.log(this.state.totalPrice);
+    const updatedPrice = this.state.basePrice + (INGREDIENT_PRICES[type] * inputValue);
     updatedIngredients[type] = inputValue;
+    console.log(updatedPrice);
     this.setState({ingredients: updatedIngredients, totalPrice: updatedPrice});
   };
 
@@ -69,7 +89,7 @@ class BurgerBuilder extends Component {
   // }
   //
   render() {
-    let disabledInfo = {...this.state.ingredients};
+    const disabledInfo = {...this.state.ingredients};
     for(let key in disabledInfo) {
       disabledInfo[key] = disabledInfo[key] <= 0;
     }
@@ -78,6 +98,7 @@ class BurgerBuilder extends Component {
       <Aux>
         <Burger ingredients={this.state.ingredients}/>
         <BuildControls
+          ingredients={this.state.ingredients}
           addIngredient={this.addIngredientHandler}
           reduceIngredient={this.reduceIngredientHandler}
           changeIngredient={this.changeIngredientHandler}

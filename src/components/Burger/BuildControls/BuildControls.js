@@ -17,6 +17,7 @@ const buildControls = (props) => (
         key={elem.label}
         label={elem.label}
         type={elem.type}
+        ingredientAmount={props.ingredients[elem.type]}
         added={props.addIngredient}
         reduce={props.reduceIngredient}
         change={props.changeIngredient}
