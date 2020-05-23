@@ -12,12 +12,13 @@ const buildControl = (props) => {
       <div className={classes.Label}>{props.label}</div>
       <button className={classes.Less} onClick={() => {
         props.reduce(props.type, inputRef)
-      }} disabled={props.disabled[props.type]}>
+        }} disabled={props.disabled[props.type].less}>
         Less
       </button>
       <input type="text" value={props.ingredientAmount} ref={inputRef} onChange={(event) => {props.change(event, props.type)}}/>
       <button className={classes.More} onClick={() => {
-        props.added(props.type, inputRef)}}>
+        props.added(props.type, inputRef)}}
+        disabled={props.disabled[props.type].more}>
         More
       </button>
     </div>

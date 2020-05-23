@@ -35,23 +35,26 @@ class BurgerBuilder extends Component {
   };
 
   addIngredientHandler = (type, input) => {
-    const updatedCount = ++this.state.ingredients[type];
-    const updatedIngredients = {
-      ...this.state.ingredients
-    };
-    updatedIngredients[type] = updatedCount;
-    const priceAddition = this.state.totalPrice + INGREDIENT_PRICES[type];
-    this.setState({ingredients: updatedIngredients, totalPrice: priceAddition});
-    input.current.value = updatedCount;
+    let currentAmount = this.state.ingredients[type];
+
+    if(currentAmount !== INGREDIENT_LIMITS[type]) {
+      const updatedCount = ++currentAmount;
+      const updatedIngredients = {...this.state.ingredients};
+      const priceAddition = this.state.totalPrice + INGREDIENT_PRICES[type];
+
+      updatedIngredients[type] = updatedCount;
+      this.setState({ingredients: updatedIngredients, totalPrice: priceAddition});
+      input.current.value = updatedCount;
+    }
   };
 
   reduceIngredientHandler = (type, input) => {
-    const oldCount = this.state.ingredients[type];
-    if(oldCount > 0) {
-      const updatedCount = --this.state.ingredients[type];
-      const updatedIngredients = {
-        ...this.state.ingredients
-      };
+    let currentAmount = this.state.ingredients[type];
+
+    if(currentAmount > 0) {
+      const updatedCount = --currentAmount;
+      const updatedIngredients = {...this.state.ingredients};
+
       updatedIngredients[type] = updatedCount;
       const priceAddition = this.state.totalPrice + INGREDIENT_PRICES[type];
       this.setState({ingredients: updatedIngredients, totalPrice: priceAddition});
@@ -62,6 +65,7 @@ class BurgerBuilder extends Component {
   changeIngredientHandler = (event, type) => {
     let inputValue = event.target.value;
 
+    //convert input value to integer
     if(inputValue === '') {
       inputValue = 0;
     } else {
@@ -72,15 +76,13 @@ class BurgerBuilder extends Component {
       inputValue = INGREDIENT_LIMITS[type];
     }
 
-    const updatedIngredients = {...this.state.ingredients};
-    // add total price for each ingredient
-    // console.log(INGREDIENT_PRICES[type] * inputValue);
-    // debugger;
-    // console.log(this.state.totalPrice);
-    const updatedPrice = this.state.basePrice + (INGREDIENT_PRICES[type] * inputValue);
-    updatedIngredients[type] = inputValue;
-    console.log(updatedPrice);
-    this.setState({ingredients: updatedIngredients, totalPrice: updatedPrice});
+    //prevent rerender components if input value is the same as current ingredient amount
+    if(inputValue !== this.state.ingredients[type]) {
+      const updatedIngredients = {...this.state.ingredients};
+      const updatedPrice = this.state.basePrice + (INGREDIENT_PRICES[type] * inputValue);
+      updatedIngredients[type] = inputValue;
+      this.setState({ingredients: updatedIngredients, totalPrice: updatedPrice});
+    }
   };
 
   // constructor(props) {
@@ -90,8 +92,22 @@ class BurgerBuilder extends Component {
   //
   render() {
     const disabledInfo = {...this.state.ingredients};
+    // const disabledInfoMore = {...this.state.ingredients};
+
+    //Correct statement
     for(let key in disabledInfo) {
-      disabledInfo[key] = disabledInfo[key] <= 0;
+
+      if(disabledInfo[key] <= 0) {
+        disabledInfo[key] = {
+          less: true,
+          more: false,
+        };
+      }else if(disabledInfo[key] === INGREDIENT_LIMITS[key]) {
+        disabledInfo[key] = {
+          less: false,
+          more: true,
+        };
+      }
     }
 
     return (
