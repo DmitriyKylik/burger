@@ -11,8 +11,8 @@ const buildControl = (props) => {
     <div className={classes.BuildControl}>
       <div className={classes.Label}>{props.label}</div>
       <button className={classes.Less} onClick={() => {
-        props.reduce(props.type, inputRef)
-        }} disabled={props.disabled[props.type].less}>
+        props.decreased(props.type, inputRef) }}
+        disabled={props.disabled[props.type].less}>
         Less
       </button>
       <input type="text" value={props.ingredientAmount} ref={inputRef} onChange={(event) => {props.change(event, props.type)}}/>

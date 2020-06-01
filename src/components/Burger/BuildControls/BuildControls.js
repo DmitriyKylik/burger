@@ -19,7 +19,7 @@ const buildControls = (props) => (
         type={elem.type}
         ingredientAmount={props.ingredients[elem.type]}
         added={props.addIngredient}
-        reduce={props.reduceIngredient}
+        decreased={props.reduceIngredient}
         change={props.changeIngredient}
         disabled={props.disabled}/>
     ))}
