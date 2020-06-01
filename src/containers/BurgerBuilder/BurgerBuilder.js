@@ -113,9 +113,35 @@ class BurgerBuilder extends Component {
     //prevent rerender components if input value is the same as current ingredient amount
     if(inputValue !== this.state.ingredients[type]) {
       const updatedIngredients = {...this.state.ingredients};
+      const updatedSequence = [...this.state.ingredientsSequence];
       const updatedPrice = this.state.basePrice + (INGREDIENT_PRICES[type] * inputValue);
+
+      //add ingredients to the beginning of ingredients sequence
+      if(updatedIngredients[type] < inputValue) {
+        const ingredientsCounter = inputValue - updatedIngredients[type];
+        const ingredientsAmount = new Array(ingredientsCounter).fill(type);
+
+        updatedSequence.unshift(...ingredientsAmount);
+        console.log(updatedSequence);
+      } else {
+      //  remove elements from to the beginning of ingredients sequence
+        const ingredientsCounter = updatedIngredients[type] - inputValue;
+      //  remove elements by 'type' name
+        for(let i = 0; i < ingredientsCounter; i++) {
+          const index = updatedSequence.indexOf(type);
+          if(index !== -1) {
+            updatedSequence.splice(index, 1);
+          }
+        }
+
+      }
+
       updatedIngredients[type] = inputValue;
-      this.setState({ingredients: updatedIngredients, totalPrice: updatedPrice});
+      this.setState({
+        ingredients: updatedIngredients,
+        ingredientsSequence: updatedSequence,
+        totalPrice: updatedPrice,
+      });
     }
   };
 
@@ -142,7 +168,7 @@ class BurgerBuilder extends Component {
         };
       }
     }
-    // ingredients={this.state.ingredients}
+
     return (
       <Aux>
         <Burger
