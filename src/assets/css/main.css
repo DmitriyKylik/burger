@@ -1,14 +1,9 @@
-.Red {
-  background: red;
-}
+@import "~normalize.css";
 
-.Brown {
-  background: brown;
-}
-
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Open Sans', sans-serif;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
 }

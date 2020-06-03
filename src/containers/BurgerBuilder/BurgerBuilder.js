@@ -31,7 +31,6 @@ class BurgerBuilder extends Component {
       meat: 0,
     },
     ingredientsSequence: [],
-    basePrice: 4,
     totalPrice: 4,
   };
 
@@ -44,16 +43,17 @@ class BurgerBuilder extends Component {
       const updatedCount = ++currentAmount;
       const updatedIngredients = {...this.state.ingredients};
       const priceAddition = +(this.state.totalPrice + INGREDIENT_PRICES[type]).toFixed(2);
-
       const updatedSequence = [...this.state.ingredientsSequence];
 
       updatedSequence.unshift(type);
       updatedIngredients[type] = updatedCount;
+
       this.setState({
         ingredients: updatedIngredients,
         ingredientsSequence: updatedSequence,
         totalPrice: priceAddition,
       }, () => {console.log(this.state.totalPrice)});
+
       input.current.value = updatedCount;
     }
 
@@ -76,16 +76,17 @@ class BurgerBuilder extends Component {
       const updatedCount = --currentAmount;
       const updatedIngredients = {...this.state.ingredients};
       const updatedSequence = [...this.state.ingredientsSequence];
+      const priceDeduction = +(this.state.totalPrice - INGREDIENT_PRICES[type]).toFixed(2);
 
       updatedSequence.splice(updatedSequence.findIndex(item => item === type), 1);
       updatedIngredients[type] = updatedCount;
-      const priceAddition = +(this.state.totalPrice - INGREDIENT_PRICES[type]).toFixed(2);
 
       this.setState({
         ingredients: updatedIngredients,
         ingredientsSequence: updatedSequence,
-        totalPrice: priceAddition,
+        totalPrice: priceDeduction,
       },() => {console.log(this.state.totalPrice)});
+
       input.current.value = updatedCount;
     }
 
@@ -124,13 +125,13 @@ class BurgerBuilder extends Component {
       if(updatedIngredients[type] < inputValue) {
         ingredientsCounter = inputValue - updatedIngredients[type];
         const ingredientsAmount = new Array(ingredientsCounter).fill(type);
-        updatedPrice = this.state.totalPrice + (INGREDIENT_PRICES[type] * ingredientsCounter);
+        updatedPrice = +(this.state.totalPrice + (INGREDIENT_PRICES[type] * ingredientsCounter)).toFixed(2);
 
         updatedSequence.unshift(...ingredientsAmount);
       } else {
       //  remove elements from to the beginning of ingredients sequence
         ingredientsCounter = updatedIngredients[type] - inputValue;
-        updatedPrice = this.state.totalPrice - (INGREDIENT_PRICES[type] * ingredientsCounter);
+        updatedPrice = +(this.state.totalPrice - (INGREDIENT_PRICES[type] * ingredientsCounter)).toFixed(2);
       //  remove elements by 'type' name
         for(let i = 0; i < ingredientsCounter; i++) {
           const index = updatedSequence.indexOf(type);
@@ -180,9 +181,10 @@ class BurgerBuilder extends Component {
         <BuildControls
           ingredients={this.state.ingredients}
           addIngredient={this.addIngredientHandler}
-          reduceIngredient={this.reduceIngredientHandler}
+          removeIngredient={this.reduceIngredientHandler}
           changeIngredient={this.changeIngredientHandler}
-          disabled={disabledInfo}/>
+          disabled={disabledInfo}
+          price={this.state.totalPrice}/>
       </Aux>
     );
   }

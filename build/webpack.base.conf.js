@@ -83,13 +83,19 @@ module.exports = {
           // MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
-            options: { sourceMap: true }
+            options: {
+              sourceMap: true,
+              localsConvention: 'camelCase',
+              modules: {
+                localIdentName: '[local]--[hash:base64:5]',
+              },
+            }
           },
           {
             loader: "postcss-loader",
             options: {
               sourceMap: true,
-              config: { path: `./postcss.config.js` }
+              config: { path: `./postcss.config.js` },
             }
           },
           {
@@ -109,6 +115,7 @@ module.exports = {
             options: {
               sourceMap: true,
               importLoaders: 1,
+              localsConvention: 'camelCase',
               // modules: true,
               modules: {
                 localIdentName: '[local]--[hash:base64:5]',
@@ -128,7 +135,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      "~": PATHS.src
+      "~": PATHS.src,
+      "Scss": `${PATHS.src}/assets/scss`,
     }
   },
   plugins: [

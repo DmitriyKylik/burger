@@ -1,0 +1,66 @@
+// Font
+$mainFont: 'Montserrat', Helvetica, sans-serif;
+$secFont: 'Montserrat', Helvetica, sans-serif;
+//$promoFont: 'audioWide', Helvetica, sans-serif;
+
+// Size
+$mainFontColor: #111111;
+$secondFontColor: #826459;
+$thirdFontColor: #555555;
+//$inputc: #777;
+//$ocfgc: #aeaeae;
+$mainFontSize: 16px;
+$mainFontWeight: 400;
+$mainLineHeight: 1.5;
+
+// BreakPoints
+$lgDesktopWidth: 1920px;
+$desktopWidth: 1280px;
+$smDesktopWidth: 980px;
+$tableWidth: 768px;
+$phoneWidth: 480px;
+$smPhoneWidth: 320px;
+
+// Secondary breakpoints
+$break_lg1: 1685px;
+$break_lg2: 1445px;
+$break_dt1: 1280px;
+$break_dt2: 992px;
+$break_md1: 768px;
+$break_md2: 620px;
+$break_sm1: 480px;
+$break_sm2: 400px;
+$break_xs1: 380px;
+$break_xs2: 320px;
+
+// Colors
+
+//First Primary Color
+$primary-color-light: lighten(#826459, 10%);
+$primary-color: #826459;
+$primary-color-dark: darken(#826459, 10%);
+//Second Primary Color
+$secPrimary-color-light: lighten(#314066, 10%);
+$secPrimary-color: #314066;
+$secPrimary-color-dark: darken(#314066, 10%);
+
+$thirdPrimary-color-light: lighten(#fc5c65, 10%);
+$thirdPrimary-color: #fc5c65;
+$thirdPrimary-color-dark: darken(#fc5c65, 10%);
+
+$grey-color-light: #f4f7fa;
+$grey-color: #E8E8E8;
+$grey-color-super: #f4f4f4;
+$light-color-super: #999;
+$light-color: #ddd;
+$dark-color: #111;
+$dark-light-color: #2b2c31;
+$border-color: #e4e8ea;
+// Add to template
+$white-color: #fff;
+$black-color: #000;
+
+$primary-color: #444ce0;
+$success-color: #26de81;
+$danger-color: #fc5c65;
+$warning-color: #fed330;
