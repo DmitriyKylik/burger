@@ -1,5 +1,6 @@
 // Fonts here
-@import "mixins";
-                // Alias        //Path for font
-
-//@include font-face('audioWide', '../fonts/Audiowide/Audiowide-Regular', 400);
+//@import "mixins";
+                    // Alias        //Path for font
+@include font-face('Comfotraa', '/assets/fonts/Comfortaa/Comfortaa-Light', 300);
+@include font-face('Comfotraa', '/assets/fonts/Comfortaa/Comfortaa-Regular', 400);
+@include font-face('Comfotraa', '/assets/fonts/Comfortaa/Comfortaa-Bold', 700);

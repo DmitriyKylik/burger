@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/auxilliary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
 //Get data from backend
 // 'ComponentDidMount' method get ingredients prices from the server
@@ -32,9 +34,22 @@ class BurgerBuilder extends Component {
     },
     ingredientsSequence: [],
     totalPrice: 4,
+    purchasing: false,
+    purchasable: false,
   };
 
   //Add handler for setting a base ingredients amount from server data
+  purchaseHandler = () => {
+    this.setState({purchasing: true});
+    console.log('Clicked!');
+  }
+
+
+  updatePurchase (ingredients) {
+    const sum = Object.values(ingredients).reduce((sum, value) => sum + value, 0);
+    console.log(sum);
+    this.setState({purchasable: sum > 0});
+  }
 
   addIngredientHandler = (type, input) => {
     let currentAmount = this.state.ingredients[type];
@@ -52,9 +67,10 @@ class BurgerBuilder extends Component {
         ingredients: updatedIngredients,
         ingredientsSequence: updatedSequence,
         totalPrice: priceAddition,
-      }, () => {console.log(this.state.totalPrice)});
+      });
 
       input.current.value = updatedCount;
+      this.updatePurchase(updatedIngredients);
     }
 
 
@@ -85,9 +101,10 @@ class BurgerBuilder extends Component {
         ingredients: updatedIngredients,
         ingredientsSequence: updatedSequence,
         totalPrice: priceDeduction,
-      },() => {console.log(this.state.totalPrice)});
+      });
 
       input.current.value = updatedCount;
+      this.updatePurchase(updatedIngredients);
     }
 
     // if(currentAmount > 0) {
@@ -132,6 +149,7 @@ class BurgerBuilder extends Component {
       //  remove elements from to the beginning of ingredients sequence
         ingredientsCounter = updatedIngredients[type] - inputValue;
         updatedPrice = +(this.state.totalPrice - (INGREDIENT_PRICES[type] * ingredientsCounter)).toFixed(2);
+
       //  remove elements by 'type' name
         for(let i = 0; i < ingredientsCounter; i++) {
           const index = updatedSequence.indexOf(type);
@@ -146,7 +164,9 @@ class BurgerBuilder extends Component {
         ingredients: updatedIngredients,
         ingredientsSequence: updatedSequence,
         totalPrice: updatedPrice,
-      },() => {console.log(this.state.totalPrice)});
+      });
+
+      this.updatePurchase(updatedIngredients);
     }
   };
 
@@ -178,12 +198,19 @@ class BurgerBuilder extends Component {
       <Aux>
         <Burger
           ingredientsSequence={this.state.ingredientsSequence}/>
+        <Modal show={this.state.purchasing}>
+          <OrderSummary
+            ingredientsPrices={INGREDIENT_PRICES}
+            ingredients={this.state.ingredients}/>
+        </Modal>
         <BuildControls
           ingredients={this.state.ingredients}
           addIngredient={this.addIngredientHandler}
           removeIngredient={this.reduceIngredientHandler}
           changeIngredient={this.changeIngredientHandler}
           disabled={disabledInfo}
+          purchasing={this.state.purchasable}
+          ordered={this.purchaseHandler}
           price={this.state.totalPrice}/>
       </Aux>
     );

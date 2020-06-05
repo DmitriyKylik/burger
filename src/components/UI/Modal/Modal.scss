@@ -1,0 +1,24 @@
+@import "Scss/utils";
+
+.Modal {
+  position: fixed;
+  background-color: white;
+  width: 650px;
+  border: 1px solid #ccc;
+  padding: 30px 15px 15px;
+  border-radius: 50px;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 500;
+  @include transitionAll;
+  @include mw(768) {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 20px;
+  }
+  &.active {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import classes from './BuildContorls.css';
+// import classes from './BuildContorls.css';
+import classes from './BuildControls.scss';
 import BuildControl from './BuildControl/BuildControl';
 
 const controls = [
@@ -10,23 +11,33 @@ const controls = [
   { label: 'Meat', type: 'meat'},
 ];
 
-const buildControls = (props) => (
-  <div className={classes.BuildControls}>
-    <p>Current price: {props.price}</p>
-    {controls.map(ctrl => (
-      //Add prices for each ingredient
-      <BuildControl
-        key={ctrl.label}
-        label={ctrl.label}
-        type={ctrl.type}
-        ingredientAmount={props.ingredients[ctrl.type]}
-        added={props.addIngredient}
-        removed={props.removeIngredient}
-        changed={props.changeIngredient}
-        disabled={props.disabled}/>
-    ))}
-  </div>
-);
+const buildControls = (props) => {
+  console.log(props);
+  return (
+    <div className={classes.BuildControls}>
+      <p>Current price: {props.price}</p>
+      {controls.map(ctrl => (
+        //Add prices for each ingredient
+        <BuildControl
+          key={ctrl.label}
+          label={ctrl.label}
+          type={ctrl.type}
+          ingredientAmount={props.ingredients[ctrl.type]}
+          added={props.addIngredient}
+          removed={props.removeIngredient}
+          changed={props.changeIngredient}
+          disabled={props.disabled}/>
+      ))}
+      <button
+        className={`btn ${classes.OrderButton}`}
+        disabled={!props.purchasing}
+        onClick={props.ordered}>
+        Order now
+      </button>
+    </div>
+  );
+
+};
 
 export default buildControls;
 

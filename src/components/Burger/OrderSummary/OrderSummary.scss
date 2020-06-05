@@ -1,0 +1,39 @@
+.order-summary {
+
+}
+
+.title {
+  padding: 20px 10px 0;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.subtitle {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.list {
+  &-item {
+    &:not(:last-child) {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.name {
+  margin-right: 5px;
+}
+
+.amount {
+  margin-right: 5px;
+}
+
+.delimiter {
+  margin: 0 5px;
+}
+
+.cost {
+  margin-right: 5px;
+}
