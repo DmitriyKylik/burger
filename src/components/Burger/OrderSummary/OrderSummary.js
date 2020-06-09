@@ -23,14 +23,15 @@ const orderSummary = (props) => {
     });
 
   return (
-    // className={classes.OrderSummary}
     <Aux>
       <div className={classes.title}>Your order</div>
       <p className={classes.subtitle}>A delicious burger with the following ingredients:</p>
       <ul className={classes.list}>
         {ingredientSummary}
       </ul>
-      <p className={classes.OrderSummary}>Continue to Checkout?</p>
+      <p className={classes.continueText}>Continue to Checkout?</p>
+      <button>Cancel</button>
+      <button>Continue</button>
     </Aux>
   );
 };

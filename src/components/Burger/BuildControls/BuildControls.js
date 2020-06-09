@@ -12,7 +12,6 @@ const controls = [
 ];
 
 const buildControls = (props) => {
-  console.log(props);
   return (
     <div className={classes.BuildControls}>
       <p>Current price: {props.price}</p>
@@ -31,7 +30,10 @@ const buildControls = (props) => {
       <button
         className={`btn ${classes.OrderButton}`}
         disabled={!props.purchasing}
-        onClick={props.ordered}>
+        onClick={() => {
+          props.ordered();
+          props.backdropToggle();
+        }}>
         Order now
       </button>
     </div>

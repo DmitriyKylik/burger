@@ -1,15 +1,47 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import Aux from '../../hoc/auxilliary';
+import BackDrop from '../UI/Backdrop/Backdrop';
+import ModalContext from '../../context/modalContext';
 import classes from './Layout.css';
 
-const layout = (props) => (
-  <Aux>
-    <div>Toolbar, SiderDrawer, Backdrop</div>
-    <main className={classes.Content}>
-      {props.children}
-    </main>
-  </Aux>
-);
+class Layout extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default layout;
+  state = {
+    backDropShow: false,
+  };
+
+  toggleBackDropHandler = () => {
+    this.setState({backDropShow: !this.state.backDropShow});
+    document.body.classList.toggle('backdroped');
+  };
+
+  render() {
+    return (
+      <Aux>
+        <div>Toolbar, SiderDrawer, Backdrop</div>
+        <BackDrop show={this.state.backDropShow} clicked={this.toggleBackDropHandler}/>
+        <ModalContext.Provider value={{show: this.state.backDropShow, toggleShow: this.toggleBackDropHandler}}>
+          <main className={classes.Content}>
+            {this.props.children}
+          </main>
+        </ModalContext.Provider>
+      </Aux>
+    )
+  }
+};
+
+export default Layout;
+
+
+// const layout = (props) => (
+//   <Aux>
+//     <div>Toolbar, SiderDrawer, Backdrop</div>
+//     <main className={classes.Content}>
+//       {props.children}
+//     </main>
+//   </Aux>
+// );

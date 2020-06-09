@@ -25,6 +25,10 @@
     font-weight: $mainFontWeight;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    &.backdroped {
+      overflow: hidden;
+      padding-right: 17px;
+    }
   }
 
   section,

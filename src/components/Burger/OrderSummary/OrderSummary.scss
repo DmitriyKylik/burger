@@ -3,7 +3,7 @@
 }
 
 .title {
-  padding: 20px 10px 0;
+  padding: 0 10px;
   margin-bottom: 10px;
   font-weight: 700;
   text-align: center;
@@ -16,6 +16,7 @@
 
 .list {
   &-item {
+    text-align: center;
     &:not(:last-child) {
       margin-bottom: 10px;
     }
@@ -36,4 +37,8 @@
 
 .cost {
   margin-right: 5px;
+}
+
+.continue-text {
+  text-align: center;
 }

@@ -1,0 +1,19 @@
+@import "Scss/utils";
+
+.Main {
+  border-radius: 15px;
+  @include transitionAll;
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.Success {
+  background: $success-color;
+  color: $white-color;
+}
+
+.Danger {
+  background: $danger-color;
+  color: $white-color;
+}
