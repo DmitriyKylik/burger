@@ -1,14 +1,8 @@
-import React, {useEffect, useRef} from 'react';
-// import classes from './BuildControl.css';
+import React, {useRef} from 'react';
 import classes from './BuildControl.scss';
-
-console.log(classes);
 
 const buildControl = (props) => {
   const inputRef = useRef();
-  // useEffect(() => {
-  //
-  // });
 
   return (
     <div className={classes.BuildControl}>

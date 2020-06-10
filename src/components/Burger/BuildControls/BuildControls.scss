@@ -27,9 +27,9 @@
   }
   &:hover,
   &:active {
-    background: #a0db41;
+    background: $primary-color;
     border: 1px solid #966909;
-    color: #966909;
+    color: $white-color;
   }
   &:disabled {
     background: #c7c6c6;

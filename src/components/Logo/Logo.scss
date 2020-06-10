@@ -1,0 +1,12 @@
+@import "Scss/utils";
+
+.Logo {
+  position: relative;
+  padding: 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  @include transitionAll;
+  & img {
+    @include imageCenterX;
+  }
+}

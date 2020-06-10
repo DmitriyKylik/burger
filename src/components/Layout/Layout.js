@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 import Aux from '../../hoc/auxilliary';
 import BackDrop from '../UI/Backdrop/Backdrop';
 import ModalContext from '../../context/modalContext';
+import Toolbar from '../Navigation/Toolbar/Toolbar'
+import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import classes from './Layout.css';
 
 class Layout extends Component {
@@ -14,7 +16,10 @@ class Layout extends Component {
     backDropShow: false,
   };
 
+
+
   toggleBackDropHandler = () => {
+    console.log('Clicked!');
     this.setState({backDropShow: !this.state.backDropShow});
     document.body.classList.toggle('backdroped');
   };
@@ -22,7 +27,8 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <div>Toolbar, SiderDrawer, Backdrop</div>
+        <Toolbar />
+        <SideDrawer open={this.state.backDropShow} />
         <BackDrop show={this.state.backDropShow} clicked={this.toggleBackDropHandler}/>
         <ModalContext.Provider value={{show: this.state.backDropShow, toggleShow: this.toggleBackDropHandler}}>
           <main className={classes.Content}>
@@ -32,7 +38,7 @@ class Layout extends Component {
       </Aux>
     )
   }
-};
+}
 
 export default Layout;
 

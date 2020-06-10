@@ -3,8 +3,6 @@ import Aux from '../../../hoc/auxilliary';
 import Button from '../../UI/Button/Button';
 import classes from './OrderSummary.scss';
 
-console.log(classes);
-
 const orderSummary = (props) => {
   const ingredientSummary =  Object.entries(props.ingredients)
     .map(([key,value]) => {
