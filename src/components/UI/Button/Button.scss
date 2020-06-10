@@ -2,6 +2,7 @@
 
 .Main {
   border-radius: 15px;
+  padding: 10px;
   @include transitionAll;
   &:hover {
     transform: translateY(-3px);
