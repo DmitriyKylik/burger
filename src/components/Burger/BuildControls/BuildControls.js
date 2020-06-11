@@ -32,7 +32,6 @@ const buildControls = (props) => {
         disabled={!props.purchasing}
         onClick={() => {
           props.ordered();
-          props.backdropToggle();
         }}>
         Order now
       </button>

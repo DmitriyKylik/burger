@@ -2,20 +2,22 @@
 
 .Modal {
   position: fixed;
-  background-color: white;
-  width: 650px;
-  border: 1px solid #ccc;
-  padding: 55px 15px 15px;
-  border-radius: 30px;
   top: -100%;
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 500;
+  background-color: white;
+  max-height: 100vh;
+  overflow: auto;
+  width: 100%;
+  max-width: 650px;
+  padding: 55px 15px 15px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 30px;
   @include transitionAll;
-  @include mw(768) {
-    width: 100%;
-    max-width: 500px;
-    margin: 0 20px;
+  @include mw(670) {
+    width: calc(100% - 40px);
   }
   &.active {
     top: 50%;

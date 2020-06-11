@@ -26,6 +26,35 @@
   height: 100%;
 }
 
+.Menu {
+  width: 40px;
+  padding: 5px;
+  cursor: pointer;
+  @include transitionAll;
+  &:hover span {
+    background: lighten($primary-color-light, 20%);
+    &:nth-child(1) {
+      transform: translateX(5px);
+    }
+    &:nth-child(2) {
+      transform: translateX(-5px);
+    }
+    &:nth-child(3) {
+      transform: translateX(5px);
+    }
+  }
+  & span {
+    display: block;
+    height: 2px;
+    background: $white-color;
+    width: 100%;
+    @include transitionAll;
+    &:not(:last-child) {
+      margin-bottom: 5px;
+    }
+  }
+}
+
 .DesktopOnly {
   @include mw(499) {
     display: none;

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Aux from '../../hoc/auxilliary';
+import Aux from '../../hoc/Auxilliary/auxilliary';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -44,10 +44,6 @@ class BurgerBuilder extends Component {
   };
 
   //Add handler for setting a base ingredients amount from server data
-  purchaseHandler = () => {
-    this.setState({purchasing: true});
-  }
-
 
   updatePurchase (ingredients) {
     const sum = Object.values(ingredients).reduce((sum, value) => sum + value, 0);
@@ -152,6 +148,10 @@ class BurgerBuilder extends Component {
     }
   };
 
+  purchaseHandler = () => {
+    this.setState({purchasing: true});
+  }
+
   purchaseCancelHandler = () => {
     this.setState({purchasing: false});
   };
@@ -182,38 +182,30 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Burger
-          ingredientsSequence={this.state.ingredientsSequence}/>
-        <ModalContext.Consumer>
-          {(context) => (
-            <Aux>
-              <Modal
-                show={this.state.purchasing}
-                backdropShowed={context.show}
-                hideBackdrop={context.toggleShow}
-                hide={this.purchaseCancelHandler}>
-                <OrderSummary
-                  hideModal={this.purchaseCancelHandler}
-                  hideBackdrop={context.toggleShow}
-                  purchaseContinued={this.purchaseContinueHandler}
-                  ingredientsPrices={INGREDIENT_PRICES}
-                  ingredients={this.state.ingredients}
-                  price={this.state.totalPrice}/>
-              </Modal>
-              <BuildControls
-                ingredients={this.state.ingredients}
-                addIngredient={this.addIngredientHandler}
-                removeIngredient={this.reduceIngredientHandler}
-                changeIngredient={this.changeIngredientHandler}
-                disabled={disabledInfo}
-                purchasing={this.state.purchasable}
-                ordered={this.purchaseHandler}
-                backdropToggle={context.toggleShow}
-                price={this.state.totalPrice}/>
-            </Aux>
-            )
-          }
-        </ModalContext.Consumer>
+        <Burger ingredientsSequence={this.state.ingredientsSequence}/>
+        <Modal
+          show={this.state.purchasing}
+          // backdropShowed={context.show}
+          // hideBackdrop={context.toggleShow}
+          hide={this.purchaseCancelHandler}>
+          <OrderSummary
+            hideModal={this.purchaseCancelHandler}
+            // hideBackdrop={context.toggleShow}
+            purchaseContinued={this.purchaseContinueHandler}
+            ingredientsPrices={INGREDIENT_PRICES}
+            ingredients={this.state.ingredients}
+            price={this.state.totalPrice}/>
+        </Modal>
+        <BuildControls
+          ingredients={this.state.ingredients}
+          addIngredient={this.addIngredientHandler}
+          removeIngredient={this.reduceIngredientHandler}
+          changeIngredient={this.changeIngredientHandler}
+          disabled={disabledInfo}
+          purchasing={this.state.purchasable}
+          ordered={this.purchaseHandler}
+          // backdropToggle={context.toggleShow}
+          price={this.state.totalPrice}/>
       </Aux>
     );
   }

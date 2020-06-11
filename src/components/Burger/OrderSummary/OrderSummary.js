@@ -1,5 +1,5 @@
 import React from 'react';
-import Aux from '../../../hoc/auxilliary';
+import Aux from '../../../hoc/Auxilliary/auxilliary';
 import Button from '../../UI/Button/Button';
 import classes from './OrderSummary.scss';
 
@@ -31,7 +31,7 @@ const orderSummary = (props) => {
       <p className={classes.total}>Total price: {props.price}</p>
       <p className={classes.continueText}>Continue to Checkout?</p>
       <div className={`${classes.footer} flex flex-center flex-wrap`}>
-        <Button classes={`${classes.footerBtn}`} btnType="Danger" clicked={() => {props.hideModal(); props.hideBackdrop();}}>Cancel</Button>
+        <Button classes={`${classes.footerBtn}`} btnType="Danger" clicked={props.hideModal}>Cancel</Button>
         <Button classes={`${classes.footerBtn}`} btnType="Success" clicked={props.purchaseContinued}>Continue</Button>
       </div>
     </Aux>

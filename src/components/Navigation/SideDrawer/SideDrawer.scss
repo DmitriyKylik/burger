@@ -12,7 +12,7 @@
   padding: 32px 16px;
   @include transitionAll;
   @include miw(500) {
-    display: none;
+    //display: none;
   }
   &.Open {
     transform: translateX(0);
