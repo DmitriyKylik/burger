@@ -4,7 +4,7 @@ import burgerLogo from '../../assets/img/logo_burger.png';
 import propTypes from 'prop-types';
 
 const logo = (props) => {
-  console.log(props.classes);
+
   return (
     <div className={`${classes.Logo} ${props.classes ? props.classes.join(' ') : null}`}>
       <img src={burgerLogo} alt="BurgerLogo"/>
