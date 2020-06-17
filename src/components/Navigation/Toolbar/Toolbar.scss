@@ -13,12 +13,6 @@
   padding: 0 20px;
   & .Logo {
     height: 80%;
-    @include miw(700) {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-    }
   }
 }
 
@@ -52,6 +46,12 @@
     &:not(:last-child) {
       margin-bottom: 5px;
     }
+  }
+}
+
+.MobileOnly {
+  @include miw(500) {
+    display: none;
   }
 }
 

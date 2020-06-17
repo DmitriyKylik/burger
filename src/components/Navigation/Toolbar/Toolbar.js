@@ -7,7 +7,7 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 const toolbar = (props) => {
   return (
     <header className={`${classes.Toolbar} flex flex-v-center flex-between`}>
-      <div className={classes.Menu} onClick={props.sideDrawerOpen}>
+      <div className={[classes.Menu, classes.MobileOnly].join(' ')} onClick={props.sideDrawerOpen}>
         <span></span>
         <span></span>
         <span></span>
