@@ -1,5 +1,6 @@
 .BreadBottom {
   height: 13%;
+  min-height: 50px;
   width: 80%;
   background: linear-gradient(#F08E4A, #e27b36);
   border-radius: 0 0 30px 30px;
@@ -9,6 +10,7 @@
 
 .BreadTop {
   height: 20%;
+  min-height: 115px;
   width: 80%;
   background: linear-gradient(#bc581e, #e27b36);
   border-radius: 50% 50% 0 0;
@@ -84,6 +86,7 @@
 .Meat {
   width: 80%;
   height: 8%;
+  min-height: 40px;
   background: linear-gradient(#7f3608, #702e05);
   margin: 2% auto;
   border-radius: 15px;
@@ -92,6 +95,7 @@
 .Cheese {
   width: 90%;
   height: 4.5%;
+  min-height: 23px;
   margin: 2% auto;
   background: linear-gradient(#f4d004, #d6bb22);
   border-radius: 20px;
@@ -100,6 +104,7 @@
 .Salad {
   width: 85%;
   height: 7%;
+  min-height: 35px;
   margin: 2% auto;
   background: linear-gradient(#228c1d, #91ce50);
   border-radius: 20px;
@@ -108,6 +113,7 @@
 .Bacon {
   width: 80%;
   height: 3%;
+  min-height: 15px;
   background: linear-gradient(#bf3813, #c45e38);
   margin: 2% auto;
 }

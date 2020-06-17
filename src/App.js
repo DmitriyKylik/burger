@@ -5,7 +5,8 @@ import './assets/scss/main.global.scss';
 
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-import { BrowserRouter } from 'react-router-dom';
+import Checkout from './containers/Checkout/Checkout';
+import { Route, Switch } from 'react-router-dom';
 
 class App extends Component {
   constructor(props) {
@@ -15,13 +16,14 @@ class App extends Component {
 
   render() {
     return (
-      <BrowserRouter>
         <div>
           <Layout>
-            <BurgerBuilder/>
+            <Switch>
+              <Route path="/checkout" component={Checkout} />
+              <Route path="/" component={BurgerBuilder} />
+            </Switch>
           </Layout>
         </div>
-      </BrowserRouter>
     );
   }
 

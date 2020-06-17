@@ -6,8 +6,9 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
-import Spinner from '../../components/UI/Spinner/Spinner'
+import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
+import classes from './BurgerBuilder.scss';
 
 //Get data from backend
 // 'ComponentDidMount' method get ingredients prices from the server
@@ -36,6 +37,7 @@ class BurgerBuilder extends Component {
     ingredients: null,
     ingredientsSequence: [],
     //Total price calculation must be provided on the server side
+    //Calc price on BurgerLoad
     totalPrice: 4,
     purchasing: false,
     purchasable: false,
@@ -50,9 +52,11 @@ class BurgerBuilder extends Component {
       .then(response => {
         console.log(response.data);
         this.setState({
+          purchasable: Object.values(response.data).some(value => +value > 0),
           ingredients: response.data,
           ingredientsSequence: Object.keys(response.data).filter(key => response.data[key] > 0),
         });
+        console.log(this.props.history);
       })
       .catch(error => this.setState({error: true}));
   }
@@ -169,30 +173,45 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    this.setState({loading: true})
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Dmitriy Kylik22222222',
-        address: {
-          street: 'SomeStreet 1',
-          zipCode: '123456',
-          country: 'Ukraine',
-        },
-        email: 'test@test.com'
-      },
-      deliveryMethod: 'theBest'
-    };
+    let queryParams = {...this.state.ingredients};
 
-    axios.post('orders.json', order)
-      .then(response => {
-        this.setState({loading: false, purchasing: false});
-        console.log(response);
-      })
-      .catch(error => {
-        this.setState({loading: false, purchasing: false});
-      });
+    queryParams['totalPrice'] = this.state.totalPrice;
+
+    queryParams = new URLSearchParams(queryParams).toString();
+
+    this.setState({loading: true});
+
+    this.props.history.push({
+      pathname: '/checkout',
+      search: `?${queryParams}`,
+    }, {
+      ingredientsSequence: [...this.state.ingredientsSequence],
+    });
+
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: 'Dmitriy Kylik22222222',
+    //     address: {
+    //       street: 'SomeStreet 1',
+    //       zipCode: '123456',
+    //       country: 'Ukraine',
+    //     },
+    //     email: 'test@test.com'
+    //   },
+    //   deliveryMethod: 'theBest'
+    // };
+
+    // axios.post('orders.json', order)
+    //   .then(response => {
+    //     this.setState({loading: false, purchasing: false});
+    //     console.log(response);
+    //   })
+    //   .catch(error => {
+    //     this.setState({loading: false, purchasing: false});
+    //   });
+
   };
 
 
@@ -222,7 +241,7 @@ class BurgerBuilder extends Component {
     if(this.state.ingredients) {
       burger = (
         <Aux>
-          <Burger ingredientsSequence={this.state.ingredientsSequence}/>
+          <Burger ingredientsSequence={this.state.ingredientsSequence} classes={classes.Burger}/>
           <BuildControls
             ingredients={this.state.ingredients}
             addIngredient={this.addIngredientHandler}
