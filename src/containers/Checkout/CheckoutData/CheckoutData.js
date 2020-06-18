@@ -3,6 +3,7 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './CheckoutData.scss';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-orders';
+import Input from '../../../components/UI/Input/Input';
 
 class CheckoutData extends Component {
 
@@ -49,10 +50,10 @@ class CheckoutData extends Component {
       <React.Fragment>
         <p>Please add your contact data!</p>
         <form action="">
-          <input type="text" name="name" placeholder="Your name"/>
-          <input type="email" name="email" placeholder="Your email"/>
-          <input type="text" name="stree" placeholder="Your street"/>
-          <input type="text" name="postCode" placeholder="Your post code"/>
+          <Input inputtype="input" type="text" name="name" placeholder="Your name"/>
+          <Input inputtype="input" type="email" name="email" placeholder="Your email"/>
+          <Input inputtype="input" type="text" name="street" placeholder="Your street"/>
+          <Input inputtype="input" type="text" name="postCode" placeholder="Your post code"/>
           <Button btnType="Success" classes={classes.submitButton} clicked={this.orderHandler}>
             Order
           </Button>

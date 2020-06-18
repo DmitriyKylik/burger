@@ -1,0 +1,19 @@
+@import "Scss/utils";
+
+.input-wrapper {
+  border: 1px solid $border-color;
+  padding: 10px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  outline: none;
+  border: none;
+  background: none;
+  &::placeholder {
+    color: $mainFont;
+  }
+}
