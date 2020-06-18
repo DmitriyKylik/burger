@@ -1,22 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import classes from './Backdrop.scss';
 
-const backdrop = (props) => {
-  let backDrop
+class backdrop extends Component {
 
-  if(props.show) {
-    if(document.documentElement.clientWidth > 1025) {
-      document.body.classList.add('backdroped');
-    }
-    backDrop = <div className={classes.backDrop} onClick={props.clicked}></div>
-  } else {
-    if(document.documentElement.clientWidth > 1025) {
-      document.body.classList.remove('backdroped');
-    }
-    backDrop = null;
+  componentWillUnmount() {
+    document.body.classList.remove('backdroped');
   }
 
-  return backDrop;
-};
+  render() {
+    let backDrop;
+
+    if(this.props.show) {
+      if(document.documentElement.clientWidth > 1025) {
+        document.body.classList.add('backdroped');
+      }
+      backDrop = <div className={classes.backDrop} onClick={this.props.clicked}></div>
+    } else {
+      if(document.documentElement.clientWidth > 1025) {
+        document.body.classList.remove('backdroped');
+      }
+      backDrop = null;
+    }
+    return backDrop;
+  }
+}
 
 export default backdrop;

@@ -1,3 +1,5 @@
+@import "Scss/utils";
+
 .Checkout {
   max-width: 1200px;
   margin: 0 auto;
@@ -11,4 +13,11 @@
 
 .control-btn {
   margin: 30px;
+}
+
+.homeLink {
+  margin: 0 5px;
+  font-weight: 700;
+  color: $success-color;
+  @include transitionAll;
 }

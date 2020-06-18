@@ -1,0 +1,19 @@
+@import "Scss/utils";
+
+.CheckoutData {
+  max-width: 500px;
+  margin: 20px auto;
+  border: 1px solid $border-color;
+  text-align: center;
+  & input {
+    display: block;
+    //&:not(:last-child) {
+      margin-bottom: 10px;
+    //}
+  }
+}
+
+.submitButton {
+  display: inline-block;
+  margin: 10px;
+}

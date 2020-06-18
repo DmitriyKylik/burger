@@ -1,46 +1,81 @@
 import React, {Component} from 'react';
-import { Router } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import Burger from '../../components/Burger/Burger';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
+import Aux from '../../hoc/Auxilliary/auxilliary';
+import CheckoutData from './CheckoutData/CheckoutData';
 import classes from './Checkout.scss';
 
 class Checkout extends Component {
 
-  state = {};
+  state = {
+    ingredientsSequence: [],
+    ingredients: {},
+    price: 0,
+  };
 
   componentDidMount() {
     const query = new URLSearchParams(this.props.location.search);
     const ingredients = {};
+    let price = 0;
 
     for(let [key, value] of query.entries()) {
-      ingredients[key] = value;
+      if(key === 'price') {
+        price = value;
+      } else {
+        ingredients[key] = value;
+      }
     }
     this.setState({
       ingredients: {...ingredients},
-      ingredientsSequence: [...this.props.history.location.state.ingredientsSequence],
+      ingredientsSequence: this.props.history.location.state ? [...this.props.history.location.state.ingredientsSequence] : [],
+      price: price
     });
 
   }
 
   cancelCheckoutHandler = () => {
-    this.props.history.push('/');
+    this.props.history.goBack();
   };
 
+  continueCheckoutHandler = () => {
+    this.props.history.replace(`${this.props.match.url}/checkout-data`)
+  };
+
+
+
   render() {
-    let burger = this.state.ingredientsSequence ? <Burger ingredientsSequence={this.state.ingredientsSequence} /> : <Spinner/>;
+    let actionButtons = null;
+    let burger = null;
+    let contactData = null;
+    if(this.state.ingredientsSequence.length === 0) {
+      burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
+    } else {
+      burger = <Burger ingredientsSequence={this.state.ingredientsSequence} />;
+      actionButtons = (
+        <Aux>
+          <Button btnType="Danger" classes={classes.controlBtn} clicked={this.cancelCheckoutHandler}>
+            Cancel
+          </Button>
+          <Button btnType="Success" classes={classes.controlBtn} clicked={this.continueCheckoutHandler}>
+            Continue
+          </Button>
+        </Aux>
+      );
+      contactData = <Route path={`${this.props.match.path}/checkout-data`} render={(props) =>
+        <CheckoutData ingredients={this.state.ingredients} price={this.state.price} {...props}/>
+      }/>;
+    }
+
     return (
       <div className={classes.Checkout}>
         <h1>Burger Checkout</h1>
         {burger}
         <div className={classes.btnWrapper} classes={classes.controlBtn}>
-          <Button btnType="Danger" classes={classes.controlBtn} clicked={this.cancelCheckoutHandler}>
-            Cancel
-          </Button>
-          <Button btnType="Success" classes={classes.controlBtn} clicked={this.cancelCheckoutHandler}>
-            Continue
-          </Button>
+          {actionButtons}
         </div>
+        {contactData}
       </div>
     );
   }
