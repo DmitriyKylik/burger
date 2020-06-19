@@ -40,7 +40,7 @@ class Checkout extends Component {
   };
 
   continueCheckoutHandler = () => {
-    this.props.history.replace(`${this.props.match.url}/checkout-data`)
+    this.props.history.replace(`${this.props.match.url}/checkout-data${this.props.location.search}`)
   };
 
 

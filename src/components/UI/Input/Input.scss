@@ -17,3 +17,16 @@
     color: $mainFont;
   }
 }
+
+.Invalid {
+  background: $danger-color;
+  & input {
+    color: $white-color;
+    &::placeholder {
+      color: $white-color;
+    }
+  }
+}
+
+//.FormisInvalid {
+//}

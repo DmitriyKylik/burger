@@ -7,6 +7,10 @@
   &:hover {
     transform: translateY(-3px);
   }
+  &:disabled {
+    background: $grey-color;
+    color: $white-color;
+  }
 }
 
 .Success {

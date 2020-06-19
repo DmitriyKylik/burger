@@ -5,26 +5,46 @@ console.log(classes);
 
 const input = (props) => {
   let inputElement = null;
+  let inputWrapperClasses = [classes.inputWrapper];
 
-  switch (props.inputtype) {
+  if(!props.isValid && props.shouldValidate && props.touched) {
+    inputWrapperClasses.push(classes.Invalid);
+  }
+
+
+
+  switch (props.elementType) {
     case('input'):
       inputElement = (
-        <div className={classes.inputWrapper}>
-          <input type="text" className={classes.input} {...props}/>
+        <div className={inputWrapperClasses.join(' ')}>
+          <input type="text" className={classes.input} {...props.elementConfig} value={props.value} onChange={props.changed}/>
         </div>
       );
       break;
     case('textarea'):
       inputElement = (
-        <div className={classes.inputWrapper}>
-          <textarea className={classes.input} {...props}/>
+        <div className={inputWrapperClasses.join(' ')}>
+          <textarea className={classes.input} {...props.elementConfig} value={props.value} onChange={props.changed}/>
+        </div>
+      );
+      break;
+    case('select'):
+      inputElement = (
+        <div className={inputWrapperClasses.join(' ')}>
+          <select className={classes.input} value={props.value} onChange={props.changed}>
+            {props.elementConfig.options.map(option => (
+              <option key={option.value} value={option.value}>
+                {option.outputValue}
+              </option>
+            ))}
+          </select>
         </div>
       );
       break;
     default:
       inputElement = (
         <div className={classes.inputWrapper}>
-          <input type="text" className={classes.input} {...props}/>
+          <input type="text" className={classes.input} {...props.elementConfig} value={props.value} onChange={props.changed}/>
         </div>
       );
   }
