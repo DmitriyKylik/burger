@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+
 import Button from '../../../components/UI/Button/Button';
 import classes from './CheckoutData.scss';
 import Spinner from '../../../components/UI/Spinner/Spinner';
@@ -154,6 +156,9 @@ class CheckoutData extends Component {
       isValid = value.length < rules.maxLength && isValid;
     }
 
+    //In state if input has property isEmail, for example, add  this check
+    // if(rules)
+
     return isValid;
   }
 
@@ -204,4 +209,11 @@ class CheckoutData extends Component {
   }
 }
 
-export default CheckoutData;
+const mapStateToProps = state => {
+  return {
+    ingredients: state.ingredients,
+    price: state.totalPrice
+  };
+};
+
+export default connect(mapStateToProps)(CheckoutData);
