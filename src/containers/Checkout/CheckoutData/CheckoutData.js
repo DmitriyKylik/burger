@@ -106,14 +106,14 @@ class CheckoutData extends Component {
       orderData: formData
     };
 
-    axios.post('orders.json', order)
-      .then(response => {
-        this.setState({loading: false});
-        this.props.history.replace('/');
-      })
-      .catch(error => {
-        this.setState({loading: false});
-      });
+    // axios.post('orders.json', order)
+    //   .then(response => {
+    //     this.setState({loading: false});
+    //     this.props.history.replace('/');
+    //   })
+    //   .catch(error => {
+    //     this.setState({loading: false});
+    //   });
   };
 
   inputChangedHandler = (event, inputIdentifier) => {
@@ -215,5 +215,7 @@ const mapStateToProps = state => {
     price: state.totalPrice
   };
 };
+
+// puchaseBurgerLoad
 
 export default connect(mapStateToProps)(CheckoutData);

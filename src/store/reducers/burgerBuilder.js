@@ -1,19 +1,14 @@
-import * as actionsType from './actions';
+import * as actionsType from '../actions/actionTypes';
 
 const initialState = {
-  ingredients: {
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0,
-  },
+  ingredients: null,
   ingredientsSequence: [],
   totalPrice: 4,
+  error: false,
 };
 
 //Get data from backend
 // 'ComponentDidMount' method get ingredients prices from the server
-// Presumably they should be store in state
 const INGREDIENT_PRICES = {
   salad: 0.3,
   meat: 1.3,
@@ -28,11 +23,9 @@ const INGREDIENT_LIMITS = {
   bacon: 40
 };
 
-const reducer = (state = initialState, action) => {
+const burgerBuilder = (state = initialState, action) => {
   switch (action.type) {
     case(actionsType.ADD_INGREDIENT):
-      console.log('ADD');
-      console.log(state);
       return {
         ...state,
         ingredients: {
@@ -42,8 +35,6 @@ const reducer = (state = initialState, action) => {
         totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingName]
       };
     case(actionsType.REMOVE_INGREDIENT):
-      console.log('REMOVE');
-      console.log(state);
       return {
         ...state,
         ingredients: {
@@ -52,9 +43,21 @@ const reducer = (state = initialState, action) => {
         },
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingName]
       };
+    case(actionsType.STORE_INGREDIENT):
+      return {
+        ...state,
+        ingredients: action.ingredients,
+        error: false,
+      }
+    case(actionsType.FETCH_INGREDIENTS_FAILED):
+      return {
+        ...state,
+        ingredients: null,
+        error: true
+      };
     default:
       return state
   }
 };
 
-export default reducer;
+export default burgerBuilder;
