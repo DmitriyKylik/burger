@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route, NavLink } from 'react-router-dom';
+import { Route, NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Burger from '../../components/Burger/Burger';
@@ -8,6 +8,7 @@ import Button from '../../components/UI/Button/Button';
 import Aux from '../../hoc/Auxilliary/auxilliary';
 import CheckoutData from './CheckoutData/CheckoutData';
 import classes from './Checkout.scss';
+import * as actionsType from "../../store/actions";
 
 class Checkout extends Component {
 
@@ -36,7 +37,6 @@ class Checkout extends Component {
   //   });
   //
   // }
-
   cancelCheckoutHandler = () => {
     this.props.history.goBack();
   };
@@ -45,20 +45,17 @@ class Checkout extends Component {
     this.props.history.replace(`${this.props.match.url}/checkout-data${this.props.location.search}`)
   };
 
-
-
   render() {
     let actionButtons = null;
-    let burger = null;
+    let burger = <Redirect to="/" />;
     let contactData = null;
-    // if(this.state.ingredientsSequence.length === 0) {
-    if(!this.props.ingredients) {
-      burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
-    } else {
-      // burger = <Burger ingredientsSequence={this.props.ingredients} />;
+    if(this.props.ingredients) {
+      const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
+      // burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
       burger = <Burger ingredients={this.props.ingredients} />;
       actionButtons = (
         <Aux>
+          {purchasedRedirect}
           <Button btnType="Danger" classes={classes.controlBtn} clicked={this.cancelCheckoutHandler}>
             Cancel
           </Button>
@@ -69,6 +66,7 @@ class Checkout extends Component {
       );
       contactData = <Route path={`${this.props.match.path}/checkout-data`} component={CheckoutData} />;
     }
+    // burger = <Burger ingredientsSequence={this.props.ingredients} />;
 
     return (
       <div className={classes.Checkout}>
@@ -85,8 +83,9 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    purchased: state.order.purchased,
   };
 };
 

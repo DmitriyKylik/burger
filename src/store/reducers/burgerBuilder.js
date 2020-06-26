@@ -1,4 +1,5 @@
 import * as actionsType from '../actions/actionTypes';
+import { updateObject } from '../utility';
 
 const initialState = {
   ingredients: null,
@@ -23,40 +24,38 @@ const INGREDIENT_LIMITS = {
   bacon: 40
 };
 
+const addIngredients = (state, action) => {
+  const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] + 1});
+  const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingName];
+
+  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice});
+};
+
+const removeIngredients = (state, action) => {
+  const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] - 1});
+  const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingName];
+  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice});
+};
+
+const storeIngredients = (state, action) => {
+  return updateObject(state, {
+    ingredients: action.ingredients,
+    error: false,
+    totalPrice: 4,
+  });
+};
+
+const fetchIngredients = (state, action) => {
+  return updateObject(state, {ingredients: null, error: true});
+};
+
 const burgerBuilder = (state = initialState, action) => {
   switch (action.type) {
-    case(actionsType.ADD_INGREDIENT):
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingName]: state.ingredients[action.ingName] + 1
-        },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingName]
-      };
-    case(actionsType.REMOVE_INGREDIENT):
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingName]: state.ingredients[action.ingName] - 1
-        },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingName]
-      };
-    case(actionsType.STORE_INGREDIENT):
-      return {
-        ...state,
-        ingredients: action.ingredients,
-        error: false,
-      }
-    case(actionsType.FETCH_INGREDIENTS_FAILED):
-      return {
-        ...state,
-        ingredients: null,
-        error: true
-      };
-    default:
-      return state
+    case(actionsType.ADD_INGREDIENT): return addIngredients(state, action);
+    case(actionsType.REMOVE_INGREDIENT): return removeIngredients(state, action);
+    case(actionsType.STORE_INGREDIENT): return storeIngredients(state, action);
+    case(actionsType.FETCH_INGREDIENTS_FAILED): return fetchIngredients(state, action);
+    default: return state;
   }
 };
 

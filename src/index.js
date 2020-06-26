@@ -6,11 +6,12 @@ import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import burgerBuilder from './store/reducers/burgerBuilder';
+import orderReducer from './store/reducers/order';
 
-// const rootReducer = combineReducers({
-//   counter: counterReducer,
-//   result: resultReducer,
-// });
+const rootReducer = combineReducers({
+  burgerBuilder: burgerBuilder,
+  order: orderReducer,
+});
 
 const logger = store => {
   return next => {
@@ -23,7 +24,7 @@ const logger = store => {
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(burgerBuilder, composeEnhancers(applyMiddleware(logger, thunk)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 
 const app = (
   <Provider store={store}>

@@ -6,6 +6,8 @@ import classes from './CheckoutData.scss';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-orders';
 import Input from '../../../components/UI/Input/Input';
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import * as actionsType from '../../../store/actions/index';
 
 class CheckoutData extends Component {
 
@@ -86,25 +88,28 @@ class CheckoutData extends Component {
               {value: 'cheapest', outputValue: 'Cheapest'}
             ]
           },
+          value: 'fastest',
           validation: {},
         },
       },
     formIsValid: false,
-    loading: false,
+    // loading: false,
   };
 
   orderHandler = (event) => {
     event.preventDefault();
-    this.setState({loading: true});
     const formData = {};
-    for(let formElementIdentifier in this.state.orderForm) {
-      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
-    }
     const order = {
       ingredients: this.props.ingredients,
       price: this.props.price,
       orderData: formData
     };
+
+    for(let formElementIdentifier in this.state.orderForm) {
+      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
+    }
+
+    this.props.onPurchaseBurger(order);
 
     // axios.post('orders.json', order)
     //   .then(response => {
@@ -138,7 +143,6 @@ class CheckoutData extends Component {
 
   checkValidity (value, rules) {
     let isValid = true;
-
 
     if(!rules) {
       return true;
@@ -197,7 +201,7 @@ class CheckoutData extends Component {
       </React.Fragment>
     );
 
-    if(this.state.loading) {
+    if(this.props.loading) {
       form = <Spinner/>;
     }
 
@@ -211,11 +215,16 @@ class CheckoutData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    price: state.totalPrice
+    ingredients: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
   };
 };
 
-// puchaseBurgerLoad
+const mapDispatchToProps = dispatch => {
+  return {
+    onPurchaseBurger: (orderData) => dispatch(actionsType.purchaseBurger(orderData)),
+  };
+};
 
-export default connect(mapStateToProps)(CheckoutData);
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(CheckoutData, axios));
