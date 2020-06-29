@@ -1,8 +1,6 @@
 import React from 'react';
 import classes from './Input.scss'
 
-console.log(classes);
-
 const input = (props) => {
   let inputElement = null;
   let inputWrapperClasses = [classes.inputWrapper];

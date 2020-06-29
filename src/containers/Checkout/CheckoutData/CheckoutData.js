@@ -109,7 +109,8 @@ class CheckoutData extends Component {
       formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
     }
 
-    this.props.onPurchaseBurger(order);
+    console.log(this.props.token);
+    this.props.onPurchaseBurger(order, this.props.token);
 
     // axios.post('orders.json', order)
     //   .then(response => {
@@ -218,12 +219,13 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onPurchaseBurger: (orderData) => dispatch(actionsType.purchaseBurger(orderData)),
+    onPurchaseBurger: (orderData, token) => dispatch(actionsType.purchaseBurger(orderData, token)),
   };
 };
 

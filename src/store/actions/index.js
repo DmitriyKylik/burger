@@ -10,3 +10,7 @@ export {
   fetchOrders,
   fetchOrdersStart,
 } from './order';
+export {
+  authLoad,
+  logout,
+} from './auth';
