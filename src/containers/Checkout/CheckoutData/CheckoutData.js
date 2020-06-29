@@ -12,7 +12,7 @@ import * as actionsType from '../../../store/actions/index';
 class CheckoutData extends Component {
 
   state = {
-      orderForm: {
+    orderForm: {
         name: {
           elementType: 'input',
           elementConfig: {

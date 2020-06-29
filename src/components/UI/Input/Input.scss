@@ -19,13 +19,14 @@
 }
 
 .Invalid {
-  background: $danger-color;
-  & input {
-    color: $white-color;
-    &::placeholder {
-      color: $white-color;
-    }
-  }
+  border-color: $danger-color;
+  //background: $danger-color;
+  //& input {
+  //  color: $white-color;
+  //  &::placeholder {
+  //    color: $white-color;
+  //  }
+  //}
 }
 
 //.FormisInvalid {
