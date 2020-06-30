@@ -11,11 +11,16 @@ import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 // import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
 import Spinner from './components/UI/Spinner/Spinner';
+import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import * as actions from './store/actions/index';
 
-const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
-const Orders = React.lazy(() => import('./containers/Orders/Orders'));
-const Auth = React.lazy(() => import('./containers/Auth/Auth'));
+const asyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkout'));
+const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
+const asyncAuth = asyncComponent(() => import('./containers/Auth/Auth'));
+
+// const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
+// const Orders = React.lazy(() => import('./containers/Orders/Orders'));
+// const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 
 class App extends Component {
   //Optz
@@ -30,7 +35,7 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route path="/auth" render={() => <Suspense fallback={<Spinner/>}><Auth/></Suspense>} />
+        <Route path="/auth" component={asyncAuth} />
         <Route path="/" component={BurgerBuilder} />
         <Redirect to="/" />
       </Switch>
@@ -40,9 +45,9 @@ class App extends Component {
     if(this.props.isAuthenticated) {
       routes = (
         <Switch>
-          <Route path="/checkout" render={(props) => <Suspense fallback={<Spinner/>}><Checkout {...props}/></Suspense>} />
-          <Route path="/orders" render={(props) => <Suspense fallback={<Spinner/>}><Orders {...props}/></Suspense>} />
-          <Route path="/auth" render={(props) => <Suspense fallback={<Spinner/>}><Auth {...props}/></Suspense>} />
+          <Route path="/checkout" component={asyncCheckout} />
+          <Route path="/orders" component={asyncOrders} />
+          <Route path="/auth" component={asyncAuth} />
           <Route path="/logout" component={Logout} />
           <Route path="/" component={BurgerBuilder} />
           <Redirect to="/" />
