@@ -15,9 +15,9 @@ export const removeIngredient = (name) => {
   };
 };
 
-const storeIngredients = (ingredients) => {
+const saveIngredients = (ingredients) => {
   return {
-    type: actionsType.STORE_INGREDIENT,
+    type: actionsType.SAVE_INGREDIENTS,
     ingredients,
   };
 };
@@ -28,11 +28,11 @@ const fetchIngredientsFailed = () => {
   };
 };
 
-export const initIngredients = (error) => {
+export const fetchIngredients = (error) => {
   return dispatch => {
     axios.get('ingredients.json/')
       .then(response => {
-        dispatch(storeIngredients(response.data))
+        dispatch(saveIngredients(response.data))
         // purchasable: Object.values(response.data).some(value => +value > 0),
         // ingredients: response.data,
         // ingredientsSequence: Object.keys(response.data).filter(key => response.data[key] > 0),

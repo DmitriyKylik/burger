@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Redirect } from 'react-router-dom';
 // import classes from './BuildContorls.css';
 import classes from './BuildControls.scss';
 import BuildControl from './BuildControl/BuildControl';
@@ -30,10 +30,8 @@ const buildControls = (props) => {
       <button
         className={`btn ${classes.OrderButton}`}
         disabled={!props.purchasing}
-        onClick={() => {
-          props.ordered();
-        }}>
-        Order now
+        onClick={props.ordered}>
+        {props.isAuth ? 'Order now' : 'Sign Up for Order'}
       </button>
     </div>
   );

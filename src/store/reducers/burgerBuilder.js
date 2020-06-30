@@ -6,6 +6,7 @@ const initialState = {
   ingredientsSequence: [],
   totalPrice: 4,
   error: false,
+  building: false,
 };
 
 //Get data from backend
@@ -28,35 +29,36 @@ const addIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] + 1});
   const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingName];
 
-  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice});
+  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice, building: true});
 };
 
 const removeIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] - 1});
   const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingName];
-  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice});
+  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice, building: true});
 };
 
-const storeIngredients = (state, action) => {
+const saveIngredients = (state, action) => {
   return updateObject(state, {
     ingredients: action.ingredients,
     error: false,
     totalPrice: 4,
+    building: false,
   });
 };
 
-const fetchIngredients = (state, action) => {
+const fetchIngredientsFailed = (state, action) => {
   return updateObject(state, {ingredients: null, error: true});
 };
 
-const burgerBuilder = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case(actionsType.ADD_INGREDIENT): return addIngredients(state, action);
     case(actionsType.REMOVE_INGREDIENT): return removeIngredients(state, action);
-    case(actionsType.STORE_INGREDIENT): return storeIngredients(state, action);
-    case(actionsType.FETCH_INGREDIENTS_FAILED): return fetchIngredients(state, action);
+    case(actionsType.SAVE_INGREDIENTS): return saveIngredients(state, action);
+    case(actionsType.FETCH_INGREDIENTS_FAILED): return fetchIngredientsFailed(state, action);
     default: return state;
   }
 };
 
-export default burgerBuilder;
+export default reducer;
