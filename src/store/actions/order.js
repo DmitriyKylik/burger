@@ -62,10 +62,11 @@ export const fetchOrdersStart = () => {
   };
 };
 
-export const fetchOrders = (token) => {
+export const fetchOrders = (token, userId) => {
   return dispatch => {
+    const queryParams = `?auth=${token}&orderBy="userId"&equalTo="${userId}"`;
     dispatch(fetchOrdersStart());
-    let url = `/orders.json?auth=${token}`;
+    let url = `/orders.json${queryParams}`;
     if(!token) {
       url = `/orders.json`;
     }
