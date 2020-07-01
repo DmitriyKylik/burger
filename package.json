@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack-dev-server --open --config ./build/webpack.dev.conf.js",
     "build": "webpack --config ./build/webpack.build.conf.js",
-    "test": "node ./test.js --env=jsdom"
+    "test": "node ./scripts/test.js --env=jsdom"
   },
   "browserslist": [
     "> 1%",
@@ -31,7 +31,6 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.19.2",
-    "dotenv": "^8.2.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.10.2",
@@ -54,6 +53,7 @@
     "copy-webpack-plugin": "^5.1.1",
     "css-loader": "^3.4.0",
     "cssnano": "^4.1.10",
+    "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "file-loader": "^5.0.2",
@@ -61,6 +61,7 @@
     "jest": "^26.1.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.13.0",
+    "object-assign": "^4.1.1",
     "postcss-loader": "^3.0.0",
     "react-test-renderer": "^16.13.1",
     "sass-loader": "^8.0.0",
@@ -68,7 +69,8 @@
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1",
-    "webpack-merge": "^4.2.2"
+    "webpack-merge": "^4.2.2",
+    "whatwg-fetch": "^3.1.0"
   },
   "jest": {
     "collectCoverageFrom": [
@@ -78,8 +80,8 @@
       "<rootDir>/build/polyfills.js"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.js?(x)",
-      "<rootDir>/src/**/?(*.)(spec|test).js?(x)"
+      "<rootDir>/src/**/*.test.js",
+      "<rootDir>/src/**/__tests__/**/*.js?(x)"
     ],
     "testEnvironment": "node",
     "testURL": "http://localhost",

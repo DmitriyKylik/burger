@@ -26,7 +26,7 @@ const INGREDIENT_LIMITS = {
   bacon: 40
 };
 
-class BurgerBuilder extends Component {
+export class BurgerBuilder extends Component {
 
   constructor(props) {
     super(props);
