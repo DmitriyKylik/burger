@@ -23,50 +23,30 @@ export const authSuccess = (idToken, userId) => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('burgerAuthToken');
-  localStorage.removeItem('burgerAuthExpirationDate');
-  localStorage.removeItem('burgerUserId');
+  return {
+    type: actionsType.AUTH_INITIATE_LOGOUT
+  };
+};
+
+export const logoutSucceed = () => {
   return {
     type: actionsType.AUTH_LOGOUT
   };
 };
 
 export const checkAuthTimeout = (expirationTime) => {
-  return dispatch => {
-    setTimeout(() => {
-      dispatch(logout());
-    }, expirationTime);
+  return {
+    type: actionsType.AUTH_CHECK_TIMEOUT,
+    expirationTime,
   };
 };
 
 export const authLoad = (email, password, isSignUp) => {
-  return dispatch => {
-    const authData = {
-      email,
-      password,
-      returnSecureToken: true,
-    };
-    let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAw1O4qxYbOpBQw9GXCi3T1cm3K--IWVQs';
-
-    if(!isSignUp) {
-      url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAw1O4qxYbOpBQw9GXCi3T1cm3K--IWVQs';
-    }
-
-    dispatch(authStart());
-    axios.post(url, authData)
-      .then(response => {
-        const updatedExpirationTime = new Date(new Date().getTime() + +response.data.expiresIn * 1000);
-
-        localStorage.setItem('burgerAuthToken', response.data.idToken);
-        localStorage.setItem('burgerAuthExpirationDate', updatedExpirationTime);
-        localStorage.setItem('burgerUserId', response.data.localId);
-
-        dispatch(authSuccess(response.data.idToken, response.data.localId));
-        dispatch(checkAuthTimeout( updatedExpirationTime ));
-      })
-      .catch(error => {
-        dispatch(authFail(error.response.data.error));
-      });
+  return {
+    type: actionsType.AUTH_USER,
+    email,
+    password,
+    isSignUp,
   };
 };
 
