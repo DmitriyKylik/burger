@@ -1,7 +1,7 @@
 import { delay } from 'redux-saga/effects';
 import { put } from 'redux-saga/effects';
 import * as actions from '../actions/index';
-import axios from "axios";
+import axios from 'axios';
 
 export function* logoutSaga(action) {
 
@@ -44,5 +44,27 @@ export function* authUserSaga(action) {
     yield put(actions.checkAuthTimeout( updatedExpirationTime ));
   } catch (error) {
     yield put(actions.authFail(error.response.data.error));
+  }
+}
+
+export function* authCheckStateSaga(action) {
+  const token = localStorage.getItem('burgerAuthToken');
+  if(!token) {
+    yield put(actions.logout());
+  } else {
+    const expirationDate = new Date(localStorage.getItem('burgerAuthExpirationDate'));
+
+    if(expirationDate >= new Date()) {
+      const userId = localStorage.getItem('burgerUserId');
+      const expirationTime = expirationDate.getTime() - new Date().getTime();
+
+      yield put(actions.authSuccess(token, userId));
+      yield put(actions.checkAuthTimeout(expirationTime));
+    } else {
+      // logout
+      yield put(actions.logout());
+      //Future optimization logout is not needed
+      // return;
+    }
   }
 }

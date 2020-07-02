@@ -58,27 +58,7 @@ export const setAuthRedirectPath = (path) => {
 };
 
 export const authCheckState = () => {
-  return dispatch => {
-    const token = localStorage.getItem('burgerAuthToken');
-    if(!token) {
-      dispatch(logout());
-    } else {
-      // burgerAuthExpirationDate
-      const expirationDate = new Date(localStorage.getItem('burgerAuthExpirationDate'));
-
-      if(expirationDate >= new Date()) {
-        const userId = localStorage.getItem('burgerUserId');
-        const expirationTime = expirationDate.getTime() - new Date().getTime();
-        console.log(expirationTime / 1000);
-
-        dispatch(authSuccess(token, userId));
-        dispatch(checkAuthTimeout(expirationTime));
-      } else {
-        // logout
-        dispatch(logout());
-        //Future optimization logout is not needed
-        // return;
-      }
-    }
+  return {
+    type: actionsType.AUTH_CHECK_STATE,
   };
 };

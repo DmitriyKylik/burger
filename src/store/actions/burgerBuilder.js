@@ -1,5 +1,4 @@
 import * as actionsType from '../actions/actionTypes';
-import axios from '../../axios-orders';
 
 export const addIngredient = (name) => {
   return {
@@ -15,29 +14,32 @@ export const removeIngredient = (name) => {
   };
 };
 
-const saveIngredients = (ingredients) => {
+export const saveIngredients = (ingredients) => {
   return {
     type: actionsType.SAVE_INGREDIENTS,
     ingredients,
   };
 };
 
-const fetchIngredientsFailed = () => {
+export const fetchIngredientsFailed = () => {
   return {
     type: actionsType.FETCH_INGREDIENTS_FAILED
   };
 };
 
-export const fetchIngredients = (error) => {
-  return dispatch => {
-    axios.get('ingredients.json/')
-      .then(response => {
-        dispatch(saveIngredients(response.data))
+export const fetchIngredients = () => {
+  return {
+    type: actionsType.FETCH_INGREDIENTS,
+  };
+  // return dispatch => {
+  //   axios.get('ingredients.json/')
+  //     .then(response => {
+  //       dispatch(saveIngredients(response.data))
         // purchasable: Object.values(response.data).some(value => +value > 0),
         // ingredients: response.data,
         // ingredientsSequence: Object.keys(response.data).filter(key => response.data[key] > 0),
-      })
-      .catch(error => dispatch(fetchIngredientsFailed()));
-  };
+      // })
+      // .catch(error => dispatch(fetchIngredientsFailed()));
+  // };
 };
 
