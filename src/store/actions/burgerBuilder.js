@@ -31,15 +31,5 @@ export const fetchIngredients = () => {
   return {
     type: actionsType.FETCH_INGREDIENTS,
   };
-  // return dispatch => {
-  //   axios.get('ingredients.json/')
-  //     .then(response => {
-  //       dispatch(saveIngredients(response.data))
-        // purchasable: Object.values(response.data).some(value => +value > 0),
-        // ingredients: response.data,
-        // ingredientsSequence: Object.keys(response.data).filter(key => response.data[key] > 0),
-      // })
-      // .catch(error => dispatch(fetchIngredientsFailed()));
-  // };
 };
 
