@@ -46,12 +46,15 @@
     }
   }
 
-  .wrapper {
+  .page-wrapper {
     display: flex;
     flex-direction: column;
     margin: 0 auto;
     min-height: 100vh;
     max-width: 100%;
+    //background-image: url(../../assets/img/background_main.jpg);
+    //background-repeat: no-repeat;
+    //background-size: cover;
   }
 
   .content-wrapper {

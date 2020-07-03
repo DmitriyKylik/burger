@@ -1,24 +1,26 @@
 import React from 'react';
-import classes from './NavigationItems.scss';
-import Navigationitem from './NavigationItem/NavigationItem';
-import Aux from '../../../hoc/Auxilliary/auxilliary';
+import propTypes from 'prop-types';
 
-// {Navigationitem.map((elem, index) => {
-//   <Navigationitem/>
-// })}
+import classes from './NavigationItems.scss';
+import NavigationItem from './NavigationItem/NavigationItem';
+import Aux from '../../../hoc/Auxilliary/auxilliary';
 
 const navigationItems = (props) => {
   return (
-    <ul className={classes.NavigationItems}>
-      <Navigationitem link="/">BurgerBuilder</Navigationitem>
+    <ul className={`${classes.NavigationItems} ${props.classes}`}>
+      <NavigationItem link="/">BurgerBuilder</NavigationItem>
       {props.isAuth
         ? (<Aux>
-            <Navigationitem link="/orders">Orders</Navigationitem>
-            <Navigationitem link="/logout">Logout</Navigationitem>
+            <NavigationItem link="/orders">Orders</NavigationItem>
+            <NavigationItem link="/logout">Logout</NavigationItem>
           </Aux>)
-        : <Navigationitem link="/auth">SignUp</Navigationitem>}
+        : <NavigationItem link="/auth">SignUp</NavigationItem>}
     </ul>
   );
+};
+
+navigationItems.propTypes = {
+  classes: propTypes.string
 };
 
 export default navigationItems;

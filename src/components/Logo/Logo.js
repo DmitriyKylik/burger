@@ -1,4 +1,6 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
+
 import classes from './Logo.scss';
 import burgerLogo from '../../assets/img/logo_burger.png';
 import propTypes from 'prop-types';
@@ -6,14 +8,14 @@ import propTypes from 'prop-types';
 const logo = (props) => {
 
   return (
-    <div className={`${classes.Logo} ${props.classes ? props.classes.join(' ') : null}`}>
+    <NavLink to="/" className={`${classes.logo} ${props.classes}`}>
       <img src={burgerLogo} alt="BurgerLogo"/>
-    </div>
+    </NavLink>
   );
 };
 
 logo.propTypes = {
-  classes: propTypes.array,
+  classes: propTypes.string,
 };
 
 export default logo;

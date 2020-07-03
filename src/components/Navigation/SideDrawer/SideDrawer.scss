@@ -1,6 +1,6 @@
 @import 'Scss/utils';
 
-.SideDrawer {
+.sideDrawer {
   position: fixed;
   width: 280px;
   height: 100%;
@@ -11,18 +11,16 @@
   background: $white-color;
   padding: 32px 16px;
   @include transitionAll;
-  @include miw(500) {
-    //display: none;
-  }
-  &.Open {
+  &.open {
     transform: translateX(0);
   }
-  &.Close {
+  &.close {
     transform: translateX(-100%);
   }
 }
 
-.Logo {
+.logo {
+  display: block;
   max-width: 130px;
   margin: 0 auto 20px;
 }

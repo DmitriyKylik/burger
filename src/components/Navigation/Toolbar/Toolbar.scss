@@ -1,26 +1,35 @@
 @import "Scss/utils";
 
-.Toolbar {
+.toolbar {
   width: 100%;
   max-width: 100%;
-  height: 56px;
   position: fixed;
   top: 0;
   left: 0;
+  padding: 10px 15px;
   color: $white-color;
   background: $primary-color;
   z-index: 90;
-  padding: 0 20px;
-  & .Logo {
-    height: 80%;
+  @include miw(500) {
+    padding: 0 0 0 20px;
   }
 }
 
-.Nav {
+.logo {
+  width: 50px;
+  background: $white-color;
+  border-radius: 5px;
+}
+
+.nav {
   height: 100%;
 }
 
-.Menu {
+.navList {
+  flex-wrap: wrap;
+}
+
+.menu {
   width: 40px;
   padding: 5px;
   cursor: pointer;
@@ -49,13 +58,13 @@
   }
 }
 
-.MobileOnly {
+.mobileOnly {
   @include miw(500) {
     display: none;
   }
 }
 
-.DesktopOnly {
+.desktopOnly {
   @include mw(499) {
     display: none;
   }

@@ -7,17 +7,17 @@ import classes from './SideDrawer.scss';
 
 const sideDrawer = (props) => {
 
-  let attachedClasses = [classes.SideDrawer, classes.Close];
+  let attachedClasses = [classes.sideDrawer, classes.close];
 
   if(props.open) {
-    attachedClasses = [classes.SideDrawer, classes.Open];
+    attachedClasses = [classes.sideDrawer, classes.open];
   }
 
   return (
     <Aux>
       <Backdrop show={props.open} clicked={props.hide}/>
       <div className={attachedClasses.join(' ')}>
-        <Logo classes={[classes.Logo]}/>
+        <Logo classes={classes.logo}/>
         <NavigationItems isAuth={props.isAuth} />
       </div>
     </Aux>

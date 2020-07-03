@@ -1,11 +1,12 @@
 @import "Scss/utils";
 
-.Logo {
+.logo {
   position: relative;
   padding: 8px;
-  border-radius: 5px;
-  cursor: pointer;
   @include transitionAll;
+  &:hover {
+    transform: scale(1.2);
+  }
   & img {
     @include imageCenterX;
   }
