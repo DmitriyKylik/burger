@@ -59,44 +59,40 @@ const changeIngredient = (state, action) => {
     inputValue = INGREDIENT_LIMITS[action.ingName];
   }
 
-  //prevent components update if input value is the same as current ingredient amount
-  if(inputValue !== state.ingredients[action.ingName]) {
-    const updatedIngredients = {...state.ingredients};
-    const updatedSequence = [...state.ingredientsSequence];
-    let updatedPrice, ingredientsCounter;
+  const updatedIngredients = {...state.ingredients};
+  const updatedSequence = [...state.ingredientsSequence];
+  let updatedPrice, ingredientsCounter;
 
-    //add ingredients to the beginning of ingredients sequence
-    if(updatedIngredients[action.ingName] < inputValue) {
-      ingredientsCounter = inputValue - updatedIngredients[action.ingName];
+  //add ingredients to the beginning of ingredients sequence
+  if(updatedIngredients[action.ingName] < inputValue) {
+    ingredientsCounter = inputValue - updatedIngredients[action.ingName];
 
-      const ingredientsAmount = new Array(ingredientsCounter).fill(action.ingName);
-      updatedPrice = +((state.totalPrice + (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
+    const ingredientsAmount = new Array(ingredientsCounter).fill(action.ingName);
+    updatedPrice = +((state.totalPrice + (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
 
-      updatedSequence.unshift(...ingredientsAmount);
-    } else {
-      //  remove elements from to the beginning of ingredients sequence
-      ingredientsCounter = updatedIngredients[action.ingName] - inputValue;
-      updatedPrice = +((state.totalPrice - (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
+    updatedSequence.unshift(...ingredientsAmount);
+  } else {
+    //  remove elements from to the beginning of ingredients sequence
+    ingredientsCounter = updatedIngredients[action.ingName] - inputValue;
+    updatedPrice = +((state.totalPrice - (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
 
-      //  remove elements by 'type' name
-      for(let i = 0; i < ingredientsCounter; i++) {
-        const index = updatedSequence.indexOf(action.ingName);
-        if(index !== -1) {
-          updatedSequence.splice(index, 1);
-        }
+    //  remove elements by 'type' name
+    for(let i = 0; i < ingredientsCounter; i++) {
+      const index = updatedSequence.indexOf(action.ingName);
+      if(index !== -1) {
+        updatedSequence.splice(index, 1);
       }
     }
-
-    updatedIngredients[action.ingName] = inputValue;
-
-    return updateObject(state, {
-      ingredients: updatedIngredients,
-      ingredientsSequence: updatedSequence,
-      totalPrice: updatedPrice,
-      building: true
-    });
   }
-  return updateObject(state);
+
+  updatedIngredients[action.ingName] = inputValue;
+
+  return updateObject(state, {
+    ingredients: updatedIngredients,
+    ingredientsSequence: updatedSequence,
+    totalPrice: updatedPrice,
+    building: true
+  });
 };
 
 const saveIngredients = (state, action) => {

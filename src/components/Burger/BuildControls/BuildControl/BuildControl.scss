@@ -16,6 +16,7 @@
   border: 1px solid #ac9980;
   text-align: center;
   cursor: pointer;
+  box-shadow: 2px 2px 2px #966909;
 }
 
 .buildBtn {
@@ -24,6 +25,7 @@
   width: 80px;
   border-radius: 5px;
   border: 1px solid #aa6817;
+  box-shadow: 2px 2px 2px #966909;
   &:hover:disabled {
     background: #ac9980;
     color: #ccc;

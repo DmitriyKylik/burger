@@ -8,7 +8,6 @@ import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Logout from './containers/Auth/Logout/Logout';
 import Aux from './hoc/Auxilliary/auxilliary';
-import Spinner from './components/UI/Spinner/Spinner';
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import * as actions from './store/actions/index';
 

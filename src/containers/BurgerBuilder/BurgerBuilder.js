@@ -106,12 +106,10 @@ export class BurgerBuilder extends Component {
     let orderSummary = null;
     let burger = this.props.error ? <p>Ingredients can't be loaded</p> : <Spinner/>;
 
-    // if(this.state.ingredients) {
     if(this.props.ingredients) {
       burger = (
         <Aux>
           <Burger ingredientsSequence={this.props.ingredientsSequence} classes={classes.burger}/>
-          {/*<Burger ingredients={this.props.ingredients} classes={classes.burger}/>*/}
           <BuildControls
             isAuth={this.props.isAuthenticated}
             ingredients={this.props.ingredients}
@@ -132,7 +130,7 @@ export class BurgerBuilder extends Component {
         ingredientsPrices={INGREDIENT_PRICES}
         // ingredients={this.state.ingredients}
         ingredients={this.props.ingredients}
-        price={this.state.price}/>;
+        price={this.props.price}/>;
     }
 
     // if(this.state.loading) {

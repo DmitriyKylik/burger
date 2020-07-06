@@ -6,9 +6,12 @@ import Burger from '../../components/Burger/Burger';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
 import Aux from '../../hoc/Auxilliary/auxilliary';
-import CheckoutData from './CheckoutData/CheckoutData';
+// import CheckoutData from './CheckoutData/CheckoutData';
 import classes from './Checkout.scss';
 import * as actionsType from "../../store/actions";
+import asyncComponent from '../../hoc/asyncComponent/asyncComponent';
+
+const CheckoutData = asyncComponent(() => import('./CheckoutData/CheckoutData'));
 
 class Checkout extends Component {
 
@@ -42,17 +45,18 @@ class Checkout extends Component {
   };
 
   continueCheckoutHandler = () => {
-    this.props.history.replace(`${this.props.match.url}/checkout-data${this.props.location.search}`)
+    this.props.history.replace(`${this.props.match.path}/checkout-data${this.props.location.search}`)
   };
 
   render() {
     let actionButtons = null;
     let burger = <Redirect to="/" />;
     let contactData = null;
+
     if(this.props.ingredients) {
       const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
       // burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
-      burger = <Burger ingredients={this.props.ingredients} />;
+      burger = <Burger ingredientsSequence={this.props.ingredientsSequence} />;
       actionButtons = (
         <Aux>
           {purchasedRedirect}
@@ -66,7 +70,6 @@ class Checkout extends Component {
       );
       contactData = <Route path={`${this.props.match.path}/checkout-data`} component={CheckoutData} />;
     }
-    // burger = <Burger ingredientsSequence={this.props.ingredients} />;
 
     return (
       <div className={classes.Checkout}>
@@ -84,6 +87,7 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
+    ingredientsSequence: state.burgerBuilder.ingredientsSequence,
     price: state.burgerBuilder.totalPrice,
     purchased: state.order.purchased,
   };

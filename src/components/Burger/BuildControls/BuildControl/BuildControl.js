@@ -1,9 +1,8 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import classes from './BuildControl.scss';
 import Button from '../../../UI/Button/Button';
 
 const buildControl = (props) => {
-  const inputRef = useRef();
 
   return (
     <div className={classes.buildControl}>
@@ -14,14 +13,6 @@ const buildControl = (props) => {
         disabled={props.disabled[props.type].less}>
         Less
       </Button>
-      {/*<button*/}
-        {/*className={classes.Less}*/}
-        {/*onClick={() => {props.removed(props.type, inputRef)}}*/}
-        {/*onClick={() => {props.removed(props.type)}}*/}
-        {/*disabled={props.disabled[props.type].less}>*/}
-        {/*Less*/}
-      {/*</button>*/}
-      {/*<input type="text" value={props.ingredientAmount} ref={inputRef} onChange={(event) => {props.changed(event, props.type)}}/>*/}
       <input
         type="text"
         value={props.ingredientAmount}
@@ -33,13 +24,6 @@ const buildControl = (props) => {
         disabled={props.disabled[props.type].more}>
         More
       </Button>
-      {/*<button*/}
-        {/*className={classes.More}*/}
-        {/*onClick={() => {props.added(props.type, inputRef)}}*/}
-        {/*onClick={() => {props.added(props.type)}}*/}
-        {/*disabled={props.disabled[props.type].more}>*/}
-        {/*More*/}
-      {/*</button>*/}
     </div>
   );
 };
