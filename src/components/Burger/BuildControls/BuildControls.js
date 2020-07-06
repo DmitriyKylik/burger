@@ -1,8 +1,7 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
-// import classes from './BuildContorls.css';
 import classes from './BuildControls.scss';
 import BuildControl from './BuildControl/BuildControl';
+import Button from '../../UI/Button/Button';
 
 const controls = [
   { label: 'Salad', type: 'salad'},
@@ -13,7 +12,7 @@ const controls = [
 
 const buildControls = (props) => {
   return (
-    <div className={classes.BuildControls}>
+    <div className={classes.buildControls}>
       <p>Current price: {props.price}</p>
       {controls.map(ctrl => (
         //Add prices for each ingredient
@@ -27,12 +26,17 @@ const buildControls = (props) => {
           changed={props.changeIngredient}
           disabled={props.disabled}/>
       ))}
-      <button
-        className={`btn ${classes.OrderButton}`}
-        disabled={!props.purchasing}
-        onClick={props.ordered}>
+      <Button classes={`btn ${classes.orderButton}`}
+              onClick={props.ordered}
+              disabled={!props.purchasing}>
         {props.isAuth ? 'Order now' : 'Sign Up for Order'}
-      </button>
+      </Button>
+      {/*<button*/}
+        {/*className={`btn ${classes.orderButton}`}*/}
+        {/*disabled={!props.purchasing}*/}
+        {/*onClick={props.ordered}>*/}
+        {/*{props.isAuth ? 'Order now' : 'Sign Up for Order'}*/}
+      {/*</button>*/}
     </div>
   );
 

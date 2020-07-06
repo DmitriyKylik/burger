@@ -17,7 +17,7 @@ class Modal extends Component {
     return (
       <Aux>
         <Backdrop show={this.props.show} clicked={this.props.hide}  />
-        <div className={`${classes.Modal} ${this.props.show ? classes.active : ''}`}>
+        <div className={`${classes.modal} ${this.props.show ? classes.active : ''}`}>
           <div className={classes.closeBtn} onClick={this.props.hide}>
             <svg className={classes.icon} version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 1000 1000">
               <g>

@@ -1,22 +1,24 @@
 @import 'Scss/utils';
 
 .Burger {
-  width: 700px;
-  margin: auto auto 30px;
-  //height: 500px;
+  max-width: 100%;
+  width: 100%;
+  padding: 0 20px;
+  margin: 30px 0;
   overflow: auto;
   text-align: center;
   font-weight: 700;
   font-size: 1.2rem;
-  @include mw(1000) {
+  @include miw(500) {
+    //height: 300px;
+    margin: auto auto 30px;
+  }
+  @include miw(769) {
     width: 500px;
-    height: 400px;
+    //height: 400px;
   }
-  @include mw(769) {
-    max-width: 100%;
-  }
-  @include mw(500) {
-    height: 300px;
-    margin: 30px 0;
+  @include miw(1000) {
+    width: 700px;
+    //height: 400px;
   }
 }

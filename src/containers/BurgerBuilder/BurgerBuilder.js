@@ -231,7 +231,7 @@ export class BurgerBuilder extends Component {
       burger = (
         <Aux>
           {/*<Burger ingredientsSequence={this.state.ingredientsSequence} classes={classes.Burger}/>*/}
-          <Burger ingredients={this.props.ingredients} classes={classes.Burger}/>
+          <Burger ingredients={this.props.ingredients} classes={classes.burger}/>
           <BuildControls
             isAuth={this.props.isAuthenticated}
             ingredients={this.props.ingredients}

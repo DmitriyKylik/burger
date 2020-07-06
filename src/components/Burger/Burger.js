@@ -2,7 +2,6 @@ import React from 'react';
 import classes from './Burger.scss';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
-
 const burger = props => {
   // let ingredients = props.ingredientsSequence.map((igKey, index) => {
   //     return <BurgerIngredient key={igKey + index} type={igKey}/>

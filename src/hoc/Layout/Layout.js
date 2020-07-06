@@ -31,7 +31,7 @@ class Layout extends Component {
           hide={this.sideDrawerToggleHandler} />
         {/*<BackDrop show={this.state.backDropShow} clicked={this.toggleBackDropHandler}/>*/}
         {/*<ModalContext.Provider value={{show: this.state.backDropShow, toggleShow: this.toggleBackDropHandler}}>*/}
-          <main className={classes.Content}>
+          <main className={classes.content}>
             {this.props.children}
           </main>
         {/*</ModalContext.Provider>*/}

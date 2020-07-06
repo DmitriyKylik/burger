@@ -1,6 +1,6 @@
 @import "Scss/utils";
 
-.Modal {
+.modal {
   position: fixed;
   top: -100%;
   left: 50%;
@@ -25,7 +25,7 @@
   }
 }
 
-.close-btn {
+.closeBtn {
   width: 40px;
   height: 40px;
   position: absolute;

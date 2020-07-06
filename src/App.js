@@ -1,4 +1,4 @@
-import React, {Component, Suspense} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import './assets/css/main.css';
@@ -6,10 +6,8 @@ import './assets/scss/main.global.scss';
 
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
-// import Checkout from './containers/Checkout/Checkout';
-// import Orders from './containers/Orders/Orders'
-// import Auth from './containers/Auth/Auth';
 import Logout from './containers/Auth/Logout/Logout';
+import Aux from './hoc/Auxilliary/auxilliary';
 import Spinner from './components/UI/Spinner/Spinner';
 import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import * as actions from './store/actions/index';
@@ -17,10 +15,6 @@ import * as actions from './store/actions/index';
 const asyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkout'));
 const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
 const asyncAuth = asyncComponent(() => import('./containers/Auth/Auth'));
-
-// const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
-// const Orders = React.lazy(() => import('./containers/Orders/Orders'));
-// const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 
 class App extends Component {
   //Optz
@@ -55,11 +49,11 @@ class App extends Component {
       );
     }
     return (
-        <div>
+        <Aux>
           <Layout>
             {routes}
           </Layout>
-        </div>
+        </Aux>
     );
   }
 }

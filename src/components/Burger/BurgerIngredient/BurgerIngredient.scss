@@ -1,4 +1,6 @@
-.BreadBottom {
+@import 'Scss/utils';
+
+.breadBottom {
   height: 13%;
   min-height: 50px;
   width: 80%;
@@ -6,9 +8,13 @@
   border-radius: 0 0 30px 30px;
   box-shadow: inset -15px 0 #c15711;
   margin: 2% auto;
+  @include mw(500) {
+    width: 100%;
+    min-height: 30px;
+  }
 }
 
-.BreadTop {
+.breadTop {
   height: 20%;
   min-height: 115px;
   width: 80%;
@@ -17,9 +23,13 @@
   box-shadow: inset -15px 0 #c15711;
   margin: 2% auto;
   position: relative;
+  @include mw(500) {
+    width: 100%;
+    min-height: 85px;
+  }
 }
 
-.Seeds1 {
+.seeds1 {
   width: 10%;
   height: 15%;
   position: absolute;
@@ -31,7 +41,7 @@
   box-shadow: inset -2px -3px #c9c9c9;
 }
 
-.Seeds1:after {
+.seeds1:after {
   content: "";
   width: 100%;
   height: 100%;
@@ -44,7 +54,7 @@
   box-shadow: inset -1px 2px #c9c9c9;
 }
 
-.Seeds1:before {
+.seeds1:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -57,7 +67,7 @@
   box-shadow: inset -1px -3px #c9c9c9;
 }
 
-.Seeds2 {
+.seeds2 {
   width: 10%;
   height: 15%;
   position: absolute;
@@ -69,7 +79,7 @@
   box-shadow: inset -3px 0 #c9c9c9;
 }
 
-.Seeds2:before {
+.seeds2:before {
   content: "";
   width: 100%;
   height: 100%;
@@ -83,16 +93,19 @@
 }
 
 
-.Meat {
+.meat {
   width: 80%;
   height: 8%;
   min-height: 40px;
   background: linear-gradient(#7f3608, #702e05);
   margin: 2% auto;
   border-radius: 15px;
+  @include mw(500) {
+    width: 100%;
+  }
 }
 
-.Cheese {
+.cheese {
   width: 90%;
   height: 4.5%;
   min-height: 23px;
@@ -101,19 +114,25 @@
   border-radius: 20px;
 }
 
-.Salad {
+.salad {
   width: 85%;
   height: 7%;
   min-height: 35px;
   margin: 2% auto;
   background: linear-gradient(#228c1d, #91ce50);
   border-radius: 20px;
+  @include mw(500) {
+    width: 100%;
+  }
 }
 
-.Bacon {
+.bacon {
   width: 80%;
   height: 3%;
   min-height: 15px;
   background: linear-gradient(#bf3813, #c45e38);
   margin: 2% auto;
+  @include mw(500) {
+    width: 100%;
+  }
 }

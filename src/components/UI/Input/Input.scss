@@ -1,10 +1,11 @@
 @import "Scss/utils";
 
-.input-wrapper {
+.inputWrapper {
   border: 1px solid $border-color;
   padding: 10px;
   border-radius: 15px;
   margin-bottom: 15px;
+  background: $white-color;
 }
 
 .input {
@@ -18,16 +19,6 @@
   }
 }
 
-.Invalid {
+.invalid {
   border-color: $danger-color;
-  //background: $danger-color;
-  //& input {
-  //  color: $white-color;
-  //  &::placeholder {
-  //    color: $white-color;
-  //  }
-  //}
 }
-
-//.FormisInvalid {
-//}

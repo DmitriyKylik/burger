@@ -1,24 +1,24 @@
 @import "Scss/utils";
 
-.Main {
-  border-radius: 15px;
+.main {
   padding: 10px;
+  cursor: pointer;
   @include transitionAll;
+}
+
+.Success,
+.Danger {
+  border-radius: 15px;
+  color: $white-color;
   &:hover {
     transform: translateY(-3px);
-  }
-  &:disabled {
-    background: $grey-color;
-    color: $white-color;
   }
 }
 
 .Success {
   background: $success-color;
-  color: $white-color;
 }
 
 .Danger {
   background: $danger-color;
-  color: $white-color;
 }

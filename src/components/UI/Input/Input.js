@@ -6,10 +6,8 @@ const input = (props) => {
   let inputWrapperClasses = [classes.inputWrapper];
 
   if(!props.isValid && props.shouldValidate && props.touched) {
-    inputWrapperClasses.push(classes.Invalid);
+    inputWrapperClasses.push(classes.invalid);
   }
-
-
 
   switch (props.elementType) {
     case('input'):

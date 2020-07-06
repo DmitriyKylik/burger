@@ -1,11 +1,11 @@
 @import "Scss/utils";
 
-.Order {
+.order {
   max-width: 700px;
   margin: 0 auto;
   border: 1px solid $border-color;
   padding: 10px;
-  box-shadow: 0 0 15px 0px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
   border-radius: 15px;
   @include mw(700) {
     margin: 0 15px;
@@ -15,22 +15,18 @@
   }
 }
 
-.ingredients-wrapper {
-
-}
-
-.ingredients-title {
+.ingredientsTitle {
   flex-shrink: 0;
   min-width: 100px;
   margin-top: 10px;
   padding-right: 10px;
 }
 
-.ingredients-inner {
+.ingredientsInner {
   flex-grow: 1;
 }
 
-.ingredients-item {
+.ingredientsItem {
   flex-basis: calc(20% - 10px);
   padding: 5px;
   margin: 5px;
@@ -45,11 +41,11 @@
   }
 }
 
-.ingredients-name {
+.ingredientsName {
   font-weight: 700;
   margin-right: 5px;
 }
 
-.price-value {
+.priceValue {
   font-weight: 700;
 }

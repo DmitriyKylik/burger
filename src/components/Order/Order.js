@@ -19,7 +19,6 @@ const order = (props) => {
   //     return arr.concat(elem);
   //   }, []);
 
-  console.log(props);
   let ingredients = [];
   for(let [key, value] of Object.entries(props.ingredients)) {
     // console.log();
@@ -41,7 +40,7 @@ const order = (props) => {
   // });
 
   return (
-    <div className={classes.Order}>
+    <div className={classes.order}>
       <div className={`flex flex-h-start`}>
         <div className={classes.ingredientsTitle}>Ingredients:</div>
         <div className={`${classes.ingredientsInner} flex flex-wrap`}>

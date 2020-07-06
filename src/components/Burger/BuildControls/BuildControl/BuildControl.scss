@@ -1,64 +1,59 @@
 @import "Scss/utils";
 
-.BuildControl {
+.buildControl {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 5px 0;
-  &__chid-btn {
-    background: #000;
+}
+
+.buildInput {
+  width: 50px;
+  height: 40px;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ac9980;
+  text-align: center;
+  cursor: pointer;
+}
+
+.buildBtn {
+  padding: 5px;
+  margin: 0 5px;
+  width: 80px;
+  border-radius: 5px;
+  border: 1px solid #aa6817;
+  &:hover:disabled {
+    background: #ac9980;
+    color: #ccc;
+    cursor: not-allowed;
   }
-  & input {
-    width: 40px;
-    padding: 5px;
-    outline: none;
-    border: 1px solid #AC9980;
-    text-align: center;
-    cursor: pointer;
-  }
-  & button {
-    display: block;
-    font: inherit;
-    padding: 5px;
-    margin: 0 5px;
-    width: 80px;
-    border: 1px solid #AA6817;
-    cursor: pointer;
-    outline: none;
-    &:disabled {
-      background-color: #AC9980;
-      border: 1px solid #7E7365;
-      color: #ccc;
-      cursor: default;
-    }
-    &:hover:disabled {
-      background-color: #AC9980;
-      color: #ccc;
-      cursor: not-allowed;
-    }
-  }
-  & .Less {
-    background-color: #D39952;
-    color: white;
-  }
-  & .More {
-    background-color: #8F5E1E;
-    color: white;
-  }
-  & .Less:hover,
-    .More:active {
-    background-color: #DAA972;
-    color: white;
-  }
-  & .Less:active,
-    .More:hover {
-    background-color: #99703F;
-    color: white;
+  &:disabled {
+    background: #ac9980;
+    border: 1px solid #7e7365;
+    color: #ccc;
   }
 }
 
-.Label {
-  padding: 10px;
-  font-weight: bold;
+.less {
+  background: #d39952;
+  color: $white-color;
+  &:hover {
+    background-color: #daa972;
+  }
+}
+
+.more {
+  background: #8f5e1e;
+  color: $white-color;
+  &:hover {
+    background-color: #99703f;
+  }
+}
+
+.label {
   width: 90px;
+  padding: 10px;
+  font-weight: 700;
 }

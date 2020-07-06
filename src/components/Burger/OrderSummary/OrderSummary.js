@@ -30,7 +30,7 @@ const orderSummary = (props) => {
       </ul>
       <p className={classes.total}>Total price: {props.price}</p>
       <p className={classes.continueText}>Continue to Checkout?</p>
-      <div className={`${classes.footer} flex flex-center flex-wrap`}>
+      <div className={`flex flex-center flex-wrap`}>
         <Button classes={`${classes.footerBtn}`} btnType="Danger" clicked={props.hideModal}>Cancel</Button>
         <Button classes={`${classes.footerBtn}`} btnType="Success" clicked={props.purchaseContinued}>Continue</Button>
       </div>

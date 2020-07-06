@@ -4,7 +4,7 @@ import propTypes from 'prop-types';
 
 const button = (props) => {
   const attachedClasses = [
-    classes.Main,
+    classes.main,
     'btn',
     classes[props.btnType],
     props.classes,

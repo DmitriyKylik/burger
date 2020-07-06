@@ -1,8 +1,8 @@
 @import 'Scss/utils';
 
-.BuildControls {
+.buildControls {
   width: 100%;
-  background-color: #cf8f2e;
+  background-color: #c9a26b;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,22 +11,19 @@
   padding: 10px;
 }
 
-.OrderButton {
+.orderButton {
   margin: 15px;
   padding: 15px 30px;
-  background: #dad735;
-  cursor: pointer;
+  background: #d39952;
+  border-radius: 10px;
   border: 1px solid #966909;
-  color: #966909;
+  color: $white-color;
   font-size: 1.2em;
   box-shadow: 2px 2px 2px #966909;
   text-transform: uppercase;
-  @include transitionAll;
+  &:active,
   &:hover {
     transform: translateY(-3px);
-  }
-  &:hover,
-  &:active {
     background: $primary-color;
     border: 1px solid #966909;
     color: $white-color;
