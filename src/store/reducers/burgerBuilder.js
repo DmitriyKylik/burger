@@ -28,15 +28,21 @@ const INGREDIENT_LIMITS = {
 const addIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] + 1});
   const updatedPrice = +((state.totalPrice + INGREDIENT_PRICES[action.ingName]).toFixed(2));
+  const updatedSequence = [...state.ingredientsSequence];
 
-  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice, building: true});
+  updatedSequence.unshift(action.ingName);
+
+  return updateObject(state, {ingredients: updatedIngredients, ingredientsSequence: updatedSequence, totalPrice: updatedPrice, building: true});
 };
 
 const removeIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] - 1});
   const updatedPrice = +((state.totalPrice - INGREDIENT_PRICES[action.ingName]).toFixed(2));
+  const updatedSequence = [...state.ingredientsSequence];
 
-  return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice, building: true});
+  updatedSequence.splice(updatedSequence.findIndex(item => item === action.ingName), 1);
+
+  return updateObject(state, {ingredients: updatedIngredients, ingredientsSequence: updatedSequence, totalPrice: updatedPrice, building: true});
 };
 
 const changeIngredient = (state, action) => {
@@ -62,7 +68,7 @@ const changeIngredient = (state, action) => {
     //add ingredients to the beginning of ingredients sequence
     if(updatedIngredients[action.ingName] < inputValue) {
       ingredientsCounter = inputValue - updatedIngredients[action.ingName];
-      
+
       const ingredientsAmount = new Array(ingredientsCounter).fill(action.ingName);
       updatedPrice = +((state.totalPrice + (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
 
@@ -87,14 +93,8 @@ const changeIngredient = (state, action) => {
       ingredients: updatedIngredients,
       ingredientsSequence: updatedSequence,
       totalPrice: updatedPrice,
+      building: true
     });
-    // this.setState({
-    //   ingredients: updatedIngredients,
-    //   ingredientsSequence: updatedSequence,
-    //   totalPrice: updatedPrice,
-    // });
-
-    // this.checkPurchasingState(updatedIngredients);
   }
   return updateObject(state);
 };
@@ -108,7 +108,7 @@ const saveIngredients = (state, action) => {
   });
 };
 
-const fetchIngredientsFailed = (state, action) => {
+const fetchIngredientsFailed = (state) => {
   return updateObject(state, {ingredients: null, error: true});
 };
 

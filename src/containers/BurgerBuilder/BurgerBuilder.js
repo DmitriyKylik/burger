@@ -33,12 +33,8 @@ export class BurgerBuilder extends Component {
   }
 
   state = {
-    // ingredients: null,
-    // ingredientsSequence: [],
-    // totalPrice: 4,
     purchasing: false,
     loading: false,
-    // error: false,
   };
 
   componentWillUnmount() {
@@ -62,115 +58,11 @@ export class BurgerBuilder extends Component {
   //     .catch(error => this.setState({error: true}));
   }
 
-  componentDidMount() {
-
-    // this.setState({purchasable: this.checkPurchasingState(this.props.ingredients)});
-  }
-
-
   //Set purchase button state
   checkPurchasableState (ingredients) {
     const sum = Object.values(ingredients).reduce((sum, value) => sum + value, 0);
     return sum > 0;
   }
-
-  // addIngredientHandler = (type, input) => {
-  //   let currentAmount = this.state.ingredients[type];
-  //
-  //   if(currentAmount !== INGREDIENT_LIMITS[type]) {
-  //     const updatedCount = ++currentAmount;
-  //     const updatedIngredients = {...this.state.ingredients};
-  //     const priceAddition = +(this.state.totalPrice + INGREDIENT_PRICES[type]).toFixed(2);
-  //     const updatedSequence = [...this.state.ingredientsSequence];
-  //
-  //     updatedSequence.unshift(type);
-  //     updatedIngredients[type] = updatedCount;
-  //
-  //     this.setState({
-  //       ingredients: updatedIngredients,
-  //       ingredientsSequence: updatedSequence,
-  //       totalPrice: priceAddition,
-  //     });
-  //
-  //     input.current.value = updatedCount;
-  //     this.checkPurchasingState(updatedIngredients);
-  //   }
-  // };
-  //
-  // reduceIngredientHandler = (type, input) => {
-  //   let currentAmount = this.state.ingredients[type];
-  //
-  //   if(currentAmount > 0) {
-  //     const updatedCount = --currentAmount;
-  //     const updatedIngredients = {...this.state.ingredients};
-  //     const updatedSequence = [...this.state.ingredientsSequence];
-  //     const priceDeduction = +(this.state.totalPrice - INGREDIENT_PRICES[type]).toFixed(2);
-  //
-  //     updatedSequence.splice(updatedSequence.findIndex(item => item === type), 1);
-  //     updatedIngredients[type] = updatedCount;
-  //
-  //     this.setState({
-  //       ingredients: updatedIngredients,
-  //       ingredientsSequence: updatedSequence,
-  //       totalPrice: priceDeduction,
-  //     });
-  //
-  //     input.current.value = updatedCount;
-  //     this.checkPurchasingState(updatedIngredients);
-  //   }
-  // };
-
-  changeIngredientHandler = (event, type) => {
-    let inputValue = event.target.value;
-
-    //convert input value to integer
-    if(inputValue === '') {
-      inputValue = 0;
-    } else {
-      inputValue = +(parseFloat(inputValue.replace(/[^\d]/g, '')).toFixed(2));
-    }
-
-    if(inputValue > INGREDIENT_LIMITS[type]) {
-      inputValue = INGREDIENT_LIMITS[type];
-    }
-
-    //prevent components update if input value is the same as current ingredient amount
-    if(inputValue !== this.state.ingredients[type]) {
-      const updatedIngredients = {...this.state.ingredients};
-      const updatedSequence = [...this.state.ingredientsSequence];
-      let updatedPrice, ingredientsCounter;
-
-      //add ingredients to the beginning of ingredients sequence
-      if(updatedIngredients[type] < inputValue) {
-        ingredientsCounter = inputValue - updatedIngredients[type];
-        const ingredientsAmount = new Array(ingredientsCounter).fill(type);
-        updatedPrice = +(this.state.totalPrice + (INGREDIENT_PRICES[type] * ingredientsCounter)).toFixed(2);
-
-        updatedSequence.unshift(...ingredientsAmount);
-      } else {
-      //  remove elements starting from to the beginning of ingredients sequence
-        ingredientsCounter = updatedIngredients[type] - inputValue;
-        updatedPrice = +(this.state.totalPrice - (INGREDIENT_PRICES[type] * ingredientsCounter)).toFixed(2);
-
-      //  remove elements by 'type' name
-        for(let i = 0; i < ingredientsCounter; i++) {
-          const index = updatedSequence.indexOf(type);
-          if(index !== -1) {
-            updatedSequence.splice(index, 1);
-          }
-        }
-      }
-
-      updatedIngredients[type] = inputValue;
-      this.setState({
-        ingredients: updatedIngredients,
-        ingredientsSequence: updatedSequence,
-        totalPrice: updatedPrice,
-      });
-
-      // this.checkPurchasingState(updatedIngredients);
-    }
-  };
 
   purchaseHandler = () => {
     if(this.props.isAuthenticated) {
@@ -189,24 +81,6 @@ export class BurgerBuilder extends Component {
     this.props.onPurchaseInit();
     this.props.history.push('/checkout');
   };
-
-  // purchaseContinueHandler = () => {
-  //   let queryParams = {...this.state.ingredients};
-  //
-  //   queryParams['price'] = this.state.totalPrice;
-  //
-  //   queryParams = new URLSearchParams(queryParams).toString();
-  //
-  //   this.setState({loading: true});
-  //
-  //   this.props.history.push({
-  //     pathname: '/checkout',
-  //     search: `?${queryParams}`,
-  //   }, {
-  //     ingredientsSequence: [...this.state.ingredientsSequence],
-  //   });
-  // };
-
 
   render() {
     let disabledInfo = null;
@@ -236,8 +110,8 @@ export class BurgerBuilder extends Component {
     if(this.props.ingredients) {
       burger = (
         <Aux>
-          {/*<Burger ingredientsSequence={this.state.ingredientsSequence} classes={classes.Burger}/>*/}
-          <Burger ingredients={this.props.ingredients} classes={classes.burger}/>
+          <Burger ingredientsSequence={this.props.ingredientsSequence} classes={classes.burger}/>
+          {/*<Burger ingredients={this.props.ingredients} classes={classes.burger}/>*/}
           <BuildControls
             isAuth={this.props.isAuthenticated}
             ingredients={this.props.ingredients}
@@ -281,6 +155,7 @@ export class BurgerBuilder extends Component {
 const mapStateToProps = state => {
   return {
     ingredients: state.burgerBuilder.ingredients,
+    ingredientsSequence: state.burgerBuilder.ingredientsSequence,
     price: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
     purchasable: state.burgerBuilder.purchasable,
