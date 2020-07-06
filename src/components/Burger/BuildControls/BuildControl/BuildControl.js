@@ -3,7 +3,7 @@ import classes from './BuildControl.scss';
 import Button from '../../../UI/Button/Button';
 
 const buildControl = (props) => {
-  // const inputRef = useRef();
+  const inputRef = useRef();
 
   return (
     <div className={classes.buildControl}>
@@ -22,7 +22,11 @@ const buildControl = (props) => {
         {/*Less*/}
       {/*</button>*/}
       {/*<input type="text" value={props.ingredientAmount} ref={inputRef} onChange={(event) => {props.changed(event, props.type)}}/>*/}
-      <input type="text" className={classes.buildInput}/>
+      <input
+        type="text"
+        value={props.ingredientAmount}
+        className={classes.buildInput}
+        onChange={(event) => {props.changed(props.type, event.target.value)}} />
       <Button
         classes={`${classes.buildBtn} ${classes.more}`}
         clicked={() => props.added(props.type)}

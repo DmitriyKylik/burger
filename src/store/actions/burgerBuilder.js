@@ -14,6 +14,14 @@ export const removeIngredient = (name) => {
   };
 };
 
+export const changeIngredient = (name, value) => {
+  return {
+    type: actionsType.CHANGE_INGREDIENT,
+    ingName: name,
+    ingValue: value,
+  };
+};
+
 export const saveIngredients = (ingredients) => {
   return {
     type: actionsType.SAVE_INGREDIENTS,

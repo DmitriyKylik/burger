@@ -36,7 +36,6 @@ export class BurgerBuilder extends Component {
     // ingredients: null,
     // ingredientsSequence: [],
     // totalPrice: 4,
-    // purchasable: false,
     purchasing: false,
     loading: false,
     // error: false,
@@ -50,6 +49,7 @@ export class BurgerBuilder extends Component {
   componentWillMount() {
   // componentDidMount() {
     this.props.fetchIngredients();
+    // console.log(this.props.fetchIngredients());
   //   axios.get('ingredients.json/')
   //     .then(response => {
   //       this.setState({
@@ -62,9 +62,15 @@ export class BurgerBuilder extends Component {
   //     .catch(error => this.setState({error: true}));
   }
 
-  updatePurchase (ingredients) {
+  componentDidMount() {
+
+    // this.setState({purchasable: this.checkPurchasingState(this.props.ingredients)});
+  }
+
+
+  //Set purchase button state
+  checkPurchasableState (ingredients) {
     const sum = Object.values(ingredients).reduce((sum, value) => sum + value, 0);
-    // this.setState({purchasable: sum > 0});
     return sum > 0;
   }
 
@@ -87,7 +93,7 @@ export class BurgerBuilder extends Component {
   //     });
   //
   //     input.current.value = updatedCount;
-  //     this.updatePurchase(updatedIngredients);
+  //     this.checkPurchasingState(updatedIngredients);
   //   }
   // };
   //
@@ -110,7 +116,7 @@ export class BurgerBuilder extends Component {
   //     });
   //
   //     input.current.value = updatedCount;
-  //     this.updatePurchase(updatedIngredients);
+  //     this.checkPurchasingState(updatedIngredients);
   //   }
   // };
 
@@ -121,14 +127,14 @@ export class BurgerBuilder extends Component {
     if(inputValue === '') {
       inputValue = 0;
     } else {
-      inputValue = parseInt(inputValue.replace(/[^\d]/g, ''), 10);
+      inputValue = +(parseFloat(inputValue.replace(/[^\d]/g, '')).toFixed(2));
     }
 
     if(inputValue > INGREDIENT_LIMITS[type]) {
       inputValue = INGREDIENT_LIMITS[type];
     }
 
-    //prevent rerender components if input value is the same as current ingredient amount
+    //prevent components update if input value is the same as current ingredient amount
     if(inputValue !== this.state.ingredients[type]) {
       const updatedIngredients = {...this.state.ingredients};
       const updatedSequence = [...this.state.ingredientsSequence];
@@ -162,7 +168,7 @@ export class BurgerBuilder extends Component {
         totalPrice: updatedPrice,
       });
 
-      this.updatePurchase(updatedIngredients);
+      // this.checkPurchasingState(updatedIngredients);
     }
   };
 
@@ -238,9 +244,11 @@ export class BurgerBuilder extends Component {
             addIngredient={this.props.onIngredientAdded}
             removeIngredient={this.props.onIngredientRemoved}
             // changeIngredient={this.changeIngredientHandler}
+            changeIngredient={this.props.onChangeIngredient}
             disabled={disabledInfo}
-            // purchasing={this.state.purchasable}
-            purchasing={this.updatePurchase(this.props.ingredients)}
+            // purchasing={this.checkPurchasingState(this.props.ingredients)}
+            purchasable={this.checkPurchasableState(this.props.ingredients)}
+            // purchasable={this.props.purchasable}
             ordered={this.purchaseHandler}
             price={this.props.price}/>
         </Aux>);
@@ -275,6 +283,7 @@ const mapStateToProps = state => {
     ingredients: state.burgerBuilder.ingredients,
     price: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
+    purchasable: state.burgerBuilder.purchasable,
     isAuthenticated: state.auth.token !== null,
   };
 };
@@ -286,6 +295,7 @@ const mapDispatchToProps = dispatch => {
     fetchIngredients: () => dispatch(actions.fetchIngredients()),
     onPurchaseInit: () => dispatch(actions.purchaseInit()),
     onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path)),
+    onChangeIngredient: (name, value) => dispatch(actions.changeIngredient(name, value)),
   };
 };
 

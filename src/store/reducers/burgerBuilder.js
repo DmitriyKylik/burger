@@ -27,15 +27,76 @@ const INGREDIENT_LIMITS = {
 
 const addIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] + 1});
-  const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingName];
+  const updatedPrice = +((state.totalPrice + INGREDIENT_PRICES[action.ingName]).toFixed(2));
 
   return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice, building: true});
 };
 
 const removeIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] - 1});
-  const updatedPrice = state.totalPrice + INGREDIENT_PRICES[action.ingName];
+  const updatedPrice = +((state.totalPrice - INGREDIENT_PRICES[action.ingName]).toFixed(2));
+
   return updateObject(state, {ingredients: updatedIngredients, totalPrice: updatedPrice, building: true});
+};
+
+const changeIngredient = (state, action) => {
+  let inputValue = action.ingValue;
+
+  //convert input value to integer
+  if(inputValue === '') {
+    inputValue = 0;
+  } else {
+    inputValue = parseInt(inputValue.replace(/[^\d]/g, ''), 10);
+  }
+
+  if(inputValue > INGREDIENT_LIMITS[action.ingName]) {
+    inputValue = INGREDIENT_LIMITS[action.ingName];
+  }
+
+  //prevent components update if input value is the same as current ingredient amount
+  if(inputValue !== state.ingredients[action.ingName]) {
+    const updatedIngredients = {...state.ingredients};
+    const updatedSequence = [...state.ingredientsSequence];
+    let updatedPrice, ingredientsCounter;
+
+    //add ingredients to the beginning of ingredients sequence
+    if(updatedIngredients[action.ingName] < inputValue) {
+      ingredientsCounter = inputValue - updatedIngredients[action.ingName];
+      
+      const ingredientsAmount = new Array(ingredientsCounter).fill(action.ingName);
+      updatedPrice = +((state.totalPrice + (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
+
+      updatedSequence.unshift(...ingredientsAmount);
+    } else {
+      //  remove elements from to the beginning of ingredients sequence
+      ingredientsCounter = updatedIngredients[action.ingName] - inputValue;
+      updatedPrice = +((state.totalPrice - (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
+
+      //  remove elements by 'type' name
+      for(let i = 0; i < ingredientsCounter; i++) {
+        const index = updatedSequence.indexOf(action.ingName);
+        if(index !== -1) {
+          updatedSequence.splice(index, 1);
+        }
+      }
+    }
+
+    updatedIngredients[action.ingName] = inputValue;
+
+    return updateObject(state, {
+      ingredients: updatedIngredients,
+      ingredientsSequence: updatedSequence,
+      totalPrice: updatedPrice,
+    });
+    // this.setState({
+    //   ingredients: updatedIngredients,
+    //   ingredientsSequence: updatedSequence,
+    //   totalPrice: updatedPrice,
+    // });
+
+    // this.checkPurchasingState(updatedIngredients);
+  }
+  return updateObject(state);
 };
 
 const saveIngredients = (state, action) => {
@@ -55,6 +116,7 @@ const reducer = (state = initialState, action) => {
   switch (action.type) {
     case(actionsType.ADD_INGREDIENT): return addIngredients(state, action);
     case(actionsType.REMOVE_INGREDIENT): return removeIngredients(state, action);
+    case(actionsType.CHANGE_INGREDIENT): return changeIngredient(state, action);
     case(actionsType.SAVE_INGREDIENTS): return saveIngredients(state, action);
     case(actionsType.FETCH_INGREDIENTS_FAILED): return fetchIngredientsFailed(state, action);
     default: return state;
