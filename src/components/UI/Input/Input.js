@@ -1,7 +1,34 @@
 import React from 'react';
-import classes from './Input.scss'
+import { useField } from 'formik';
+import Aux from '../../../hoc/Auxilliary/auxilliary';
+import classes from './Input.scss';
 
 const input = (props) => {
+  const [field, meta] = useField(props);
+  return (
+    <div className={classes.inputContainer}>
+      <label htmlFor={props.id || props.name}>{props.label}</label>
+      <input className={`${classes.input} ${meta.error && meta.touched ? classes.invalid : null}`} {...field} {...props}/>
+      {meta.touched && meta.error ? (
+        <div className={classes.error}>{meta.error}</div>
+      ) : null}
+    </div>
+  );
+};
+
+export default input;
+
+{/*<div className={classes.inputContainer}>*/}
+  {/*<label htmlFor={props.id || props.name}>{props.label}</label>*/}
+  {/*<div className={`${classes.inputWrapper} ${meta.error && meta.touched ? classes.invalid : null}`}>*/}
+    {/*<input className={classes.input} {...field} {...props}/>*/}
+  {/*</div>*/}
+  {/*{meta.touched && meta.error ? (*/}
+    {/*<div className={classes.error}>{meta.error}</div>*/}
+  {/*) : null}*/}
+{/*</div>*/}
+
+/*const input = (props) => {
   let inputElement = null;
   let inputWrapperClasses = [classes.inputWrapper];
 
@@ -51,6 +78,4 @@ const input = (props) => {
       {inputElement}
     </div>
   );
-};
-
-export default input;
+};*/

@@ -29,7 +29,7 @@
     color: $white-color;
   }
   &:disabled {
-    background: #c7c6c6;
+    background: $disabled-color;
     cursor: not-allowed;
     border: 1px solid #ccc;
     color: #888;

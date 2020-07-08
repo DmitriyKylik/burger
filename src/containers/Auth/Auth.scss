@@ -1,4 +1,7 @@
-.Auth {
+@import 'Scss/utils';
+
+.auth {
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
   text-align: center;
@@ -7,4 +10,16 @@
 .submitButton {
   display: inline-block;
   margin: 10px;
+  &:disabled {
+    background: $disabled-color;
+    color: #ccc;
+  }
+  &:hover:disabled {
+    transform: none;
+  }
+}
+
+.authForm {
+  width: 100%;
+  margin-top: 15px;
 }

@@ -9,10 +9,10 @@ const button = (props) => {
     classes[props.btnType],
     props.classes,
   ].join(' ');
-
   return (
     <button
-      disabled={props.disabled}
+      type={props.type ? props.type : "button"}
+      disabled={props.disabled ? props.disabled : null}
       className={attachedClasses}
       onClick={props.clicked}>
       {props.children}
@@ -21,7 +21,8 @@ const button = (props) => {
 };
 
 button.propTypes = {
-  classes: propTypes.string
+  classes: propTypes.string,
+  disabled: propTypes.bool,
 };
 
 export default button;

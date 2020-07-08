@@ -4,21 +4,38 @@
   border: 1px solid $border-color;
   padding: 10px;
   border-radius: 15px;
-  margin-bottom: 15px;
   background: $white-color;
+}
+
+.inputContainer {
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
 }
 
 .input {
   display: block;
   width: 100%;
   outline: none;
-  border: none;
   background: none;
+  border: 1px solid $border-color;
+  padding: 10px;
+  border-radius: 15px;
+  background: $white-color;
+  @include transitionAll;
+  &:focus {
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.3);
+  }
   &::placeholder {
     color: $mainFont;
   }
 }
 
+.error {
+  margin-top: 10px;
+  color: $danger-color;
+}
+
 .invalid {
-  border-color: $danger-color;
+  box-shadow: 0 0 12px 0 rgba(148, 67, 23, 0.8);
 }

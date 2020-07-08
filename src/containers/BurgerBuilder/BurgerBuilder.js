@@ -43,6 +43,7 @@ export class BurgerBuilder extends Component {
 
   //Add handler for setting a base ingredients amount from server data
   componentWillMount() {
+
   // componentDidMount() {
     this.props.fetchIngredients();
     // console.log(this.props.fetchIngredients());

@@ -6,12 +6,9 @@ import Burger from '../../components/Burger/Burger';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
 import Aux from '../../hoc/Auxilliary/auxilliary';
-// import CheckoutData from './CheckoutData/CheckoutData';
+import CheckoutData from './CheckoutData/CheckoutData';
 import classes from './Checkout.scss';
 import * as actionsType from "../../store/actions";
-import asyncComponent from '../../hoc/asyncComponent/asyncComponent';
-
-const CheckoutData = asyncComponent(() => import('./CheckoutData/CheckoutData'));
 
 class Checkout extends Component {
 
