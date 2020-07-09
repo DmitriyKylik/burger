@@ -31,6 +31,13 @@
   }
 }
 
+.inputSelect {
+  display: block;
+  [class^='inputSelect__indicators'] {
+    display: none;
+  }
+}
+
 .error {
   margin-top: 10px;
   color: $danger-color;

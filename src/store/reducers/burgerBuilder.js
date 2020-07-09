@@ -52,7 +52,8 @@ const changeIngredient = (state, action) => {
   if(inputValue === '') {
     inputValue = 0;
   } else {
-    inputValue = parseInt(inputValue.replace(/[^\d]/g, ''), 10);
+    const value = inputValue.replace(/[^\d]/g, '');
+    inputValue = parseInt(value === '' ? 0 : value, 10);
   }
 
   if(inputValue > INGREDIENT_LIMITS[action.ingName]) {

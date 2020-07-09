@@ -1,99 +1,29 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 import Button from '../../../components/UI/Button/Button';
 import classes from './CheckoutData.scss';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import axios from '../../../axios-orders';
-import Input from '../../../components/UI/Input/Input';
+import { Input, CustomSelect, } from '../../../components/UI/Input/Input';
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actionsType from '../../../store/actions/index';
+import Aux from '../../../hoc/Auxilliary/auxilliary';
 
 class CheckoutData extends Component {
 
   state = {
-    orderForm: {
-        name: {
-          elementType: 'input',
-          elementConfig: {
-            type: 'text',
-            placeholder: 'Your name',
-          },
-          value: '',
-          valid: false,
-          touched: false,
-          validation: {
-            required: true,
-            minLength: 3,
-            maxLength: 6,
-          }
-        },
-        street: {
-          elementType: 'input',
-          elementConfig: {
-            type: 'text',
-            placeholder: 'Street',
-          },
-          value: '',
-          valid: false,
-          touched: false,
-          validation: {
-            required: true,
-          }
-        },
-        email: {
-          elementType: 'email',
-          elementConfig: {
-            type: 'email',
-            placeholder: 'Your email',
-          },
-          value: '',
-          valid: false,
-          touched: false,
-          validation: {
-            required: true,
-          }
-        },
-        zipCode: {
-          elementType: 'input',
-          elementConfig: {
-            type: 'text',
-            placeholder: 'Zip Code',
-          },
-          value: '',
-          valid: false,
-          touched: false,
-          validation: {
-            required: true,
-          }
-        },
-        country: {
-          elementType: 'input',
-          elementConfig: {
-            type: 'text',
-            placeholder: 'Country',
-          },
-          value: '',
-          valid: false,
-          touched: false,
-          validation: {
-            required: true,
-          }
-        },
-        deliveryMethod: {
-          elementType: 'select',
-          elementConfig: {
-            options: [
-              {value: 'fastest', outputValue: 'Fastest'},
-              {value: 'cheapest', outputValue: 'Cheapest'}
-            ]
-          },
-          value: 'fastest',
-          validation: {},
-        },
-      },
-    formIsValid: false,
-    // loading: false,
+    countryOptions: [
+      { value: 'ukraine', label: 'Ukraine' },
+      { value: 'germany', label: 'Germany' },
+      { value: 'japan', label: 'Japan' }
+    ],
+    deliveryOptions: [
+      { value: 'fastest', label: 'Fastest' },
+      { value: 'cheapest', label: 'Cheapest' },
+    ]
   };
 
   orderHandler = (event) => {
@@ -123,84 +53,116 @@ class CheckoutData extends Component {
     //   });
   };
 
-  inputChangedHandler = (event, inputIdentifier) => {
-    const updatedOrderForm = JSON.parse(JSON.stringify(this.state.orderForm));
-    let formIsValid = true;
+  // inputChangedHandler = (event, inputIdentifier) => {
+  //   const updatedOrderForm = JSON.parse(JSON.stringify(this.state.orderForm));
+  //   let formIsValid = true;
+  //
+  //   updatedOrderForm[inputIdentifier].value = event.target.value;
+  //   updatedOrderForm[inputIdentifier].touched = true;
+  //   updatedOrderForm[inputIdentifier].valid = this.checkValidity(event.target.value, updatedOrderForm[inputIdentifier].validation);
+  //
+  //   for(let inputIdentifier in updatedOrderForm) {
+  //     if(updatedOrderForm[inputIdentifier].hasOwnProperty('valid')) {
+  //       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
+  //     }
+  //   }
+  //   console.log(formIsValid);
+  //   this.setState({
+  //     orderForm: updatedOrderForm,
+  //     formIsValid: formIsValid,
+  //   });
+  // };
 
-    updatedOrderForm[inputIdentifier].value = event.target.value;
-    updatedOrderForm[inputIdentifier].touched = true;
-    updatedOrderForm[inputIdentifier].valid = this.checkValidity(event.target.value, updatedOrderForm[inputIdentifier].validation);
-
-    for(let inputIdentifier in updatedOrderForm) {
-      if(updatedOrderForm[inputIdentifier].hasOwnProperty('valid')) {
-        formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-      }
-    }
-    console.log(formIsValid);
-    this.setState({
-      orderForm: updatedOrderForm,
-      formIsValid: formIsValid,
-    });
-  };
-
-  checkValidity (value, rules) {
-    let isValid = true;
-
-    if(!rules) {
-      return true;
-    }
-
-    if(rules.required) {
-      isValid = value.trim() !== '';
-    }
-
-    if(rules.minLength) {
-      isValid = value.length > rules.minLength && isValid;
-    }
-
-    if(rules.maxLength) {
-      isValid = value.length < rules.maxLength && isValid;
-    }
-
-    //In state if input has property isEmail, for example, add  this check
-    // if(rules)
-
-    return isValid;
-  }
+  // checkValidity (value, rules) {
+  //   let isValid = true;
+  //
+  //   if(!rules) {
+  //     return true;
+  //   }
+  //
+  //   if(rules.required) {
+  //     isValid = value.trim() !== '';
+  //   }
+  //
+  //   if(rules.minLength) {
+  //     isValid = value.length > rules.minLength && isValid;
+  //   }
+  //
+  //   if(rules.maxLength) {
+  //     isValid = value.length < rules.maxLength && isValid;
+  //   }
+  //
+  //   return isValid;
+  // }
 
   render() {
-    const formElementsArray = [];
-
-    for(let key in this.state.orderForm) {
-      formElementsArray.push({
-        id: key,
-        config: this.state.orderForm[key],
-      });
-    }
+    // const formElementsArray = [];
+    //
+    // for(let key in this.state.orderForm) {
+    //   formElementsArray.push({
+    //     id: key,
+    //     config: this.state.orderForm[key],
+    //   });
+    // }
 
     let form = (
-      <React.Fragment>
+      <Aux>
         <p>Please add your contact data!</p>
-        <form onSubmit={this.orderHandler}>
-          {formElementsArray.map(formElement => (
-            <Input
-              touched={formElement.config.touched}
-              shouldValidate={formElement.config.validation}
-              isValid={formElement.config.valid}
-              changed={(event) => this.inputChangedHandler(event, formElement.id)}
-              elementType={formElement.config.elementType}
-              elementConfig={formElement.config.elementConfig}
-              value={formElement.config.value}
-              key={formElement.id}/>
-          ))}
-          <Button
-            btnType="Success"
-            disabled={!this.state.formIsValid}
-            classes={classes.submitButton}>
-            Order
-          </Button>
-        </form>
-      </React.Fragment>
+        <Formik
+          initialValues={{
+            name: '',
+            address: '',
+            email: '',
+            zipCode: '',
+            country: '',
+            deliveryMethod: '',
+          }}
+          validationSchema={Yup.object({
+            name: Yup.string()
+              .required('Required')
+              .matches(/^[\sA-Za-zА-Яа-яЁёА-Яа-яёЁЇїІіЄєҐґ'-]+$/, 'Name must contain only letters'),
+            email: Yup.string().required('Required').email('Invalid email address'),
+            address: Yup.string().required('Required'),
+            zipCode: Yup.string().required('Required'),
+            country: Yup.string().required("Select Country"),
+            deliveryMethod: Yup.string().required("Select Method"),
+          })
+          }
+          onSubmit={(values, {isSubmitting}) => {
+
+          }}>
+            <Form>
+              <Input
+                type="text"
+                name="name"
+                placeholder="Your name"/>
+              <Input
+                type="email"
+                name="email"
+                placeholder="Your email"/>
+              <Input
+                type="text"
+                name="address"
+                placeholder="Your address"/>
+              <Input
+                type="text"
+                name="zipCode"
+                placeholder="Your Zip Code"/>
+              <CustomSelect
+                options={this.state.countryOptions}
+                name="country"/>
+              <CustomSelect
+                options={this.state.deliveryOptions}
+                name="deliveryMethod"/>
+              <Button
+                btnType="Success"
+                // disabled={!this.state.formIsValid}
+                classes={classes.submitButton}>
+                Order
+              </Button>
+            </Form>
+        </Formik>
+      </Aux>
     );
 
     if(this.props.loading) {
@@ -210,6 +172,26 @@ class CheckoutData extends Component {
     return (
       <div className={classes.CheckoutData}>
         {form}
+
+        {/*<form onSubmit={this.orderHandler}>*/}
+          {/*{formElementsArray.map(formElement => (*/}
+            {/*<Input*/}
+              {/*touched={formElement.config.touched}*/}
+              {/*shouldValidate={formElement.config.validation}*/}
+              {/*isValid={formElement.config.valid}*/}
+              {/*changed={(event) => this.inputChangedHandler(event, formElement.id)}*/}
+              {/*elementType={formElement.config.elementType}*/}
+              {/*elementConfig={formElement.config.elementConfig}*/}
+              {/*value={formElement.config.value}*/}
+              {/*key={formElement.id}/>*/}
+          {/*))}*/}
+          {/*<Button*/}
+            {/*btnType="Success"*/}
+            {/*disabled={!this.state.formIsValid}*/}
+            {/*classes={classes.submitButton}>*/}
+            {/*Order*/}
+          {/*</Button>*/}
+        {/*</form>*/}
       </div>
     );
   }

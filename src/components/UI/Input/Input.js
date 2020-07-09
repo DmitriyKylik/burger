@@ -1,13 +1,13 @@
 import React from 'react';
 import { useField } from 'formik';
-import Aux from '../../../hoc/Auxilliary/auxilliary';
+
+import Select from 'react-select';
 import classes from './Input.scss';
 
-const input = (props) => {
+export const Input = (props) => {
   const [field, meta] = useField(props);
   return (
     <div className={classes.inputContainer}>
-      <label htmlFor={props.id || props.name}>{props.label}</label>
       <input className={`${classes.input} ${meta.error && meta.touched ? classes.invalid : null}`} {...field} {...props}/>
       {meta.touched && meta.error ? (
         <div className={classes.error}>{meta.error}</div>
@@ -16,66 +16,77 @@ const input = (props) => {
   );
 };
 
-export default input;
+export const CustomSelect = (props) => {
 
-{/*<div className={classes.inputContainer}>*/}
-  {/*<label htmlFor={props.id || props.name}>{props.label}</label>*/}
-  {/*<div className={`${classes.inputWrapper} ${meta.error && meta.touched ? classes.invalid : null}`}>*/}
-    {/*<input className={classes.input} {...field} {...props}/>*/}
-  {/*</div>*/}
-  {/*{meta.touched && meta.error ? (*/}
-    {/*<div className={classes.error}>{meta.error}</div>*/}
-  {/*) : null}*/}
-{/*</div>*/}
+  const [field, meta, helpers] = useField(props.name);
 
-/*const input = (props) => {
-  let inputElement = null;
-  let inputWrapperClasses = [classes.inputWrapper];
+  const { setValue, setTouched, setError } = helpers;
 
-  if(!props.isValid && props.shouldValidate && props.touched) {
-    inputWrapperClasses.push(classes.invalid);
+  const setFieldProps = (selectedOption) => {
+    setValue(selectedOption.value);
+    setError(null);
   }
 
-  switch (props.elementType) {
-    case('input'):
-      inputElement = (
-        <div className={inputWrapperClasses.join(' ')}>
-          <input type="text" className={classes.input} {...props.elementConfig} value={props.value} onChange={props.changed}/>
-        </div>
-      );
-      break;
-    case('textarea'):
-      inputElement = (
-        <div className={inputWrapperClasses.join(' ')}>
-          <textarea className={classes.input} {...props.elementConfig} value={props.value} onChange={props.changed}/>
-        </div>
-      );
-      break;
-    case('select'):
-      inputElement = (
-        <div className={inputWrapperClasses.join(' ')}>
-          <select className={classes.input} value={props.value} onChange={props.changed}>
-            {props.elementConfig.options.map(option => (
-              <option key={option.value} value={option.value}>
-                {option.outputValue}
-              </option>
-            ))}
-          </select>
-        </div>
-      );
-      break;
-    default:
-      inputElement = (
-        <div className={classes.inputWrapper}>
-          <input type="text" className={classes.input} {...props.elementConfig} value={props.value} onChange={props.changed}/>
-        </div>
-      );
-  }
+  const customStyles =  {
+    control: (provided, state) => ({
+      ...provided,
+      borderColor: '#e4e8ea',
+      borderBottom: state.isFocused ? 'none' : '1px solid #e4e8ea',
+      boxShadow: state.isFocused ? '0 0 12px 0 rgba(0, 0, 0, 0.3)' : null,
+      borderRadius: state.isFocused && state.selectProps.menuIsOpen ? '15px 15px 0 0' : '15px',
+      '&:hover:active': {
+        boxShadow: state.isFocused ? '0 0 12px 0 rgba(0, 0, 0, 0.3)' : null,
+      },
+      '&:hover': {
+        cursor: 'pointer',
+        boxShadow: state.isFocused ? '0 0 12px 0 rgba(0, 0, 0, 0.3)' : null,
+      }
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      textAlign: 'left',
+      transition: 'all 0.3s ease-out',
+      backgroundColor: '#fff',
+      color: '#111',
+      '&:hover': {
+        backgroundColor: '#826459',
+        color: '#fff',
+      }
+    }),
+    menu: (provided, state) => ({
+      ...provided,
+      marginTop: 0,
+      borderRadius: '0 0 15px 15px',
+      overflow: 'hidden',
+      borderTop: state.isFocused ? 'none' : '1px solid #e4e8ea',
+      boxShadow: state.selectProps.menuIsOpen ? '0 9px 12px 0 rgba(0, 0, 0, 0.3)' : null,
+    }),
+    valueContainer: (provided, state) => ({
+      ...provided,
+      padding: '4px 8px'
+    }),
+    singleValue: (provided, state) => ({
+      color: '#111',
+    }),
+    placeholder: (provided, state) => ({
+      color: 'rgb(117, 117, 117)',
+    }),
+    menuList: (provided, state) => ({
+      ...provided,
+      padding: 0,
+    })
+  };
 
   return (
-    <div>
-      <label>{props.label}</label>
-      {inputElement}
+    <div className={classes.inputContainer}>
+      <Select
+        styles={customStyles}
+        {...props}
+        onBlur={setTouched}
+        onChange={selectedOption => setFieldProps(selectedOption)} />
+      {meta.touched && meta.error ? (
+        <div className={classes.error}>{meta.error}</div>
+      ) : null}
     </div>
   );
-};*/
+};

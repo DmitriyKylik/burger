@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 
 import Aux from '../../hoc/Auxilliary/auxilliary';
-import Input from '../../components/UI/Input/Input';
+import { Input } from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import Spinner from '../../components/UI/Spinner/Spinner';
@@ -39,7 +39,7 @@ class Auth extends Component {
 
     if(this.props.error) {
       errorMessage = (
-        <p>{this.props.error.message}</p>
+        <p className={classes.error}>{this.props.error.message}</p>
       );
     }
 
@@ -60,7 +60,6 @@ class Auth extends Component {
           this.props.onAuth(values.email, values.password, this.state.isSignUp);
           setSubmitting(false);
         }}>
-        {formik => (
           <Form className={classes.authForm}>
             <Aux>
               {errorMessage}
@@ -80,7 +79,6 @@ class Auth extends Component {
               </Button>
             </Aux>
           </Form>
-        )}
       </Formik>
     );
 

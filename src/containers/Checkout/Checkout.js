@@ -12,31 +12,6 @@ import * as actionsType from "../../store/actions";
 
 class Checkout extends Component {
 
-  // state = {
-  //   ingredientsSequence: [],
-  //   ingredients: {},
-  //   price: 0,
-  // };
-
-  // componentDidMount() {
-  //   const query = new URLSearchParams(this.props.location.search);
-  //   const ingredients = {};
-  //   let price = 0;
-  //
-  //   for(let [key, value] of query.entries()) {
-  //     if(key === 'price') {
-  //       price = value;
-  //     } else {
-  //       ingredients[key] = value;
-  //     }
-  //   }
-  //   this.setState({
-  //     ingredients: {...ingredients},
-  //     ingredientsSequence: this.props.history.location.state ? [...this.props.history.location.state.ingredientsSequence] : [],
-  //     price: price
-  //   });
-  //
-  // }
   cancelCheckoutHandler = () => {
     this.props.history.goBack();
   };
@@ -48,11 +23,11 @@ class Checkout extends Component {
   render() {
     let actionButtons = null;
     let burger = <Redirect to="/" />;
-    let contactData = null;
+    let checkoutData = null;
 
     if(this.props.ingredients) {
       const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
-      // burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
+
       burger = <Burger ingredientsSequence={this.props.ingredientsSequence} />;
       actionButtons = (
         <Aux>
@@ -65,17 +40,19 @@ class Checkout extends Component {
           </Button>
         </Aux>
       );
-      contactData = <Route path={`${this.props.match.path}/checkout-data`} component={CheckoutData} />;
+      checkoutData = <Route path={`${this.props.match.path}/checkout-data`} component={CheckoutData} />;
+    } else {
+      burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
     }
 
     return (
-      <div className={classes.Checkout}>
+      <div className={classes.checkout}>
         <h1>Burger Checkout</h1>
         {burger}
-        <div className={classes.btnWrapper} classes={classes.controlBtn}>
+        <div className={classes.btnWrapper}>
           {actionButtons}
         </div>
-        {contactData}
+        {checkoutData}
       </div>
     );
   }
