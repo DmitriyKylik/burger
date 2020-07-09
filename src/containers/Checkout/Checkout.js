@@ -1,14 +1,12 @@
 import React, {Component} from 'react';
-import { Route, NavLink, Redirect } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Burger from '../../components/Burger/Burger';
-import Spinner from '../../components/UI/Spinner/Spinner';
 import Button from '../../components/UI/Button/Button';
 import Aux from '../../hoc/Auxilliary/auxilliary';
 import CheckoutData from './CheckoutData/CheckoutData';
 import classes from './Checkout.scss';
-import * as actionsType from "../../store/actions";
 
 class Checkout extends Component {
 
@@ -28,7 +26,7 @@ class Checkout extends Component {
     if(this.props.ingredients) {
       const purchasedRedirect = this.props.purchased ? <Redirect to="/" /> : null;
 
-      burger = <Burger ingredientsSequence={this.props.ingredientsSequence} />;
+      burger = <Burger ingredientsSequence={this.props.ingredientsSequence} classes={classes.burger} />;
       actionButtons = (
         <Aux>
           {purchasedRedirect}
@@ -41,10 +39,7 @@ class Checkout extends Component {
         </Aux>
       );
       checkoutData = <Route path={`${this.props.match.path}/checkout-data`} component={CheckoutData} />;
-    } else {
-      burger = <p>Your burger is empty!<NavLink to="/" className={`${classes.homeLink} slide-line`}>Add some ingredients</NavLink></p>;
     }
-
     return (
       <div className={classes.checkout}>
         <h1>Burger Checkout</h1>

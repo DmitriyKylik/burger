@@ -106,7 +106,7 @@ const saveIngredients = (state, action) => {
 };
 
 const fetchIngredientsFailed = (state) => {
-  return updateObject(state, {ingredients: null, error: true});
+  return updateObject(state, {ingredients: null, ingredientsSequence: [], error: true});
 };
 
 const reducer = (state = initialState, action) => {

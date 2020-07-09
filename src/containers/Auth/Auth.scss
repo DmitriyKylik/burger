@@ -25,6 +25,10 @@
 }
 
 .authForm {
-  width: 100%;
-  margin-top: 15px;
+  width: auto;
+  margin: 15px 20px;
+  @include miw(500) {
+    width: 100%;
+    margin: 15px 0 0 0;
+  }
 }

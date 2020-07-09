@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Aux from '../../hoc/Auxilliary/auxilliary';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar'
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+import SideDrawerContext from '../../context/sideDrawerContext';
 import classes from './Layout.scss';
 
 class Layout extends Component {
@@ -15,6 +16,10 @@ class Layout extends Component {
     showSideDrawer: false,
   };
 
+  sideDrawerClosedHandler = () => {
+    this.setState( { showSideDrawer: false } );
+  }
+
   sideDrawerToggleHandler = () => {
     this.setState((prevState) => {
       return {showSideDrawer: !prevState.showSideDrawer}
@@ -25,16 +30,15 @@ class Layout extends Component {
     return (
       <Aux>
         <Toolbar isAuth={this.props.isAuthenticated} sideDrawerOpen={this.sideDrawerToggleHandler} />
-        <SideDrawer
-          isAuth={this.props.isAuthenticated}
-          open={this.state.showSideDrawer}
-          hide={this.sideDrawerToggleHandler} />
-        {/*<BackDrop show={this.state.backDropShow} clicked={this.toggleBackDropHandler}/>*/}
-        {/*<ModalContext.Provider value={{show: this.state.backDropShow, toggleShow: this.toggleBackDropHandler}}>*/}
+        <SideDrawerContext.Provider value={{close: this.sideDrawerClosedHandler}}>
+          <SideDrawer
+            isAuth={this.props.isAuthenticated}
+            open={this.state.showSideDrawer}
+            hide={this.sideDrawerToggleHandler} />
+        </SideDrawerContext.Provider>
           <main className={classes.content}>
             {this.props.children}
           </main>
-        {/*</ModalContext.Provider>*/}
       </Aux>
     )
   }

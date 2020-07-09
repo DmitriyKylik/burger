@@ -30,36 +30,17 @@ export class BurgerBuilder extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      purchasing: false,
+      loading: false,
+    };
   }
 
-  state = {
-    purchasing: false,
-    loading: false,
-  };
-
-  componentWillUnmount() {
-    console.log('Burger Builder UnMount');
-  }
-
-  //Add handler for setting a base ingredients amount from server data
-  componentWillMount() {
-
-  // componentDidMount() {
+  // componentWillMount() {
+  componentDidMount() {
     this.props.fetchIngredients();
-    // console.log(this.props.fetchIngredients());
-  //   axios.get('ingredients.json/')
-  //     .then(response => {
-  //       this.setState({
-  //         purchasable: Object.values(response.data).some(value => +value > 0),
-  //         ingredients: response.data,
-  //         ingredientsSequence: Object.keys(response.data).filter(key => response.data[key] > 0),
-  //       });
-  //       console.log(this.props.history);
-  //     })
-  //     .catch(error => this.setState({error: true}));
   }
 
-  //Set purchase button state
   checkPurchasableState (ingredients) {
     const sum = Object.values(ingredients).reduce((sum, value) => sum + value, 0);
     return sum > 0;
@@ -116,12 +97,9 @@ export class BurgerBuilder extends Component {
             ingredients={this.props.ingredients}
             addIngredient={this.props.onIngredientAdded}
             removeIngredient={this.props.onIngredientRemoved}
-            // changeIngredient={this.changeIngredientHandler}
             changeIngredient={this.props.onChangeIngredient}
             disabled={disabledInfo}
-            // purchasing={this.checkPurchasingState(this.props.ingredients)}
             purchasable={this.checkPurchasableState(this.props.ingredients)}
-            // purchasable={this.props.purchasable}
             ordered={this.purchaseHandler}
             price={this.props.price}/>
         </Aux>);
@@ -133,10 +111,6 @@ export class BurgerBuilder extends Component {
         ingredients={this.props.ingredients}
         price={this.props.price}/>;
     }
-
-    // if(this.state.loading) {
-    //   orderSummary = <Spinner/>
-    // }
 
     return (
       <Aux>

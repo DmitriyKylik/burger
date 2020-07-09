@@ -26,85 +26,7 @@ class CheckoutData extends Component {
     ]
   };
 
-  orderHandler = (event) => {
-    event.preventDefault();
-    const formData = {};
-    const order = {
-      ingredients: this.props.ingredients,
-      price: this.props.price,
-      orderData: formData,
-      userId: this.props.userId,
-    };
-
-    for(let formElementIdentifier in this.state.orderForm) {
-      formData[formElementIdentifier] = this.state.orderForm[formElementIdentifier].value;
-    }
-
-    console.log(this.props.token);
-    this.props.onPurchaseBurger(order, this.props.token);
-
-    // axios.post('orders.json', order)
-    //   .then(response => {
-    //     this.setState({loading: false});
-    //     this.props.history.replace('/');
-    //   })
-    //   .catch(error => {
-    //     this.setState({loading: false});
-    //   });
-  };
-
-  // inputChangedHandler = (event, inputIdentifier) => {
-  //   const updatedOrderForm = JSON.parse(JSON.stringify(this.state.orderForm));
-  //   let formIsValid = true;
-  //
-  //   updatedOrderForm[inputIdentifier].value = event.target.value;
-  //   updatedOrderForm[inputIdentifier].touched = true;
-  //   updatedOrderForm[inputIdentifier].valid = this.checkValidity(event.target.value, updatedOrderForm[inputIdentifier].validation);
-  //
-  //   for(let inputIdentifier in updatedOrderForm) {
-  //     if(updatedOrderForm[inputIdentifier].hasOwnProperty('valid')) {
-  //       formIsValid = updatedOrderForm[inputIdentifier].valid && formIsValid;
-  //     }
-  //   }
-  //   console.log(formIsValid);
-  //   this.setState({
-  //     orderForm: updatedOrderForm,
-  //     formIsValid: formIsValid,
-  //   });
-  // };
-
-  // checkValidity (value, rules) {
-  //   let isValid = true;
-  //
-  //   if(!rules) {
-  //     return true;
-  //   }
-  //
-  //   if(rules.required) {
-  //     isValid = value.trim() !== '';
-  //   }
-  //
-  //   if(rules.minLength) {
-  //     isValid = value.length > rules.minLength && isValid;
-  //   }
-  //
-  //   if(rules.maxLength) {
-  //     isValid = value.length < rules.maxLength && isValid;
-  //   }
-  //
-  //   return isValid;
-  // }
-
   render() {
-    // const formElementsArray = [];
-    //
-    // for(let key in this.state.orderForm) {
-    //   formElementsArray.push({
-    //     id: key,
-    //     config: this.state.orderForm[key],
-    //   });
-    // }
-
     let form = (
       <Aux>
         <p>Please add your contact data!</p>
@@ -128,8 +50,21 @@ class CheckoutData extends Component {
             deliveryMethod: Yup.string().required("Select Method"),
           })
           }
-          onSubmit={(values, {isSubmitting}) => {
+          onSubmit={(values, {setSubmitting}) => {
+            // const formData = {};
+            const order = {
+              ingredients: this.props.ingredients,
+              price: this.props.price,
+              orderData: values,
+              userId: this.props.userId,
+            };
 
+            // for(let formElementName in values) {
+            //   formData[formElementName] = values[formElementName];
+            // }
+            debugger;
+            this.props.onPurchaseBurger(order, this.props.token)
+            setSubmitting(false);
           }}>
             <Form>
               <Input
@@ -155,8 +90,8 @@ class CheckoutData extends Component {
                 options={this.state.deliveryOptions}
                 name="deliveryMethod"/>
               <Button
+                type="submit"
                 btnType="Success"
-                // disabled={!this.state.formIsValid}
                 classes={classes.submitButton}>
                 Order
               </Button>
@@ -172,26 +107,6 @@ class CheckoutData extends Component {
     return (
       <div className={classes.CheckoutData}>
         {form}
-
-        {/*<form onSubmit={this.orderHandler}>*/}
-          {/*{formElementsArray.map(formElement => (*/}
-            {/*<Input*/}
-              {/*touched={formElement.config.touched}*/}
-              {/*shouldValidate={formElement.config.validation}*/}
-              {/*isValid={formElement.config.valid}*/}
-              {/*changed={(event) => this.inputChangedHandler(event, formElement.id)}*/}
-              {/*elementType={formElement.config.elementType}*/}
-              {/*elementConfig={formElement.config.elementConfig}*/}
-              {/*value={formElement.config.value}*/}
-              {/*key={formElement.id}/>*/}
-          {/*))}*/}
-          {/*<Button*/}
-            {/*btnType="Success"*/}
-            {/*disabled={!this.state.formIsValid}*/}
-            {/*classes={classes.submitButton}>*/}
-            {/*Order*/}
-          {/*</Button>*/}
-        {/*</form>*/}
       </div>
     );
   }

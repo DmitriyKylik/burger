@@ -6,6 +6,7 @@ import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as ordersActions from '../../store/actions/index';
+import classes from './Orders.scss';
 
 class Orders extends Component {
 
@@ -45,18 +46,20 @@ class Orders extends Component {
     let orders = <Spinner/>
     if(!this.props.loading) {
       orders = this.props.orders.map(order => {
+        debugger;
        return(
          <Order key={order.id}
                 ingredients={order.ingredients}
-                delivered={order.deliveryMethod}
+                delivered={order.orderData.deliveryMethod}
                 price={order.price}
-                customer={order.customer}/>
+                country={order.orderData.country}
+                customer={order.orderData.name}/>
        );
       });
     }
 
     return (
-      <div>
+      <div className={classes.ordersWrapper}>
         {orders}
       </div>
     );

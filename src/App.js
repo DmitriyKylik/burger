@@ -16,10 +16,6 @@ const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
 const asyncAuth = asyncComponent(() => import('./containers/Auth/Auth'));
 
 class App extends Component {
-  //Optz
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.onAutoSignUp();

@@ -47,12 +47,10 @@ const order = (props) => {
           {ingredients}
         </div>
       </div>
-      <p>Price: <span className={classes.priceValue}>USD {props.price}</span></p>
-      <p>Delivery method: {props.delivered}</p>
-      {/*<div>*/}
-        {/*<div className={classes.dataTitle}>Customer</div>*/}
-        {/*<div>{customer}</div>*/}
-      {/*</div>*/}
+      <p className={classes.contactData}>Price: <span className={classes.orderDataValue}>USD {props.price}</span></p>
+      <p className={classes.contactData}>Delivery method: <span className={classes.orderDataValue}>{props.delivered}</span></p>
+      <p className={classes.contactData}>Country: <span className={classes.orderDataValue}>{props.country}</span></p>
+      <p className={classes.contactData}> Customer: <span className={classes.orderDataValue}>{props.customer}</span></p>
     </div>
   );
 };
