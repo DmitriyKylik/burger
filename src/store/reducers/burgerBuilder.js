@@ -2,47 +2,41 @@ import * as actionsType from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
 const initialState = {
+  ingredientsParams: null,
   ingredients: null,
   ingredientsSequence: [],
-  totalPrice: 4,
+  totalPrice: 0,
   error: false,
   building: false,
 };
 
-//Get data from backend
-// 'ComponentDidMount' method get ingredients prices from the server
-const INGREDIENT_PRICES = {
-  salad: 0.3,
-  meat: 1.3,
-  cheese: 0.4,
-  bacon: 0.5
-};
-
-const INGREDIENT_LIMITS = {
-  salad: 10,
-  meat: 8,
-  cheese: 15,
-  bacon: 40
-};
-
 const addIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] + 1});
-  const updatedPrice = +((state.totalPrice + INGREDIENT_PRICES[action.ingName]).toFixed(2));
+  const updatedPrice = +((state.totalPrice + state.ingredientsParams.prices[action.ingName]).toFixed(2));
   const updatedSequence = [...state.ingredientsSequence];
 
   updatedSequence.unshift(action.ingName);
 
-  return updateObject(state, {ingredients: updatedIngredients, ingredientsSequence: updatedSequence, totalPrice: updatedPrice, building: true});
+  return updateObject(state, {
+    ingredients: updatedIngredients,
+    ingredientsSequence: updatedSequence,
+    totalPrice: updatedPrice,
+    building: true});
 };
 
 const removeIngredients = (state, action) => {
   const updatedIngredients = updateObject(state.ingredients, {[action.ingName]: state.ingredients[action.ingName] - 1});
-  const updatedPrice = +((state.totalPrice - INGREDIENT_PRICES[action.ingName]).toFixed(2));
+  const updatedPrice = +((state.totalPrice - state.ingredientsParams.prices[action.ingName]).toFixed(2));
   const updatedSequence = [...state.ingredientsSequence];
 
   updatedSequence.splice(updatedSequence.findIndex(item => item === action.ingName), 1);
 
-  return updateObject(state, {ingredients: updatedIngredients, ingredientsSequence: updatedSequence, totalPrice: updatedPrice, building: true});
+  return updateObject(state, {
+    ingredients: updatedIngredients,
+    ingredientsSequence: updatedSequence,
+    totalPrice: updatedPrice,
+    building: true,
+  });
 };
 
 const changeIngredient = (state, action) => {
@@ -56,8 +50,8 @@ const changeIngredient = (state, action) => {
     inputValue = parseInt(value === '' ? 0 : value, 10);
   }
 
-  if(inputValue > INGREDIENT_LIMITS[action.ingName]) {
-    inputValue = INGREDIENT_LIMITS[action.ingName];
+  if(inputValue > state.ingredientsParams.limits[action.ingName]) {
+    inputValue = state.ingredientsParams.limits[action.ingName];
   }
 
   const updatedIngredients = {...state.ingredients};
@@ -69,13 +63,13 @@ const changeIngredient = (state, action) => {
     ingredientsCounter = inputValue - updatedIngredients[action.ingName];
 
     const ingredientsAmount = new Array(ingredientsCounter).fill(action.ingName);
-    updatedPrice = +((state.totalPrice + (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
+    updatedPrice = +((state.totalPrice + (state.ingredientsParams.prices[action.ingName] * ingredientsCounter)).toFixed(2));
 
     updatedSequence.unshift(...ingredientsAmount);
   } else {
     //  remove elements from to the beginning of ingredients sequence
     ingredientsCounter = updatedIngredients[action.ingName] - inputValue;
-    updatedPrice = +((state.totalPrice - (INGREDIENT_PRICES[action.ingName] * ingredientsCounter)).toFixed(2));
+    updatedPrice = +((state.totalPrice - (state.ingredientsParams.prices[action.ingName] * ingredientsCounter)).toFixed(2));
 
     //  remove elements by 'type' name
     for(let i = 0; i < ingredientsCounter; i++) {
@@ -97,16 +91,26 @@ const changeIngredient = (state, action) => {
 };
 
 const saveIngredients = (state, action) => {
+  const ingredientsSequence = Object.keys(action.ingredients).filter(key => action.ingredients[key] > 0 );
+
   return updateObject(state, {
     ingredients: action.ingredients,
+    ingredientsSequence,
     error: false,
-    totalPrice: 4,
     building: false,
   });
 };
 
-const fetchIngredientsFailed = (state) => {
+const fetchIngredientsDataFailed = (state) => {
   return updateObject(state, {ingredients: null, ingredientsSequence: [], error: true});
+};
+
+const saveIngredientsParams = (state, action) => {
+  return updateObject(state, {
+    ingredientsParams: action.ingredientsParams,
+    totalPrice: action.ingredientsParams.basePrice,
+    error: false,
+  });
 };
 
 const reducer = (state = initialState, action) => {
@@ -115,7 +119,8 @@ const reducer = (state = initialState, action) => {
     case(actionsType.REMOVE_INGREDIENT): return removeIngredients(state, action);
     case(actionsType.CHANGE_INGREDIENT): return changeIngredient(state, action);
     case(actionsType.SAVE_INGREDIENTS): return saveIngredients(state, action);
-    case(actionsType.FETCH_INGREDIENTS_FAILED): return fetchIngredientsFailed(state, action);
+    case(actionsType.SAVE_INGREDIENTS_PARAMS): return saveIngredientsParams(state, action);
+    case(actionsType.FETCH_INGREDIENTS_DATA_FAILED): return fetchIngredientsDataFailed(state, action);
     default: return state;
   }
 };

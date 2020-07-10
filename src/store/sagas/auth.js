@@ -23,7 +23,6 @@ export function* authUserSaga(action) {
     password: action.password,
     returnSecureToken: true,
   };
-  // debugger;
   let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAw1O4qxYbOpBQw9GXCi3T1cm3K--IWVQs';
 
   if(!action.isSignUp) {

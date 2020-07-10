@@ -29,9 +29,9 @@ export const saveIngredients = (ingredients) => {
   };
 };
 
-export const fetchIngredientsFailed = () => {
+export const fetchIngredientsDataFailed = () => {
   return {
-    type: actionsType.FETCH_INGREDIENTS_FAILED
+    type: actionsType.FETCH_INGREDIENTS_DATA_FAILED
   };
 };
 
@@ -41,3 +41,15 @@ export const fetchIngredients = () => {
   };
 };
 
+export const saveIngredientsParams = (ingredientsParams) => {
+  return {
+    type: actionsType.SAVE_INGREDIENTS_PARAMS,
+    ingredientsParams,
+  };
+};
+
+export const fetchIngredientsParams = () => {
+  return {
+    type: actionsType.FETCH_INGREDIENTS_PARAMS,
+  };
+};

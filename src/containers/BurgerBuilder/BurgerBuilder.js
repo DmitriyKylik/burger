@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
+import propTypes from 'prop-types';
 
 import Aux from '../../hoc/Auxilliary/auxilliary';
 import Burger from '../../components/Burger/Burger';
@@ -12,33 +13,20 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import classes from './BurgerBuilder.scss';
 import * as actions from '../../store/actions/index';
 
-const INGREDIENT_PRICES = {
-  salad: 0.3,
-  meat: 1.3,
-  cheese: 0.4,
-  bacon: 0.5
-};
-
-const INGREDIENT_LIMITS = {
-  salad: 10,
-  meat: 8,
-  cheese: 15,
-  bacon: 40
-};
-
 export class BurgerBuilder extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       purchasing: false,
-      loading: false,
     };
   }
 
-  // componentWillMount() {
   componentDidMount() {
-    this.props.fetchIngredients();
+    if(!this.props.building) {
+      this.props.fetchIngredientsParams();
+      this.props.fetchIngredients();
+    }
   }
 
   checkPurchasableState (ingredients) {
@@ -66,10 +54,9 @@ export class BurgerBuilder extends Component {
 
   render() {
     let disabledInfo = null;
-    if(this.props.ingredients) {
+    if(this.props.ingredients && this.props.params) {
       disabledInfo = {...this.props.ingredients};
 
-      //Correct statement
       for(let key in disabledInfo) {
 
         if(disabledInfo[key] <= 0) {
@@ -77,7 +64,7 @@ export class BurgerBuilder extends Component {
             less: true,
             more: false,
           };
-        } else if(disabledInfo[key] === INGREDIENT_LIMITS[key]) {
+        } else if(disabledInfo[key] === this.props.params.limits[key]) {
           disabledInfo[key] = {
             less: false,
             more: true,
@@ -86,9 +73,9 @@ export class BurgerBuilder extends Component {
       }
     }
     let orderSummary = null;
-    let burger = this.props.error ? <p>Ingredients can't be loaded</p> : <Spinner/>;
+    let burger = this.props.error ? <p>Ingredients data can't be loaded</p> : <Spinner/>;
 
-    if(this.props.ingredients) {
+    if(this.props.ingredients && this.props.params) {
       burger = (
         <Aux>
           <Burger ingredientsSequence={this.props.ingredientsSequence} classes={classes.burger}/>
@@ -106,8 +93,7 @@ export class BurgerBuilder extends Component {
       orderSummary = <OrderSummary
         hideModal={this.purchaseCancelHandler}
         purchaseContinued={this.purchaseContinueHandler}
-        ingredientsPrices={INGREDIENT_PRICES}
-        // ingredients={this.state.ingredients}
+        ingredientsPrices={this.props.params.prices}
         ingredients={this.props.ingredients}
         price={this.props.price}/>;
     }
@@ -132,6 +118,8 @@ const mapStateToProps = state => {
     price: state.burgerBuilder.totalPrice,
     error: state.burgerBuilder.error,
     purchasable: state.burgerBuilder.purchasable,
+    building: state.burgerBuilder.building,
+    params: state.burgerBuilder.ingredientsParams,
     isAuthenticated: state.auth.token !== null,
   };
 };
@@ -141,6 +129,7 @@ const mapDispatchToProps = dispatch => {
     onIngredientAdded: (ingName) => dispatch(actions.addIngredient(ingName)),
     onIngredientRemoved: (ingName) => dispatch(actions.removeIngredient(ingName)),
     fetchIngredients: () => dispatch(actions.fetchIngredients()),
+    fetchIngredientsParams: () => dispatch(actions.fetchIngredientsParams()),
     onPurchaseInit: () => dispatch(actions.purchaseInit()),
     onSetAuthRedirectPath: (path) => dispatch(actions.setAuthRedirectPath(path)),
     onChangeIngredient: (name, value) => dispatch(actions.changeIngredient(name, value)),

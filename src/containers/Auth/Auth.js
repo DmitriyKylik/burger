@@ -19,6 +19,7 @@ class Auth extends Component {
     isSignUp: false,
   };
 
+
   componentDidMount() {
     if(!this.props.burgerBuilding && this.props.authRedirectPath !== '/') {
       this.props.onSetAuthRedirectPath();
@@ -122,4 +123,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Auth);
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Auth, axios));

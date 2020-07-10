@@ -4,9 +4,11 @@ export {
   addIngredient,
   removeIngredient,
   fetchIngredients,
-  fetchIngredientsFailed,
+  fetchIngredientsDataFailed,
   saveIngredients,
   changeIngredient,
+  saveIngredientsParams,
+  fetchIngredientsParams,
 } from './burgerBuilder';
 export {
   purchaseBurger,

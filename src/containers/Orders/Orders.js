@@ -10,52 +10,27 @@ import classes from './Orders.scss';
 
 class Orders extends Component {
 
-  state = {
-    // orders: [],
-    // loading: true
-  };
-
-  componentWillMount() {
+  componentDidMount() {
     this.props.onFetchOrders(this.props.token, this.props.userId);
-    // axios.get('/orders.json')
-    //   .then(response => {
-    //     const fetchedOrders = [];
-    //
-    //     this.setState({loading: false});
-    //
-    //     for(let key in response.data) {
-    //       fetchedOrders.push({
-    //         ...response.data[key],
-    //         id: key,
-    //       });
-    //     }
-    //     console.log(fetchedOrders);
-    //     this.setState({
-    //       orders: fetchedOrders,
-    //       loading: false,
-    //     });
-    //   })
-    //   .catch(error => {
-    //     this.setState({loading: false});
-    //     console.log(error);
-    //   });
   }
 
-
   render() {
-    let orders = <Spinner/>
+    let orders = <Spinner/>;
     if(!this.props.loading) {
-      orders = this.props.orders.map(order => {
-        debugger;
-       return(
-         <Order key={order.id}
-                ingredients={order.ingredients}
-                delivered={order.orderData.deliveryMethod}
-                price={order.price}
-                country={order.orderData.country}
-                customer={order.orderData.name}/>
-       );
-      });
+      if(Array.isArray(this.props.orders) && this.props.orders.length > 0) {
+        orders = this.props.orders.map(order => {
+          return(
+            <Order key={order.id}
+                   ingredients={order.ingredients}
+                   delivered={order.orderData.deliveryMethod}
+                   price={order.price}
+                   country={order.orderData.country}
+                   customer={order.orderData.name}/>
+          );
+        });
+      } else {
+        orders = <p className={classes.ordersEmpty}>You haven't made an orders yet.</p>
+      }
     }
 
     return (

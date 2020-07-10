@@ -31,20 +31,9 @@ const buildControls = (props) => {
               disabled={!props.purchasable}>
         {props.isAuth ? 'Order now' : 'Sign Up for Order'}
       </Button>
-      {/*<button*/}
-        {/*className={`btn ${classes.orderButton}`}*/}
-        {/*disabled={!props.purchasing}*/}
-        {/*onClick={props.ordered}>*/}
-        {/*{props.isAuth ? 'Order now' : 'Sign Up for Order'}*/}
-      {/*</button>*/}
     </div>
   );
 
 };
 
 export default buildControls;
-
-
-// added={() => {props.addIngredient(elem.type)}}
-// reduce={() => {props.reduceIngredient(elem.type)}}
-// change={(event) => {props.changeIngredient(event, elem.type)}}

@@ -8,6 +8,16 @@ export function* fetchIngredientsSaga() {
 
     yield put(actions.saveIngredients(response.data));
   } catch (error) {
-    yield put(actions.fetchIngredientsFailed());
+    yield put(actions.fetchIngredientsDataFailed());
+  }
+}
+
+export function* fetchIngredientsParamsSaga() {
+  try{
+    const response = yield axios.get('ingredientsParams.json/');
+
+    yield put(actions.saveIngredientsParams(response.data));
+  } catch (error) {
+    yield put(actions.fetchIngredientsDataFailed());
   }
 }

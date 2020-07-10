@@ -30,7 +30,6 @@ class App extends Component {
       </Switch>
     );
 
-
     if(this.props.isAuthenticated) {
       routes = (
         <Switch>
