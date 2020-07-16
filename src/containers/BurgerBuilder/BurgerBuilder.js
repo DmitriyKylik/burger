@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import propTypes from 'prop-types';
 
 import Aux from '../../hoc/Auxilliary/auxilliary';
 import Burger from '../../components/Burger/Burger';
@@ -13,8 +12,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import classes from './BurgerBuilder.scss';
 import * as actions from '../../store/actions/index';
 
-// export class BurgerBuilder extends Component {
-export const BurgerBuilder = (props) => {
+export const burgerBuilder = (props) => {
   const [purchasing, setPurchasing] = useState(false);
 
   useEffect(() => {
@@ -22,14 +20,7 @@ export const BurgerBuilder = (props) => {
       props.fetchIngredientsParams();
       props.fetchIngredients();
     }
-  }, [props.building, props.fetchIngredientsParams, props.fetchIngredients]);
-
-  // componentDidMount() {
-  //   if(!props.building) {
-  //     props.fetchIngredientsParams();
-  //     props.fetchIngredients();
-  //   }
-  // }
+  }, []);
 
   const checkPurchasableState = (ingredients) => {
     const sum = Object.values(ingredients).reduce((sum, value) => sum + value, 0);
@@ -136,4 +127,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(BurgerBuilder, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(burgerBuilder, axios));

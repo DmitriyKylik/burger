@@ -12,7 +12,6 @@ import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actionsType from '../../../store/actions/index';
 import Aux from '../../../hoc/Auxilliary/auxilliary';
 
-// class CheckoutData extends Component {
 const CheckoutData = (props) => {
   const [countriesState] = useState([
     { value: 'ukraine', label: 'Ukraine' },

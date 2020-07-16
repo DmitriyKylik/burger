@@ -109,7 +109,8 @@ const saveIngredientsParams = (state, action) => {
   return updateObject(state, {
     ingredientsParams: action.ingredientsParams,
     totalPrice: action.ingredientsParams.basePrice,
-    error: false,
+    //Show error if ingredients wasn't fetched
+    error: state.ingredients === null,
   });
 };
 

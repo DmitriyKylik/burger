@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import Order from '../../components/Order/Order';
@@ -8,38 +8,36 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 import * as ordersActions from '../../store/actions/index';
 import classes from './Orders.scss';
 
-class Orders extends Component {
+const orders = props => {
 
-  componentDidMount() {
-    this.props.onFetchOrders(this.props.token, this.props.userId);
-  }
-
-  render() {
-    let orders = <Spinner/>;
-    if(!this.props.loading) {
-      if(Array.isArray(this.props.orders) && this.props.orders.length > 0) {
-        orders = this.props.orders.map(order => {
-          return(
-            <Order key={order.id}
-                   ingredients={order.ingredients}
-                   delivered={order.orderData.deliveryMethod}
-                   price={order.price}
-                   country={order.orderData.country}
-                   customer={order.orderData.name}/>
-          );
-        });
-      } else {
-        orders = <p className={classes.ordersEmpty}>You haven't made an orders yet.</p>
-      }
+  useEffect(() => {
+    props.onFetchOrders(props.token, props.userId);
+  }, []);
+  
+  let orders = <Spinner/>;
+  if(!props.loading) {
+    if(Array.isArray(props.orders) && props.orders.length > 0) {
+      orders = props.orders.map(order => {
+        return (
+          <Order key={order.id}
+                 ingredients={order.ingredients}
+                 delivered={order.orderData.deliveryMethod}
+                 price={order.price}
+                 country={order.orderData.country}
+                 customer={order.orderData.name}/>
+        );
+      });
+    } else {
+      orders = <p className={classes.ordersEmpty}>You haven't made an orders yet.</p>
     }
-
-    return (
-      <div className={classes.ordersWrapper}>
-        {orders}
-      </div>
-    );
   }
-}
+
+  return (
+    <div className={classes.ordersWrapper}>
+      {orders}
+    </div>
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -56,4 +54,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(orders, axios));

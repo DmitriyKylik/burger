@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as Yup from 'yup';
@@ -14,96 +14,86 @@ import * as actions from '../../store/actions/index';
 import axios from '../../axios-orders';
 
 
-class Auth extends Component {
-  state = {
-    isSignUp: false,
+const auth = props => {
+  const [isSignUp, setIsSignUp] = useState(false);
+
+  useEffect(() => {
+    if(!props.burgerBuilding && props.authRedirectPath !== '/') {
+      props.onSetAuthRedirectPath();
+    }
+  });
+
+  const switchSignModeHandler = () => {
+    setIsSignUp(!isSignUp);
   };
 
+  let errorMessage = null;
 
-  componentDidMount() {
-    if(!this.props.burgerBuilding && this.props.authRedirectPath !== '/') {
-      this.props.onSetAuthRedirectPath();
-    }
-  }
-
-  switchSignModeHandler = () => {
-    this.setState((prevState) => {
-      return {
-        isSignUp: !prevState.isSignUp,
-      }
-    });
-  };
-
-  render() {
-
-    let errorMessage = null;
-
-    if(this.props.error) {
-      errorMessage = (
-        <p className={classes.error}>{this.props.error.message}</p>
-      );
-    }
-
-    let form = (
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        validationSchema={Yup.object({
-          email: Yup.string()
-            .required('Required')
-            .email('Invalid email address'),
-          password: Yup.string()
-            .required('Required')
-        })}
-        onSubmit={(values, {setSubmitting}) => {
-          this.props.onAuth(values.email, values.password, this.state.isSignUp);
-        }}>
-          <Form className={classes.authForm}>
-            <Aux>
-              {errorMessage}
-              <Input
-                name="email"
-                type="email"
-                placeholder="Your email"/>
-              <Input
-                name="password"
-                type="password"
-                placeholder="Your password"/>
-              <Button
-                type="submit"
-                btnType="Success"
-                classes={classes.submitButton}>
-                Submit
-              </Button>
-            </Aux>
-          </Form>
-      </Formik>
-    );
-
-    if(this.props.loading) {
-      form = <Spinner/>;
-    }
-
-    let authRedirect = null;
-
-    if(this.props.isAuthenticated) {
-      authRedirect = <Redirect to={this.props.authRedirectPath}/>
-    }
-
-    return (
-      <div className={classes.auth}>
-        <h2>Sign {this.state.isSignUp ? 'Up' : 'In'}!</h2>
-        {authRedirect}
-        {form}
-        <Button btnType="Danger" clicked={this.switchSignModeHandler}>
-          Switch to {this.state.isSignUp ? "Sign In" : "Sign Up"}
-        </Button>
-      </div>
+  if(props.error) {
+    errorMessage = (
+      <p className={classes.error}>{props.error.message}</p>
     );
   }
-}
+
+  let form = (
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      validationSchema={Yup.object({
+        email: Yup.string()
+          .required('Required')
+          .email('Invalid email address'),
+        password: Yup.string()
+          .required('Required')
+      })}
+      onSubmit={(values, {setSubmitting}) => {
+        props.onAuth(values.email, values.password, isSignUp);
+      }}>
+        <Form className={classes.authForm}>
+          <Aux>
+            {errorMessage}
+            <Input
+              name="email"
+              type="email"
+              placeholder="Your email"/>
+            <Input
+              name="password"
+              type="password"
+              placeholder="Your password"/>
+            <Button
+              type="submit"
+              btnType="Success"
+              classes={classes.submitButton}>
+              Submit
+            </Button>
+          </Aux>
+        </Form>
+    </Formik>
+  );
+
+  if(props.loading) {
+    form = <Spinner/>;
+  }
+
+  let authRedirect = null;
+
+  if(props.isAuthenticated) {
+    authRedirect = <Redirect to={props.authRedirectPath}/>
+  }
+
+  return (
+    <div className={classes.auth}>
+      <h2>Sign {isSignUp ? 'Up' : 'In'}!</h2>
+      {authRedirect}
+      {form}
+      <Button btnType="Danger" clicked={switchSignModeHandler}>
+        Switch to {isSignUp ? "Sign In" : "Sign Up"}
+      </Button>
+    </div>
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -122,4 +112,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Auth, axios));
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(auth, axios));

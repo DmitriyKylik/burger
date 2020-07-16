@@ -7,15 +7,16 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import SideDrawerContext from '../../context/sideDrawerContext';
 import classes from './Layout.scss';
 
-const Layout = (props) => {
-  const [sideDrawerState, setSideDrawerState] = useState(false);
+const layout = (props) => {
+
+  const [sideDrawerIsVisible, setSideDrawerIsVisible] = useState(false);
 
   const sideDrawerClosedHandler = () => {
-    setSideDrawerState(false);
+    setSideDrawerIsVisible(false);
   };
 
   const sideDrawerToggleHandler = () => {
-    setSideDrawerState(!sideDrawerState);
+    setSideDrawerIsVisible(!sideDrawerIsVisible);
   };
 
   return (
@@ -24,7 +25,7 @@ const Layout = (props) => {
       <SideDrawerContext.Provider value={{close: sideDrawerClosedHandler}}>
         <SideDrawer
           isAuth={props.isAuthenticated}
-          open={sideDrawerState}
+          open={sideDrawerIsVisible}
           hide={sideDrawerToggleHandler} />
       </SideDrawerContext.Provider>
         <main className={classes.content}>
@@ -40,4 +41,4 @@ const mapStateToProps = state => {
   }
 };
 
-export default connect(mapStateToProps)(Layout);
+export default connect(mapStateToProps)(layout);
