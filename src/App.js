@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Suspense } from 'react';
 import {connect} from 'react-redux';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import './assets/css/main.css';
 import './assets/scss/main.global.scss';
 
+import Spinner from './components/UI/Spinner/Spinner';
 import Layout from './hoc/Layout/Layout';
 import BurgerBuilder from './containers/BurgerBuilder/BurgerBuilder';
 import Logout from './containers/Auth/Logout/Logout';
 import Aux from './hoc/Auxilliary/auxilliary';
-import asyncComponent from './hoc/asyncComponent/asyncComponent';
 import * as actions from './store/actions/index';
 
-const asyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkout'));
-const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
-const asyncAuth = asyncComponent(() => import('./containers/Auth/Auth'));
+
+const Checkout = React.lazy(() => import('./containers/Checkout/Checkout'));
+const Orders = React.lazy(() => import('./containers/Orders/Orders'));
+const Auth = React.lazy(() => import('./containers/Auth/Auth'));
 
 const app = (props) => {
 
@@ -23,7 +24,7 @@ const app = (props) => {
 
   let routes = (
     <Switch>
-      <Route path="/auth" component={asyncAuth} />
+      <Route path="/auth" component={Auth} />
       <Route path="/" component={BurgerBuilder} />
       <Redirect to="/" />
     </Switch>
@@ -32,9 +33,9 @@ const app = (props) => {
   if(props.isAuthenticated) {
     routes = (
       <Switch>
-        <Route path="/checkout" component={asyncCheckout} />
-        <Route path="/orders" component={asyncOrders} />
-        <Route path="/auth" component={asyncAuth} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/orders" component={Orders} />
+        <Route path="/auth" component={Auth} />
         <Route path="/logout" component={Logout} />
         <Route path="/" component={BurgerBuilder} />
         <Redirect to="/" />
@@ -45,7 +46,9 @@ const app = (props) => {
   return (
       <Aux>
         <Layout>
-          {routes}
+          <Suspense fallback={<Spinner/>}>
+            {routes}
+          </Suspense>
         </Layout>
       </Aux>
   );
