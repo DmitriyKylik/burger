@@ -1,4 +1,4 @@
-import React, from 'react';
+import React from 'react';
 import classes from './Modal.scss';
 import Aux from '../../../hoc/Auxilliary/auxilliary';
 import Backdrop from '../Backdrop/Backdrop';

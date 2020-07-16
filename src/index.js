@@ -4,7 +4,6 @@ import App from "./App";
 import { BrowserRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
 
 import burgerBuilder from './store/reducers/burgerBuilder';
@@ -31,7 +30,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const sagaMiddleWare = createSagaMiddleware();
 
-const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk, sagaMiddleWare)));
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, sagaMiddleWare)));
 
 sagaMiddleWare.run(rootSaga);
 
