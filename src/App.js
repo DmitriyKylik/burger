@@ -1,4 +1,4 @@
-import React, {Component, useEffect, } from 'react';
+import React, { useEffect } from 'react';
 import {connect} from 'react-redux';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import './assets/css/main.css';
@@ -42,14 +42,14 @@ const App = (props) => {
     );
   }
 
-    return (
-        <Aux>
-          <Layout>
-            {routes}
-          </Layout>
-        </Aux>
-    );
-}
+  return (
+      <Aux>
+        <Layout>
+          {routes}
+        </Layout>
+      </Aux>
+  );
+};
 
 const mapStateToProps = state => {
   return {

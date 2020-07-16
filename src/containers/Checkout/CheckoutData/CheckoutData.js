@@ -51,20 +51,13 @@ class CheckoutData extends Component {
           })
           }
           onSubmit={(values, {setSubmitting}) => {
-            // const formData = {};
             const order = {
               ingredients: this.props.ingredients,
               price: this.props.price,
               orderData: values,
               userId: this.props.userId,
             };
-
-            // for(let formElementName in values) {
-            //   formData[formElementName] = values[formElementName];
-            // }
-            debugger;
             this.props.onPurchaseBurger(order, this.props.token)
-            setSubmitting(false);
           }}>
             <Form>
               <Input

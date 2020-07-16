@@ -59,7 +59,6 @@ class Auth extends Component {
         })}
         onSubmit={(values, {setSubmitting}) => {
           this.props.onAuth(values.email, values.password, this.state.isSignUp);
-          setSubmitting(false);
         }}>
           <Form className={classes.authForm}>
             <Aux>
