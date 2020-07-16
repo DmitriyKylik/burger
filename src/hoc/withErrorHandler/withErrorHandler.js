@@ -11,7 +11,7 @@ const withErrorHandler = ( WrappedComponent, axios ) => {
     const [errorState, setErrorState] = useState(null);
     let reqInterceptor = null;
     let respInterceptor = null;
-debugger;
+
     useEffect(() => {
       reqInterceptor = axios.interceptors.request.use( req => {
         setErrorState(null);

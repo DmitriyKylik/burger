@@ -15,11 +15,11 @@ const asyncCheckout = asyncComponent(() => import('./containers/Checkout/Checkou
 const asyncOrders = asyncComponent(() => import('./containers/Orders/Orders'));
 const asyncAuth = asyncComponent(() => import('./containers/Auth/Auth'));
 
-const App = (props) => {
+const app = (props) => {
 
   useEffect(() => {
     props.onAutoSignUp();
-  }, [props.onAutoSignUp]);
+  }, []);
 
   let routes = (
     <Switch>
@@ -63,4 +63,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(app));
