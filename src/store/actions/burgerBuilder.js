@@ -53,3 +53,9 @@ export const fetchIngredientsParams = () => {
     type: actionsType.FETCH_INGREDIENTS_PARAMS,
   };
 };
+
+export const resetBurger = () => {
+  return {
+    type: actionsType.RESET_BURGER,
+  }
+};

@@ -10,15 +10,25 @@
   font-weight: 700;
   font-size: 1.2rem;
   @include miw(500) {
-    //height: 300px;
     margin: auto auto 30px;
   }
   @include miw(769) {
     width: 500px;
-    //height: 400px;
   }
   @include miw(1000) {
     width: 700px;
-    //height: 400px;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

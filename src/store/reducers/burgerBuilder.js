@@ -109,8 +109,16 @@ const saveIngredientsParams = (state, action) => {
   return updateObject(state, {
     ingredientsParams: action.ingredientsParams,
     totalPrice: action.ingredientsParams.basePrice,
-    //Show error if ingredients wasn't fetched
-    error: state.ingredients === null,
+    error: false,
+  });
+};
+
+const resetBurger = (state, action) => {
+  return updateObject(state, {
+    building: false,
+    ingredientsParams: null,
+    ingredients: null,
+    ingredientsSequence: [],
   });
 };
 
@@ -122,6 +130,7 @@ const reducer = (state = initialState, action) => {
     case(actionsType.SAVE_INGREDIENTS): return saveIngredients(state, action);
     case(actionsType.SAVE_INGREDIENTS_PARAMS): return saveIngredientsParams(state, action);
     case(actionsType.FETCH_INGREDIENTS_DATA_FAILED): return fetchIngredientsDataFailed(state, action);
+    case(actionsType.RESET_BURGER): return resetBurger(state, action);
     default: return state;
   }
 };

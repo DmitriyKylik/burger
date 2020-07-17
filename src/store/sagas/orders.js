@@ -1,14 +1,13 @@
 import { put } from 'redux-saga/effects';
 import * as actions from '../actions/index';
 import axios from '../../axios-orders';
-import {fetchOrdersStart} from "../actions/index";
-import {fetchOrdersFail, fetchOrdersSuccess} from "../actions/order";
 
 export function* purchaseBurgerSaga(action) {
   yield put(actions.purchaseBurgerStart());
   try {
     const response = yield axios.post(`orders.json?auth=${action.token}`, action.orderData);
 
+    yield put(actions.resetBurger());
     yield put(actions.purchaseBurgerSuccess(response.data.name, action.orderData));
   } catch (error) {
     yield put(actions.purchaseBurgerFail(error));
@@ -17,7 +16,7 @@ export function* purchaseBurgerSaga(action) {
 
 export function* fetchOrdersSaga(action) {
   const queryParams = `?auth=${action.token}&orderBy="userId"&equalTo="${action.userId}"`;
-  yield put(fetchOrdersStart());
+  yield put(actions.fetchOrdersStart());
   let url = `/orders.json${queryParams}`;
 
   if(!action.token) {
@@ -35,8 +34,8 @@ export function* fetchOrdersSaga(action) {
       });
     }
 
-    yield put(fetchOrdersSuccess(fetchedOrders));
+    yield put(actions.fetchOrdersSuccess(fetchedOrders));
   } catch (error) {
-    yield put(fetchOrdersFail(error))
+    yield put(actions.fetchOrdersFail(error))
   }
 }

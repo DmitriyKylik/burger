@@ -94,7 +94,7 @@ const CheckoutData = (props) => {
   }
 
   return (
-    <div className={classes.CheckoutData}>
+    <div className={`${classes.CheckoutData} ${classes.fadeIn}`}>
       {form}
     </div>
   );

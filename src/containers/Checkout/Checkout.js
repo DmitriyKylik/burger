@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -9,7 +9,6 @@ import CheckoutData from './CheckoutData/CheckoutData';
 import classes from './Checkout.scss';
 
 const checkout = props => {
-
   const cancelCheckoutHandler = () => {
     props.history.goBack();
   };

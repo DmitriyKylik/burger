@@ -12,7 +12,7 @@ const burger = props => {
   }
 
   return (
-    <div className={`${classes.Burger} ${props.classes}`}>
+    <div className={`${classes.Burger} ${classes.fadeIn} ${props.classes}`}>
       <BurgerIngredient type="bread-top"/>
       {ingredients}
       <BurgerIngredient type="bread-bottom"/>

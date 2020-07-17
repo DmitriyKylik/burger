@@ -6,7 +6,6 @@ const inititalState = {
   loading: false,
   error: null,
   purchased: false,
-
 };
 
 const fetchOrdersStart = (state, action) => {

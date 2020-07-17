@@ -65,23 +65,22 @@ export const burgerBuilder = (props) => {
       }
     }
     let orderSummary = null;
-    let burger = props.error ? <p>Ingredients data can't be loaded</p> : <Spinner/>;
+    let buildControls = null;
+    let burger = props.error && !props.ingredients && !props.params ? <p>Ingredients data can't be loaded</p> : <Spinner/>;
 
     if(props.ingredients && props.params) {
-      burger = (
-        <Aux>
-          <Burger ingredientsSequence={props.ingredientsSequence} classes={classes.burger}/>
-          <BuildControls
-            isAuth={props.isAuthenticated}
-            ingredients={props.ingredients}
-            addIngredient={props.onIngredientAdded}
-            removeIngredient={props.onIngredientRemoved}
-            changeIngredient={props.onChangeIngredient}
-            disabled={disabledInfo}
-            purchasable={checkPurchasableState(props.ingredients)}
-            ordered={purchaseHandler}
-            price={props.price}/>
-        </Aux>);
+      burger = <Burger ingredientsSequence={props.ingredientsSequence} classes={`${classes.burger}`}/>;
+      buildControls =
+        <BuildControls
+          isAuth={props.isAuthenticated}
+          ingredients={props.ingredients}
+          addIngredient={props.onIngredientAdded}
+          removeIngredient={props.onIngredientRemoved}
+          changeIngredient={props.onChangeIngredient}
+          disabled={disabledInfo}
+          purchasable={checkPurchasableState(props.ingredients)}
+          ordered={purchaseHandler}
+          price={props.price}/>
       orderSummary = <OrderSummary
         hideModal={purchaseCancelHandler}
         purchaseContinued={purchaseContinueHandler}
@@ -98,6 +97,7 @@ export const burgerBuilder = (props) => {
           {orderSummary}
         </Modal>
         {burger}
+        {buildControls}
       </Aux>
     );
 };

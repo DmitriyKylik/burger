@@ -1,5 +1,3 @@
-import {fetchOrdersFail, fetchOrdersSuccess} from "./order";
-
 export {
   addIngredient,
   removeIngredient,
@@ -9,7 +7,9 @@ export {
   changeIngredient,
   saveIngredientsParams,
   fetchIngredientsParams,
+  resetBurger,
 } from './burgerBuilder';
+
 export {
   purchaseBurger,
   purchaseBurgerStart,
@@ -21,6 +21,7 @@ export {
   fetchOrdersSuccess,
   fetchOrdersFail,
 } from './order';
+
 export {
   authLoad,
   logout,
