@@ -18,6 +18,7 @@ const auth = props => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   useEffect(() => {
+    debugger;
     if(!props.burgerBuilding && props.authRedirectPath !== '/') {
       props.onSetAuthRedirectPath();
     }
