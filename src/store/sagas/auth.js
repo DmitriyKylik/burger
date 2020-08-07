@@ -4,7 +4,6 @@ import * as actions from '../actions/index';
 import axios from 'axios';
 
 export function* logoutSaga(action) {
-
   localStorage.removeItem('burgerAuthToken');
   localStorage.removeItem('burgerAuthExpirationDate');
   localStorage.removeItem('burgerUserId');
@@ -33,20 +32,22 @@ export function* authUserSaga(action) {
 
   try {
     const response = yield axios.post(url, authData);
-    const updatedExpirationTime = new Date(new Date().getTime() + +response.data.expiresIn * 1000);
+    const expireTime = parseInt(response.data.expiresIn, 10) * 1000;
+    const updatedExpirationTime = new Date(new Date().getTime() + expireTime);
 
     localStorage.setItem('burgerAuthToken', response.data.idToken);
     localStorage.setItem('burgerAuthExpirationDate', updatedExpirationTime);
     localStorage.setItem('burgerUserId', response.data.localId);
 
     yield put(actions.authSuccess(response.data.idToken, response.data.localId));
-    yield put(actions.checkAuthTimeout( updatedExpirationTime ));
+    yield put(actions.checkAuthTimeout(expireTime));
   } catch (error) {
     yield put(actions.authFail(error.response.data.error));
   }
 }
 
 export function* authCheckStateSaga(action) {
+
   const token = localStorage.getItem('burgerAuthToken');
   if(!token) {
     yield put(actions.logout());
@@ -59,11 +60,6 @@ export function* authCheckStateSaga(action) {
 
       yield put(actions.authSuccess(token, userId));
       yield put(actions.checkAuthTimeout(expirationTime));
-    } else {
-      // logout
-      yield put(actions.logout());
-      //Future optimization logout is not needed
-      // return;
     }
   }
 }
