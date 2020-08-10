@@ -1,5 +1,9 @@
+@import "utils/libs";
+@import "utils/helpers/vars";
+@import "utils/helpers/mixins";
+@import "utils/fonts";
+
 :global {
-  @import "utils";
 
   html {
     line-height: $mainLineHeight;

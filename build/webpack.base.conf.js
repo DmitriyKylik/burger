@@ -6,6 +6,7 @@ const fs = require("fs");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Main const. Feel free to change it
 const PATHS = {
@@ -48,12 +49,12 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        // JavaScript
-        test: /\.js$/,
-        loader: "babel-loader",
-        exclude: "/node_modules/"
-      },
+      // {
+      //   // JavaScript
+      //   test: /\.js$/,
+      //   loader: "babel-loader",
+      //   exclude: "/node_modules/"
+      // },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -108,29 +109,48 @@ module.exports = {
         // css
         test: /\.css$/,
         use: [
-          "style-loader",
-          // MiniCssExtractPlugin.loader,
+          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
-            loader: "css-loader",
-            options: {
-              sourceMap: true,
-              importLoaders: 1,
-              localsConvention: 'camelCase',
-              // modules: true,
-              modules: {
-                localIdentName: '[local]--[hash:base64:5]',
-              },
-            }
+            loader: 'css-loader',
+            options: { sourceMap: true }
           },
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
               sourceMap: true,
               config: { path: `./postcss.config.js` }
             }
           }
         ]
-      }
+      },
+      // {
+      //   // css
+      //   test: /\.css$/,
+      //   use: [
+      //     "style-loader",
+      //     // MiniCssExtractPlugin.loader,
+      //     {
+      //       loader: "css-loader",
+      //       options: {
+      //         sourceMap: true,
+      //         importLoaders: 1,
+      //         localsConvention: 'camelCase',
+      //         // modules: true,
+      //         modules: {
+      //           localIdentName: '[local]--[hash:base64:5]',
+      //         },
+      //       }
+      //     },
+      //     {
+      //       loader: "postcss-loader",
+      //       options: {
+      //         sourceMap: true,
+      //         config: { path: `./postcss.config.js` }
+      //       }
+      //     }
+      //   ]
+      // }
     ]
   },
   resolve: {
@@ -140,15 +160,17 @@ module.exports = {
     }
   },
   plugins: [
-    // new MiniCssExtractPlugin({
-    //   filename: `${PATHS.assets}css/[name].[contenthash].css`
-    // }),
+    new MiniCssExtractPlugin({
+      filename: `${PATHS.assets}css/[name].[contenthash].css`
+    }),
     new CopyWebpackPlugin([
       { from: `${PATHS.src}/${PATHS.assets}img`, to: `${PATHS.assets}img` },
       { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
       { from: `${PATHS.src}/static`, to: "" }
     ]),
-
+    new BundleAnalyzerPlugin({
+      generateStatsFile: true,
+    }),
     /*
       Automatic creation any html pages (Don't forget to RERUN dev server!)
       See more:

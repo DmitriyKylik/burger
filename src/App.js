@@ -44,13 +44,11 @@ const app = (props) => {
   }
 
   return (
-      <Aux>
-        <Layout>
-          <Suspense fallback={<Spinner/>}>
-            {routes}
-          </Suspense>
-        </Layout>
-      </Aux>
+    <Layout>
+      <Suspense fallback={<Spinner/>}>
+        {routes}
+      </Suspense>
+    </Layout>
   );
 };
 
