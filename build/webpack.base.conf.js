@@ -6,7 +6,7 @@ const fs = require("fs");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Main const. Feel free to change it
 const PATHS = {
@@ -168,9 +168,9 @@ module.exports = {
       { from: `${PATHS.src}/${PATHS.assets}fonts`, to: `${PATHS.assets}fonts` },
       { from: `${PATHS.src}/static`, to: "" }
     ]),
-    new BundleAnalyzerPlugin({
-      generateStatsFile: true,
-    }),
+    // new BundleAnalyzerPlugin({
+    //   generateStatsFile: true,
+    // }),
     /*
       Automatic creation any html pages (Don't forget to RERUN dev server!)
       See more:
