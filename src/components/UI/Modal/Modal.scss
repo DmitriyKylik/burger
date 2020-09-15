@@ -1,0 +1,54 @@
+//@import "Scss/utils";
+
+@import "../../../assets/scss/utils";
+
+.modal {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 500;
+  background-color: white;
+  max-height: 100vh;
+  overflow: auto;
+  width: 100%;
+  max-width: 650px;
+  padding: 55px 15px 55px;
+  margin: 0 auto;
+  border: 1px solid #ccc;
+  border-radius: 30px;
+  @include transitionAll;
+  @include mw(670) {
+    width: calc(100% - 40px);
+  }
+  &.active {
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.closeBtn {
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border-radius: 50%;
+  border: 1px solid $primary-color;
+  cursor: pointer;
+  @include transitionAll;
+  &:hover {
+    background: $primary-color;
+    & .icon {
+      fill: $white-color;
+    }
+  }
+  & .icon {
+    max-width: 100%;
+    width: 20px;
+    height: auto;
+    fill: $primary-color;
+    @include transitionAll;
+    @include absCenter;
+  }
+}

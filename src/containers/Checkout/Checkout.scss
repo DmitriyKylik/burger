@@ -1,0 +1,39 @@
+//@import "Scss/utils";
+
+@import "../../assets/scss/utils";
+
+.checkout {
+  max-width: 1200px;
+  text-align: center;
+  width: auto;
+  margin: 0 20px;
+  @include miw(768) {
+    margin: 0 auto;
+  }
+}
+
+.burger {
+  height: auto;
+}
+
+.btnWrapper {
+  max-width: 500px;
+  margin: 15px auto;
+  @include miw(500) {
+    margin: 30px auto;
+  }
+}
+
+.controlBtn {
+  margin: 10px;
+  @include miw(500) {
+    margin: 30px;
+  }
+}
+
+.homeLink {
+  margin: 0 5px;
+  font-weight: 700;
+  color: $success-color;
+  @include transitionAll;
+}

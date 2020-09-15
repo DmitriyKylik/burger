@@ -1,0 +1,10 @@
+//@import 'Scss/utils';
+
+@import "../../assets/scss/utils";
+
+.burger {
+  height: 500px;
+  @include mw(500) {
+    height: 300px;
+  }
+}

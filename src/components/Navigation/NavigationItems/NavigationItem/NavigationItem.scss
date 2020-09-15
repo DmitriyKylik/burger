@@ -1,0 +1,42 @@
+//@import "Scss/utils";
+
+@import "../../../../assets/scss/utils";
+
+
+.NavigationItem {
+  display: block;
+  width: 100%;
+
+  @include miw(500) {
+    display: flex;
+    align-items: center;
+    width: auto;
+    height: 100%;
+  }
+  & a {
+    display: block;
+    color: $primary-color;
+    width: 100%;
+    text-align: center;
+    @include transitionAll;
+    &:hover,
+    &:active,
+    &.active {
+      color: $secPrimary-color;
+    }
+    @include miw(500) {
+      display: block;
+      color: $white-color;
+      height: 100%;
+      padding: 16px 10px 12px;
+      border-bottom: 4px solid transparent;
+      &:hover,
+      &:active,
+      &.active {
+        background: $primary-color-light;
+        color: $white-color ;
+        border-bottom: 4px solid $secPrimary-color-light;
+      }
+    }
+  }
+}

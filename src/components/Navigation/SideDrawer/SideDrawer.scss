@@ -1,0 +1,29 @@
+//@import 'Scss/utils';
+
+@import "../../../assets/scss/utils";
+
+
+.sideDrawer {
+  position: fixed;
+  width: 280px;
+  height: 100%;
+  max-width: 70%;
+  left: 0;
+  top: 0;
+  z-index: 200;
+  background: $white-color;
+  padding: 32px 16px;
+  @include transitionAll;
+  &.open {
+    transform: translateX(0);
+  }
+  &.close {
+    transform: translateX(-100%);
+  }
+}
+
+.logo {
+  display: block;
+  max-width: 130px;
+  margin: 0 auto 20px;
+}

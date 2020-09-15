@@ -1,6 +1,36 @@
-/* Example css file */
-body {
+@import "~normalize.css";
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  min-width: 0;
+  min-height: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+li {
   margin: 0;
   padding: 0;
-  font-family: 'Open Sans', sans-serif;
+  list-style-type: none;
 }
+
+div, input, p, textarea, select, button,
+h1, h2, h3, h4, h5, h6, a, span, a:focus {
+  word-wrap: break-word;
+  overflow-wrap:break-word;
+}
+

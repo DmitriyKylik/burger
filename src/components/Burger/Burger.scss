@@ -1,0 +1,36 @@
+//@import 'Scss/utils';
+
+@import "../../assets/scss/utils";
+
+.Burger {
+  max-width: 100%;
+  width: 100%;
+  padding: 0 20px;
+  margin: 30px 0;
+  overflow: auto;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  @include miw(500) {
+    margin: auto auto 30px;
+  }
+  @include miw(769) {
+    width: 500px;
+  }
+  @include miw(1000) {
+    width: 700px;
+  }
+}
+
+.fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

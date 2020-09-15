@@ -1,0 +1,31 @@
+//@import "Scss/utils";
+
+@import "../../../assets/scss/utils";
+
+
+.CheckoutData {
+  max-width: 500px;
+  margin: 20px auto;
+  border: 1px solid $border-color;
+  border-radius: 15px;
+  text-align: center;
+  padding: 15px;
+}
+
+.submitButton {
+  display: inline-block;
+  margin: 10px;
+}
+
+.fadeIn {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,36 @@
+//@import 'Scss/utils';
+
+@import "../../assets/scss/utils";
+
+.auth {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.error {
+  color: $danger-color;
+  font-weight: 700;
+}
+
+.submitButton {
+  display: inline-block;
+  margin: 10px;
+  &:disabled {
+    background: $disabled-color;
+    color: #ccc;
+  }
+  &:hover:disabled {
+    transform: none;
+  }
+}
+
+.authForm {
+  width: auto;
+  margin: 15px 20px;
+  @include miw(500) {
+    width: 100%;
+    margin: 15px 0 0 0;
+  }
+}

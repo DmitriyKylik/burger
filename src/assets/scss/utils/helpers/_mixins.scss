@@ -1,0 +1,315 @@
+@function rem($pixels, $context: $mainFontSize) {
+    @if (unitless($pixels)) {
+        $pixels: $pixels * 1px;
+    }
+    @if (unitless($context)) {
+        $context: $context * 1px;
+    }
+    @return $pixels / $context * 1rem;
+}
+
+@mixin size($width, $height: $width) {
+    width: $width;
+    height: $height;
+}
+
+@mixin transitionAll($time:0.3) {
+    transition: all #{$time}s;
+}
+
+@mixin absCenter() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin itemBorderTop($amount, $color) {
+    @for $i from 1 through $amount {
+        &:nth-child(#{$i}) {
+            border-top: 1px solid $color;
+        }
+    }
+}
+
+@mixin hideItemBorderTop($childIndex) {
+    &:nth-child(#{$childIndex}) {
+        border-top: none;
+    }
+}
+
+@function calcFluidFontSize($f-min, $f-max, $w-min, $w-max, $units: px) {
+
+    $k: ($f-max - $f-min)/($w-max - $w-min);
+    $b: $f-min - $k * $w-min;
+
+    $b: $b;
+
+    @return calc( #{$k} * 100vw + #{$b} );
+}
+
+@mixin fluidFontSize($f-min, $f-max, $w-min, $w-max) {
+    font-size: calcFluidFontSize($f-min, $f-max, $w-min, $w-max, px);
+}
+
+// scroll-bar
+@mixin scroll($cbar: $pc, $ctrack: $greyc, $w: 7px, $h: 7px) {
+    scrollbar-width: thin;
+    scrollbar-color: $cbar $ctrack;
+    &::-webkit-scrollbar-track-piece {
+        background-color: $ctrack;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: $cbar;
+    }
+    &::-webkit-scrollbar {
+        width: $w;
+        height: $h;
+    }
+}
+
+
+@mixin for-phone-only {
+    @media (max-width: 599px) { @content; }
+  }
+  @mixin for-tablet-portrait-up {
+    @media (min-width: 600px) { @content; }
+  }
+  @mixin for-tablet-landscape-up {
+    @media (min-width: 900px) { @content; }
+  }
+  @mixin for-desktop-up {
+    @media (min-width: 1200px) { @content; }
+  }
+  @mixin for-big-desktop-up {
+    @media (min-width: 1800px) { @content; }
+  }
+
+@mixin placeholder {
+    ::-webkit-input-placeholder {
+        @content;
+    }
+    :-moz-placeholder {
+        @content;
+    }
+    :-ms-input-placeholder {
+        @content;
+    }
+}
+
+@mixin mobile {
+    @media (max-width: 480px) {
+        @content;
+    }
+}
+
+@mixin button {
+    // display: flex;
+    align-items: center;
+    outline: none;
+    border: none;
+    background: none;
+    justify-content: center;
+    cursor: pointer;
+    //text-transform: uppercase;
+}
+
+@mixin textOverflow {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// Centering image inside wrapper with fixed size
+@mixin imageCenterFixed {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+// Centering image inside wrapper with fixed width and non fixed size
+@mixin imageCenterX {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+// Centering image inside wrapper with not fixed size
+@mixin imageCenterFluid {
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+
+// Stretch image in fixed wrapper
+@mixin imageCover {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@mixin cover {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 50% 50%;
+}
+@mixin contain {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: 50% 50%;
+}
+
+@mixin font($alias, $name) {
+    @font-face {
+        font-family: $alias;
+        src: url('../' + $name + '.woff2') format("woff2"),
+            url('../' + $name + '.woff') format("woff"),
+            url('../' + $name + '.oft') format("otf"),
+            url('../' + $name + '.ttf') format("ttf"),
+            url('../' + $name + '.eot') format("eot");
+    }
+}
+
+ @mixin font-face(
+   $font-family,
+   $file-path,
+   $weight: normal,
+   $style: normal,
+   $asset-pipeline: false
+ ) {
+   @font-face {
+     font-family: $font-family;
+     font-weight: $weight;
+     font-style: $style;
+
+     src: url("#{$file-path}.eot?#iefix") format("embedded-opentype"),
+       url("#{$file-path}.woff") format("woff"),
+       url("#{$file-path}.woff2") format("woff2"),
+       url("#{$file-path}.svg") format("svg"),
+       url("#{$file-path}.ttf") format("truetype");
+   }
+ }
+
+//@mixin font-face($font-family, $file-path, $weight: normal, $style: normal, $asset-pipeline: false ) {
+//    @font-face {
+//        font-family: $font-family;
+//        font-weight: $weight;
+//        font-style: $style;
+//
+//        @if $asset-pipeline == true {
+//            src: url('#{$file-path}.eot');
+//            src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+//            url('#{$file-path}.woff') format('woff'),
+//            url('#{$file-path}.ttf') format('truetype');
+//            src: url('#{$file-path}.ttf') format('truetype');
+//        }
+//        @else if($asset-pipeline == ttf) {
+//
+//        }
+//        @else if($asset-pipeline == woff) {
+//            src: url('#{$file-path}.woff') format('woff');
+//        }
+//        @else {
+//            src: url('#{$file-path}.eot');
+//            src: url('#{$file-path}.eot?#iefix') format('embedded-opentype'),
+//            url('#{$file-path}.woff') format('woff'),
+//            url('#{$file-path}.ttf') format('truetype');
+//        }
+//    }
+//}
+
+// to use:
+//@include font(black, cytiapro-black-webfont)
+
+@mixin clear {
+    content: " ";
+    display: block;
+    clear: both;
+}
+
+// Media queries
+
+@mixin girdSize($n, $full: null) {
+    $col: $columns / $n;
+    $val: 100% / $columns * $col;
+    @if($full == full) {
+      width: $val;
+    }
+    @else if($full != null) {
+      width: #{calc(#{$val} - #{$full})};
+    }
+    @else {
+      width: #{calc(#{$val} - #{$offset})};
+    }
+}
+
+@mixin mw($value) {
+    @media screen and (max-width: $value + 'px') {
+        @content;
+    }
+}
+
+@mixin miw($value) {
+    @media screen and (min-width: $value + 'px') {
+        @content;
+    }
+}
+
+@mixin for-desktop {
+    @media (max-width: #{$desktopWidth}) {
+        @content;
+    }
+}
+
+@mixin for-tablet {
+    @media (max-width: #{$tabletWidth}) {
+        @content;
+    }
+}
+
+@mixin for-phone {
+    @media (max-width: #{$phoneWidth}) {
+        @content;
+    }
+}
+
+@mixin for-smPhone {
+    @media (max-width: #{$smPhoneWidth}) {
+        @content;
+    }
+}
+
+// retina, also available as +hdpi
+
+@mixin for-tablet-retina {
+    @media
+        screen and (-webkit-min-device-pixel-ratio: 2),
+        screen and (   min--moz-device-pixel-ratio: 2),
+        screen and (     -o-min-device-pixel-ratio: 2/1),
+        screen and (        min-device-pixel-ratio: 2),
+        screen and (                min-resolution: 192dpi),
+        screen and (                min-resolution: 2dppx) {
+        @content;
+    }
+}
+
+@mixin for-phone-retina {
+    @media
+        screen and (-webkit-min-device-pixel-ratio: 3),
+        screen and (   min--moz-device-pixel-ratio: 3),
+        screen and (     -o-min-device-pixel-ratio: 3/1),
+        screen and (        min-device-pixel-ratio: 3),
+        screen and (                min-resolution: 288dpi),
+        screen and (                min-resolution: 3dppx) {
+        @content;
+    }
+}

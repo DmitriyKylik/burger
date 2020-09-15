@@ -1,0 +1,52 @@
+.title {
+  padding: 0 10px;
+  margin-bottom: 10px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.subtitle {
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.listItem {
+  text-align: center;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.name {
+  margin-right: 5px;
+}
+
+.amount {
+  margin-right: 5px;
+}
+
+.delimiter {
+  margin: 0 5px;
+}
+
+.cost {
+  margin-right: 5px;
+}
+
+.total {
+  margin-bottom: 10px;
+  text-align: center;
+  font-weight: 700;
+}
+
+.continueText {
+  text-align: center;
+}
+
+.bg {
+  background: #000;
+}
+
+.footerBtn {
+  margin: 10px 30px;
+}

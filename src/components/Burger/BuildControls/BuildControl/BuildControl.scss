@@ -1,0 +1,71 @@
+//@import "Scss/utils";
+
+@import "../../../../assets/scss/utils";
+
+.buildControl {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0;
+  @include mw(400) {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+.buildInput {
+  width: 50px;
+  height: 40px;
+  padding: 5px;
+  outline: none;
+  border-radius: 5px;
+  border: 1px solid #ac9980;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 2px #966909;
+}
+
+.buildBtn {
+  padding: 5px;
+  margin: 0 5px;
+  width: 80px;
+  border-radius: 5px;
+  border: 1px solid #aa6817;
+  box-shadow: 2px 2px 2px #966909;
+  &:hover:disabled {
+    background: #ac9980;
+    color: #ccc;
+    cursor: not-allowed;
+  }
+  &:disabled {
+    background: #ac9980;
+    border: 1px solid #7e7365;
+    color: #ccc;
+  }
+}
+
+.less {
+  background: #d39952;
+  color: $white-color;
+  &:hover {
+    background-color: #daa972;
+  }
+}
+
+.more {
+  background: #8f5e1e;
+  color: $white-color;
+  &:hover {
+    background-color: #99703f;
+  }
+}
+
+.label {
+  width: 90px;
+  padding: 10px;
+  font-weight: 700;
+  @include mw(400) {
+    width: 100%;
+    text-align: center;
+  }
+}

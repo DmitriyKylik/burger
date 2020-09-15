@@ -1,0 +1,51 @@
+//@import "Scss/utils";
+
+@import "../../../assets/scss/utils";
+
+.inputWrapper {
+  border: 1px solid $border-color;
+  padding: 10px;
+  border-radius: 15px;
+  background: $white-color;
+}
+
+.inputContainer {
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+}
+
+.input {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  outline: none;
+  background: none;
+  border: 1px solid $border-color;
+  padding: 10px;
+  border-radius: 15px;
+  background: $white-color;
+  @include transitionAll;
+  &:focus {
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.3);
+  }
+  &::placeholder {
+    color: $mainFont;
+  }
+}
+
+.inputSelect {
+  display: block;
+  [class^='inputSelect__indicators'] {
+    display: none;
+  }
+}
+
+.error {
+  margin-top: 10px;
+  color: $danger-color;
+}
+
+.invalid {
+  box-shadow: 0 0 12px 0 rgba(148, 67, 23, 0.8);
+}

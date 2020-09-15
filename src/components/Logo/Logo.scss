@@ -1,0 +1,15 @@
+//@import "Scss/utils";
+
+@import "../../assets/scss/utils";
+
+.logo {
+  position: relative;
+  padding: 8px;
+  @include transitionAll;
+  &:hover {
+    transform: scale(1.2);
+  }
+  & img {
+    @include imageCenterX;
+  }
+}

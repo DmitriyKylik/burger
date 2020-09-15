@@ -1,0 +1,58 @@
+//@import "Scss/utils";
+
+@import "../../assets/scss/utils";
+
+
+.order {
+  max-width: 700px;
+  margin: 0 auto;
+  border: 1px solid $border-color;
+  padding: 10px;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  @include mw(700) {
+    margin: 0 15px;
+  }
+  &:not(:last-child) {
+    margin-bottom: 20px;
+  }
+}
+
+.ingredientsTitle {
+  flex-shrink: 0;
+  min-width: 100px;
+  margin-top: 10px;
+  padding-right: 10px;
+}
+
+.ingredientsInner {
+  flex-grow: 1;
+}
+
+.ingredientsItem {
+  flex-basis: calc(20% - 10px);
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
+  @include mw(768) {
+    flex-basis: calc(33.33% - 10px);
+  }
+  @include mw(600) {
+    flex-basis: auto;
+    flex-grow: 1;
+  }
+}
+
+.ingredientsName {
+  font-weight: 700;
+  margin-right: 5px;
+}
+
+.orderDataValue {
+  font-weight: 700;
+}
+
+.contactData {
+  margin-bottom: 10px;
+}

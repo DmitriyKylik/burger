@@ -1,0 +1,26 @@
+//@import "Scss/utils";
+
+@import "../../../assets/scss/utils";
+
+.main {
+  padding: 10px;
+  cursor: pointer;
+  @include transitionAll;
+}
+
+.Success,
+.Danger {
+  border-radius: 15px;
+  color: $white-color;
+  &:hover {
+    transform: translateY(-3px);
+  }
+}
+
+.Success {
+  background: $success-color;
+}
+
+.Danger {
+  background: $danger-color;
+}

@@ -1,0 +1,54 @@
+//@import 'Scss/utils';
+@import "../../../assets/scss/utils";
+
+.buildControls {
+  width: 100%;
+  background-color: #c9a26b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 0 20px 9px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.orderButton {
+  margin: 15px;
+  padding: 15px 30px;
+  background: #d39952;
+  border-radius: 10px;
+  border: 1px solid #966909;
+  color: $white-color;
+  font-size: 1.2em;
+  box-shadow: 2px 2px 2px #966909;
+  text-transform: uppercase;
+  &:active,
+  &:hover {
+    transform: translateY(-3px);
+    background: $primary-color;
+    border: 1px solid #966909;
+    color: $white-color;
+  }
+  &:disabled {
+    background: $disabled-color;
+    cursor: not-allowed;
+    border: 1px solid #ccc;
+    color: #888;
+  }
+  &:not(:disabled) {
+    animation: enable 0.3s linear;
+  }
+}
+
+@keyframes enable {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+
+}
